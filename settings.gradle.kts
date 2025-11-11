@@ -22,5 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "AspireBank"
 include(":app")
 include(":login")
-include(":customer")
-
+include(":notifications")
