@@ -1,4 +1,4 @@
-package com.example.notifications;
+package com.example.officer;
 
 import org.junit.Test;
 

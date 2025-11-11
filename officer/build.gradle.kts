@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.notifications"
+    namespace = "com.example.officer"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.notifications"
+        applicationId = "com.example.officer"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
