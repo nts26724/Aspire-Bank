@@ -7,40 +7,7 @@
     android:background="@color/aspire_cream_background"
     tools:context=".OtpActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header_layout"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/white"
-        android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:id="@+id/header_logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_aspire_logo"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <TextView
-            android:id="@+id/header_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aspire Bank"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/adamina"
-            android:textColor="@color/aspire_dark_text"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/header_logo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/app_bar" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -54,131 +21,134 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"> <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/adamina"
-            android:text="Xác thực OTP"
-            android:textColor="@color/aspire_dark_text"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/adamina"
-            android:gravity="center"
-            android:text="Vui lòng nhập mã OTP vừa gửi đến số điện thoại của bạn"
-            android:textColor="@color/aspire_dark_text"
-            android:textSize="16sp" />
+        app:layout_constraintVertical_bias="0.4">
 
         <LinearLayout
-            android:id="@+id/otp_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <EditText
-                style="@style/Style.App.EditText.Otp"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/aspire_dark_text" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/adamina"
+                android:text="Xác thực OTP"
+                android:textColor="@color/aspire_dark_text"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-            <EditText
-                style="@style/Style.App.EditText.Otp"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/aspire_dark_text" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/adamina"
+                android:gravity="center"
+                android:text="Vui lòng nhập mã OTP vừa gửi đến số điện thoại của bạn"
+                android:textColor="@color/aspire_dark_text"
+                android:textSize="16sp" />
 
-            <EditText
-                style="@style/Style.App.EditText.Otp"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/aspire_dark_text" />
+            <LinearLayout
+                android:id="@+id/otp_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
 
-            <EditText
-                style="@style/Style.App.EditText.Otp"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/aspire_dark_text" />
+                <EditText
+                    style="@style/Style.App.EditText.Otp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/aspire_dark_text" />
 
-            <EditText
-                style="@style/Style.App.EditText.Otp"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/aspire_dark_text" />
+                <EditText
+                    style="@style/Style.App.EditText.Otp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/aspire_dark_text" />
 
-            <EditText
-                style="@style/Style.App.EditText.Otp"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:textColor="@color/aspire_dark_text" />
+                <EditText
+                    style="@style/Style.App.EditText.Otp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/aspire_dark_text" />
+
+                <EditText
+                    style="@style/Style.App.EditText.Otp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/aspire_dark_text" />
+
+                <EditText
+                    style="@style/Style.App.EditText.Otp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/aspire_dark_text" />
+
+                <EditText
+                    style="@style/Style.App.EditText.Otp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:textColor="@color/aspire_dark_text" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_confirm_otp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/adamina"
+                android:text="Xác nhận"
+                android:textColor="@color/aspire_dark_text"
+                android:backgroundTint="@color/aspire_light_orange_background"
+                app:cornerRadius="999dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel_otp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/adamina"
+                android:text="Hủy"
+                android:textColor="@color/aspire_dark_text"
+                android:backgroundTint="@color/aspire_gray_button_bg"
+                app:cornerRadius="999dp" />
+
+            <TextView
+                android:id="@+id/tv_resend_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/adamina"
+                android:text="Gửi lại mã OTP"
+                android:textColor="@color/aspire_orange_primary"
+                android:textSize="16sp" />
 
         </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_confirm_otp"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/adamina"
-            android:text="Xác nhận"
-            android:textColor="@color/aspire_dark_text"
-            android:backgroundTint="@color/aspire_light_orange_background"
-            app:cornerRadius="999dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_cancel_otp"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/adamina"
-            android:text="Hủy"
-            android:textColor="@color/aspire_dark_text"
-            android:backgroundTint="@color/aspire_gray_button_bg"
-            app:cornerRadius="999dp" />
-
-        <TextView
-            android:id="@+id/tv_resend_otp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/adamina"
-            android:text="Gửi lại mã OTP"
-            android:textColor="@color/aspire_orange_primary"
-            android:textSize="16sp" />
-
-    </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- THANH FOOTER TRỐNG (GIỮ NGUYÊN) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/footer_layout"
         android:layout_width="0dp"
