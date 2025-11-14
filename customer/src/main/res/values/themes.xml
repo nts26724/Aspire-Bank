@@ -1,9 +1,65 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <style name="Base.Theme.AspireBank" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.AspireBank" parent="Base.Theme.AspireBank" />
+
+    <style name="Widget.App.Button.Toggle.Transfer" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/aspire_dark_text</item>
+        <item name="android:backgroundTint">@color/transfer_toggle_selector</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="fontFamily">@font/adamina</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    <style name="Style.App.TextView.TransferLabel" parent="">
+        <item name="android:fontFamily">@font/adamina</item>
+        <item name="android:textColor">@color/aspire_dark_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Style.App.TextInputLayout.Transfer" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/aspire_input_field_bg</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="boxCornerRadiusTopStart">999dp</item>
+        <item name="boxCornerRadiusTopEnd">999dp</item>
+        <item name="boxCornerRadiusBottomStart">999dp</item>
+        <item name="boxCornerRadiusBottomEnd">999dp</item>
+    </style>
+
+    <style name="Style.App.EditText.Otp" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/transfer_bg_otp_box</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:fontFamily">@font/adamina</item>
+        <item name="android:textColor">@color/aspire_dark_text</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Style.App.TextView.ReceiptLabel" parent="">
+        <item name="android:fontFamily">@font/adamina</item>
+        <item name="android:textColor">@color/aspire_dark_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Style.App.TextView.ReceiptValue" parent="">
+        <item name="android:fontFamily">@font/adamina</item>
+        <item name="android:textColor">@color/aspire_dark_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Style.App.Button.Success" parent="Widget.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/adamina</item>
+        <item name="android:textColor">@color/aspire_orange_primary</item>
+        <item name="android:backgroundTint">@color/aspire_light_orange_background</item>
+        <item name="cornerRadius">999dp</item>
+    </style>
+
 </resources>
