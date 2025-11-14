@@ -8,9 +8,12 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+<<<<<<< Updated upstream
       <SelectionState runConfigName="customer">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+=======
+>>>>>>> Stashed changes
       <SelectionState runConfigName="notifications">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
