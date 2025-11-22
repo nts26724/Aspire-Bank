@@ -11,11 +11,9 @@
       <SelectionState runConfigName="customer">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      
-      <SelectionState runConfigName="officer">
+      <SelectionState runConfigName="notifications">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-
     </selectionStates>
   </component>
 </project>
