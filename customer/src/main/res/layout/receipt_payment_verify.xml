@@ -203,13 +203,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/botBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:padding="20dp"
-        android:background="@color/white"
+    <include
+        layout="@layout/bot_bar"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
