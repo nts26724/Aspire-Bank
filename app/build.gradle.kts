@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.aspirebank"
+    namespace = "com.example.customer"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.aspirebank"
+        applicationId = "com.example.app"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
