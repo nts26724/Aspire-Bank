@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aspire_cream_background"
-    tools:context=".register.RegisterStep1Activity">
+    android:id="@+id/main"
+    >
+<!--    tools:context=".register.RegisterStep1Activity"-->
 
     <ImageView
         android:id="@+id/img_logo"
