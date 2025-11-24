@@ -20,6 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "AspireBank"
-include(":app")
 include(":customer")
-include(":officer")
