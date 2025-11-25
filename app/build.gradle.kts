@@ -1,5 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
+//    alias(libs.plugins.android.application)
+    id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -40,4 +42,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-analytics")
+
+//    implementation("com.google.android.gms:play-services-ads:23.4.0")
+//    implementation('com.google.android.gms:play-services-auth:21.2.0')
+//    implementation('com.google.firebase:firebase-auth')
 }
