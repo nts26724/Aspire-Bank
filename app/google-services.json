@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "330905960606",
+    "project_id": "aspire-banking-1fc09",
+    "storage_bucket": "aspire-banking-1fc09.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330905960606:android:da39928413277f4d713b8f",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiHiDUjibNOhnLFqiwLX10n2-RRoJGXbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
