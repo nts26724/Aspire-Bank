@@ -1,5 +1,6 @@
 package com.example.app.ui.homecustomer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,15 +10,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.app.R;
+import com.example.app.data.model.Account;
+import com.example.app.ui.depositphone.DepositPhoneActivity;
+import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
 import com.example.app.utils.SessionManager;
 
 public class HomeCustomerActivity extends AppCompatActivity {
     TextView balance, name;
-    ImageView deposit, transfer, utility, mortgage, depositPhone, saving;
+    ImageView deposit, transfer, utility, mortgage, depositPhone, saving, eye;
     private HomeCustomerViewModel homeCustomerViewModel;
+    private MutableLiveData<Boolean> hide;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +38,74 @@ public class HomeCustomerActivity extends AppCompatActivity {
 
         init();
 
+
+        eye.setOnClickListener(v -> {
+            hide.postValue(Boolean.FALSE.equals(hide.getValue()));
+        });
+
+        hide.observe(this, hide -> {
+            Account account = SessionManager.getInstance().getUser();
+            if (account == null) {
+                balance.setText("Unknown");
+                return;
+            }
+            eye.setImageResource(hide ? R.mipmap.ic_eye_round : R.mipmap.ic_eye_hide);
+            balance.setText(hide ? "****** VND" : account.getBalance() + " VND");
+        });
+
+
         homeCustomerViewModel.setAccountLiveData(SessionManager.getInstance().getUser());
 
         homeCustomerViewModel.getAccountLiveData().observe(this, account -> {
-            name.setText(account.getName());
-            balance.setText(account.getBalance() + " VND");
+            if (Boolean.TRUE.equals(hide.getValue())) {
+                balance.setText("***");
+            } else {
+                balance.setText(account.getBalance() + " VND");
+            }
+        });
+
+
+
+        homeCustomerViewModel.getFullNameByUsername(
+                SessionManager.getInstance().getUser().getUsername()
+        );
+
+        homeCustomerViewModel.getFullNameLiveData().observe(this, fullName -> {
+            if (fullName == null) {
+                name.setText("Unknown");
+                return;
+            }
+            name.setText(fullName);
+        });
+
+        deposit.setOnClickListener(v -> {
+//           Intent intent = new Intent(this, DepositActivity.class);
+//           startActivity(intent);
+        });
+
+        transfer.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, TransferActivity.class);
+//            startActivity(intent);
+        });
+
+        utility.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ReceiptPaymentActivity.class);
+            startActivity(intent);
+        });
+
+        mortgage.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, MortgageActivity.class);
+//            startActivity(intent);
+        });
+
+        depositPhone.setOnClickListener(v -> {
+            Intent intent = new Intent(this, DepositPhoneActivity.class);
+            startActivity(intent);
+        });
+
+        saving.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, SavingActivity.class);
+//            startActivity(intent);
         });
     }
 
@@ -48,7 +118,9 @@ public class HomeCustomerActivity extends AppCompatActivity {
         mortgage = findViewById(R.id.mortgage);
         depositPhone = findViewById(R.id.depositPhone);
         saving = findViewById(R.id.saving);
+        eye = findViewById(R.id.eye);
 
+        hide = new MutableLiveData<>(false);
         homeCustomerViewModel = new ViewModelProvider(this).get(HomeCustomerViewModel.class);
     }
 }

@@ -30,7 +30,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void login(String username, String passwordText) {
-        accountRepository.getUserByUsername(username,new LoginCallback() {
+        accountRepository.getUserByUsername(username, new LoginCallback() {
             @Override
             public void onSuccess(Account account) {
                 if (account == null) {

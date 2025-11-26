@@ -4,10 +4,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff1d6"
+    android:id="@+id/receipt_payment"
     >
 
-    <include
-        layout="@layout/app_bar"/>
+
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 
     <LinearLayout
@@ -16,10 +23,13 @@
         android:layout_marginVertical="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         android:orientation="vertical">
 
-        <include layout="@layout/utility_bar" />
+        <com.example.app.ui.customeview.UtilityBarView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
         
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -54,6 +64,12 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <include
-        layout="@layout/nav_bar"/>
+    <com.example.app.ui.customeview.NavBarView
+        android:id="@+id/nav_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

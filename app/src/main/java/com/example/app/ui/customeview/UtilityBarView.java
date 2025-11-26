@@ -1,0 +1,67 @@
+package com.example.app.ui.customeview;
+
+import android.content.Context;
+import android.content.Intent;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+
+import com.example.app.R;
+import com.example.app.ui.bookroom.BookRoomActivity;
+import com.example.app.ui.bookticket.BookTicketActivity;
+import com.example.app.ui.depositphone.DepositPhoneActivity;
+import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
+
+public class UtilityBarView extends FrameLayout {
+    TextView receiptPayment, depositPhone, bookTicket, bookRoom;
+
+    public UtilityBarView(Context context) {
+        super(context);
+        init(null);
+    }
+
+    public UtilityBarView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(null);
+    }
+
+    public UtilityBarView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(null);
+    }
+
+    public void init(AttributeSet attrs) {
+        LayoutInflater.from(getContext()).inflate(R.layout.utility_bar, this, true);
+
+        receiptPayment = findViewById(R.id.receiptPayment);
+        depositPhone = findViewById(R.id.depositPhone);
+        bookTicket = findViewById(R.id.bookTicket);
+        bookRoom = findViewById(R.id.bookRoom);
+
+
+        receiptPayment.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ReceiptPaymentActivity.class);
+            getContext().startActivity(intent);
+        });
+
+
+        depositPhone.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), DepositPhoneActivity.class);
+            getContext().startActivity(intent);
+        });
+
+
+        bookTicket.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), BookTicketActivity.class);
+            getContext().startActivity(intent);
+        });
+
+
+        bookRoom.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), BookRoomActivity.class);
+            getContext().startActivity(intent);
+        });
+    }
+}

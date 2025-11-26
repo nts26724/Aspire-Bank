@@ -6,9 +6,13 @@
     android:background="#fff1d6"
     >
 
-    <include
-        layout="@layout/app_bar"/>
-
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
@@ -20,7 +24,7 @@
         app:cardUseCompatPadding="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintBottom_toTopOf="@+id/botBar"
         >
 
