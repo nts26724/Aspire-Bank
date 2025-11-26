@@ -7,8 +7,13 @@
     android:id="@+id/home_customer"
     >
 
-    <include
-        layout="@layout/app_bar"
+
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
     <LinearLayout
@@ -17,7 +22,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
@@ -78,6 +83,7 @@
                             />
 
                         <ImageView
+                            android:id="@+id/eye"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@mipmap/ic_eye_hide"
@@ -224,7 +230,12 @@
 
 
 
-    <include
-        layout="@layout/nav_bar"
+    <com.example.app.ui.customeview.NavBarView
+        android:id="@+id/nav_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.example.app.data.remote;
 
 import com.example.app.data.model.Account;
+import com.example.app.data.model.Customer;
+import com.example.app.interfaces.HomeCustomerCallback;
 import com.example.app.interfaces.LoginCallback;
 import com.example.app.utils.SessionManager;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,5 +34,26 @@ public class FireStoreSource {
                 .addOnFailureListener(e -> {
                     loginCallback.onFailure();
                 });
+    }
+
+    public void getCustomerByUsername(String username, HomeCustomerCallback homeCustomerCallback) {
+        db.collection("customer")
+            .whereEqualTo("username", username)
+            .get()
+            .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                if (queryDocumentSnapshots.isEmpty()) {
+                    homeCustomerCallback.onSuccess(null);
+                    return;
+                }
+
+                homeCustomerCallback.onSuccess(
+                    queryDocumentSnapshots.getDocuments().get(0)
+                            .toObject(Customer.class).getFullName()
+                );
+            })
+            .addOnFailureListener(e -> {
+                homeCustomerCallback.onFailure();
+            });;
     }
 }

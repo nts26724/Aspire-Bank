@@ -6,10 +6,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="@color/white"
-        app:cardUseCompatPadding="true"
         app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
         >
 
         <LinearLayout
@@ -28,6 +27,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/receiptPayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hóa đơn"
@@ -52,6 +52,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/depositPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nạp tiền"
@@ -75,6 +76,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/bookTicket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đặt vé"
@@ -98,6 +100,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/bookRoom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Khác"

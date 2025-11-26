@@ -7,9 +7,13 @@
     android:background="@color/aspire_cream_background"
     tools:context=".SavingsConfirmActivity">
 
-    <include
-        android:id="@+id/appBar"
-        layout="@layout/app_bar" />
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <ScrollView
         android:layout_width="0dp"
@@ -20,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar">
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -248,8 +252,13 @@
         </androidx.cardview.widget.CardView>
     </ScrollView>
 
-    <include
+    <com.example.app.ui.customeview.NavBarView
         android:id="@+id/nav_bar"
-        layout="@layout/nav_bar" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
