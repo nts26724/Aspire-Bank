@@ -4,7 +4,7 @@ import com.example.app.data.model.Account;
 
 public class SessionManager {
     private static SessionManager instance;
-    private Account currentUser;
+    private Account account;
 
     private SessionManager() {}
 
@@ -15,15 +15,15 @@ public class SessionManager {
         return instance;
     }
 
-    public void setUser(Account user) {
-        this.currentUser = user;
+    public void setAccount(Account user) {
+        this.account = user;
     }
 
-    public Account getUser() {
-        return currentUser;
+    public Account getAccount() {
+        return account;
     }
 
     public void clear() {
-        currentUser = null;
+        account = null;
     }
 }

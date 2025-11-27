@@ -28,10 +28,6 @@ public class HomeCustomerViewModel extends AndroidViewModel {
         customerRepository.getFullNameByUsername(username, new HomeCustomerCallback() {
             @Override
             public void onSuccess(String fullName){
-                if (fullName == null) {
-                    fullNameLiveData.postValue(null);
-                    return;
-                }
                 fullNameLiveData.postValue(fullName);
             }
 

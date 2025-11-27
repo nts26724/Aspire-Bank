@@ -18,7 +18,6 @@ import com.example.app.utils.SessionManager;
 public class LoginViewModel extends AndroidViewModel {
     private AccountRepository accountRepository;
     public MutableLiveData<Result> loginResult;
-//    private MutableLiveData<Account> accountLiveData;
 
 
 
@@ -26,7 +25,6 @@ public class LoginViewModel extends AndroidViewModel {
         super(application);
         accountRepository = new AccountRepository();
         loginResult = new MutableLiveData<>();
-//        accountLiveData = new MutableLiveData<>();
     }
 
     public void login(String username, String passwordText) {
@@ -38,12 +36,10 @@ public class LoginViewModel extends AndroidViewModel {
                 } else if(!account.getPassword().equals(passwordText)){
                     loginResult.postValue(Result.WRONG_PASSWORD);
                 } else if(account.getRole().equals("customer")){
-                    SessionManager.getInstance().setUser(account);
-//                    accountLiveData.postValue(account);
+                    SessionManager.getInstance().setAccount(account);
                     loginResult.postValue(Result.CUSTOMER);
                 } else {
-                    SessionManager.getInstance().setUser(account);
-//                    accountLiveData.postValue(account);
+                    SessionManager.getInstance().setAccount(account);
                     loginResult.postValue(Result.OFFICER);
                 }
             }
