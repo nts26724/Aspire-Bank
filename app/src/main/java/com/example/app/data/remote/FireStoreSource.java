@@ -2,10 +2,19 @@ package com.example.app.data.remote;
 
 import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
+import com.example.app.data.model.Transaction;
 import com.example.app.interfaces.HomeCustomerCallback;
 import com.example.app.interfaces.LoginCallback;
+import com.example.app.interfaces.TransactionCallback;
 import com.example.app.utils.SessionManager;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FireStoreSource {
     private FirebaseFirestore db;
@@ -54,6 +63,43 @@ public class FireStoreSource {
             })
             .addOnFailureListener(e -> {
                 homeCustomerCallback.onFailure();
-            });;
+            });
     }
+
+
+    public void getTransactionByUsername(String username, TransactionCallback transactionCallback) {
+        Task<QuerySnapshot> q1 = db.collection("transaction")
+                .whereEqualTo("usernameTransfer", username)
+                .get();
+
+        Task<QuerySnapshot> q2 = db.collection("transaction")
+                .whereEqualTo("usernameReceive", username)
+                .get();
+
+
+
+        Tasks.whenAllSuccess(q1, q2)
+                .addOnSuccessListener(results -> {
+                    List<DocumentSnapshot> allDocs = new ArrayList<>();
+
+                    QuerySnapshot r1 = (QuerySnapshot) results.get(0);
+                    if (r1 != null) allDocs.addAll(r1.getDocuments());
+
+                    QuerySnapshot r2 = (QuerySnapshot) results.get(1);
+                    if (r2 != null) allDocs.addAll(r2.getDocuments());
+
+                    if (allDocs.isEmpty()) {
+                        transactionCallback.onSuccess(null);
+                        return;
+                    }
+
+                    List<Transaction> allTransactions = new ArrayList<>();
+                    for (DocumentSnapshot doc : allDocs) {
+                        allTransactions.add(doc.toObject(Transaction.class));
+                    }
+                    transactionCallback.onSuccess(allTransactions);
+                })
+                .addOnFailureListener(e -> transactionCallback.onFailure());
+    }
+
 }

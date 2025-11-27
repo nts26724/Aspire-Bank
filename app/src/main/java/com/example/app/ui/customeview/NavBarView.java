@@ -39,7 +39,7 @@ public class NavBarView extends FrameLayout {
         notification = findViewById(R.id.notification);
         utility = findViewById(R.id.utility);
         map = findViewById(R.id.map);
-        profile = findViewById(R.id.notification);
+        profile = findViewById(R.id.profile);
 
 
         homeCustomer.setOnClickListener(v -> {

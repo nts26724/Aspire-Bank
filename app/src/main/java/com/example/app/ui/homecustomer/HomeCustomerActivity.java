@@ -44,7 +44,7 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
         hide.observe(this, hide -> {
-            Account account = SessionManager.getInstance().getUser();
+            Account account = SessionManager.getInstance().getAccount();
             if (account == null) {
                 balance.setText("Unknown");
                 return;
@@ -54,7 +54,7 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
 
-        homeCustomerViewModel.setAccountLiveData(SessionManager.getInstance().getUser());
+        homeCustomerViewModel.setAccountLiveData(SessionManager.getInstance().getAccount());
 
         homeCustomerViewModel.getAccountLiveData().observe(this, account -> {
             if (Boolean.TRUE.equals(hide.getValue())) {
@@ -67,7 +67,7 @@ public class HomeCustomerActivity extends AppCompatActivity {
 
 
         homeCustomerViewModel.getFullNameByUsername(
-                SessionManager.getInstance().getUser().getUsername()
+                SessionManager.getInstance().getAccount().getUsername()
         );
 
         homeCustomerViewModel.getFullNameLiveData().observe(this, fullName -> {
