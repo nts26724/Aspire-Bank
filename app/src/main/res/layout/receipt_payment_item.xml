@@ -17,9 +17,10 @@
 
 
         <ImageView
+            android:id="@+id/img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_aspire_logo"
+            android:src="@mipmap/ic_electric"
             />
 
         <LinearLayout
@@ -36,6 +37,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -45,6 +47,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="850.000 VND"
@@ -62,12 +65,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Tien dien"
+                    android:text="EVN TP.HCM"
                     android:textSize="15dp"
                     android:gravity="start"
                     />
 
                 <TextView
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="850.000 VND"
@@ -83,6 +87,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/receiptID"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -98,6 +103,7 @@
                     >
 
                     <TextView
+                        android:id="@+id/payment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Thanh toan"

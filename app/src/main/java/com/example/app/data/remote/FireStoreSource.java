@@ -2,9 +2,11 @@ package com.example.app.data.remote;
 
 import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
+import com.example.app.data.model.Receipt;
 import com.example.app.data.model.Transaction;
 import com.example.app.interfaces.HomeCustomerCallback;
 import com.example.app.interfaces.LoginCallback;
+import com.example.app.interfaces.ReceiptPaymentCallback;
 import com.example.app.interfaces.TransactionCallback;
 import com.example.app.utils.SessionManager;
 import com.google.android.gms.tasks.Task;
@@ -102,4 +104,23 @@ public class FireStoreSource {
                 .addOnFailureListener(e -> transactionCallback.onFailure());
     }
 
+
+    public void getReceiptByUsername(String username, ReceiptPaymentCallback receiptPaymentCallback) {
+        db.collection("receipt")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        receiptPaymentCallback.onSuccess(null);
+                        return;
+                    }
+
+                    List<Receipt> receipts = new ArrayList<>();
+                    for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                        receipts.add(doc.toObject(Receipt.class));
+                    }
+                    receiptPaymentCallback.onSuccess(receipts);
+                })
+                .addOnFailureListener(e -> receiptPaymentCallback.onFailure());
+    }
 }
