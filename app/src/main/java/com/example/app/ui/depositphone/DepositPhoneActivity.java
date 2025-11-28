@@ -69,7 +69,7 @@ public class DepositPhoneActivity extends AppCompatActivity {
                 Intent intentDepositPhoneCheck = new Intent(DepositPhoneActivity.this, DepositPhoneVerify.class);
                 intentDepositPhoneCheck.putExtra("phone", phone);
                 intentDepositPhoneCheck.putExtra(
-                        "money",
+                        "amount",
                         selectedButton.getText().toString().split(" ")[0]
                 );
                 startActivity(intentDepositPhoneCheck);

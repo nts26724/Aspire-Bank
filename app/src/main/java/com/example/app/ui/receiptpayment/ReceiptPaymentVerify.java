@@ -25,8 +25,8 @@ public class ReceiptPaymentVerify extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.receipt_payment_verify);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.receipt_payment_verify), (v, insets) -> {
+        setContentView(R.layout.verify);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.verify), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -40,16 +40,17 @@ public class ReceiptPaymentVerify extends AppCompatActivity {
         String receiptIDStr = intent.getStringExtra("receiptID");
 
 
+
         confirm.setOnClickListener(v -> {
             //check
+            // if(false)
+                Toast.makeText(this, "Sai mã OTP", Toast.LENGTH_SHORT).show();
             // if(true)
                 Intent intentReceiptPaymentSuccess = new Intent(this, ReceiptPaymentSuccess.class);
                 intentReceiptPaymentSuccess.putExtra("type", typeStr);
                 intentReceiptPaymentSuccess.putExtra("amount", amountStr);
                 intentReceiptPaymentSuccess.putExtra("receiptID", receiptIDStr);
                 startActivity(intentReceiptPaymentSuccess);
-            // if(false)
-                Toast.makeText(this, "Sai mã OTP", Toast.LENGTH_SHORT).show();
         });
 
 
@@ -71,10 +72,11 @@ public class ReceiptPaymentVerify extends AppCompatActivity {
         numberOTP4 = findViewById(R.id.numberOTP4);
         numberOTP5 = findViewById(R.id.numberOTP5);
         numberOTP6 = findViewById(R.id.numberOTP6);
-        confirm = findViewById(R.id.confirm);
-        cancel = findViewById(R.id.cancel);
+
         reSendOTP = findViewById(R.id.reSendOTP);
 
+        confirm = findViewById(R.id.confirm);
+        cancel = findViewById(R.id.cancel);
 
     }
 }
