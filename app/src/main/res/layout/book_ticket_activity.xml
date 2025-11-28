@@ -79,6 +79,7 @@
                         app:boxCornerRadiusTopStart="20dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/source"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/outline_location_on_24"
@@ -106,6 +107,7 @@
                         app:boxCornerRadiusTopStart="20dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/desination"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/outline_location_on_24"
@@ -133,6 +135,7 @@
                         app:boxCornerRadiusTopStart="20dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/departureDay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/outline_location_on_24"
@@ -160,6 +163,7 @@
                         app:boxCornerRadiusTopStart="20dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/returnDay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/outline_location_on_24"
@@ -178,6 +182,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/find"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tìm chuyến bay"

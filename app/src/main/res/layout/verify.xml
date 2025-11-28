@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/verify"
+    >
 
     <com.example.app.ui.customeview.AppBarView
         android:id="@+id/app_bar"
@@ -65,10 +67,12 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:padding="12dp"
+                        android:maxLength="1"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,10 +91,12 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:padding="12dp"
+                        android:maxLength="1"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,53 +114,12 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:padding="12dp"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="10dp"
-                    app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusBottomStart="10dp"
-                    app:boxCornerRadiusBottomEnd="10dp"
-                    app:boxBackgroundColor="#d9d9d9"
-                    app:boxStrokeWidth="1dp"
-                    app:boxStrokeColor="#BDBDBD"
-                    android:layout_marginHorizontal="5dp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:padding="12dp"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="10dp"
-                    app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusBottomStart="10dp"
-                    app:boxCornerRadiusBottomEnd="10dp"
-                    app:boxBackgroundColor="#d9d9d9"
-                    app:boxStrokeWidth="1dp"
-                    app:boxStrokeColor="#BDBDBD"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:padding="12dp"
+                        android:maxLength="1"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -173,15 +138,65 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:padding="12dp"
+                        android:maxLength="1"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeColor="#BDBDBD"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="12dp"
+                        android:maxLength="1"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeColor="#BDBDBD"
+                    android:layout_marginHorizontal="5dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="12dp"
+                        android:maxLength="1"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <Button
+                android:id="@+id/confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Xác nhận"
@@ -191,6 +206,7 @@
                 />
 
             <Button
+                android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hủy"
@@ -199,6 +215,7 @@
                 />
 
             <TextView
+                android:id="@+id/reSendOTP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gửi lại mã OTP"
