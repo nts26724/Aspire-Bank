@@ -21,6 +21,7 @@ public class ReceiptPaymentViewModel extends AndroidViewModel {
     public ReceiptPaymentViewModel(@NonNull Application application) {
         super(application);
         receiptPaymentRepository = new ReceiptPaymentRepository();
+        listReceipts = new MutableLiveData<>();
     }
 
     public void getReceiptsByUsername(String username) {

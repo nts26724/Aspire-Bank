@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/book_room_success"
     >
 
 
@@ -74,6 +75,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -95,6 +97,30 @@
                         android:text="Tên khách sạn"
                         />
 
+                    <TextView
+                        android:id="@+id/hotelName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="VietJet Air"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="Số người"
+                        />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -102,10 +128,11 @@
                         />
 
                     <TextView
+                        android:id="@+id/quantityPeople"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
-                        android:text="VietJet Air"
+                        android:text="TP HCM"
                         android:gravity="end"
                         />
                 </LinearLayout>
@@ -130,6 +157,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/quantityRoom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -158,6 +186,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/checkInDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -186,6 +215,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/checkOutDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -214,6 +244,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -239,6 +270,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/continueBookRoom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tiếp tục đặt phòng"
@@ -262,6 +294,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/homeCustomer"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:padding="10dp"

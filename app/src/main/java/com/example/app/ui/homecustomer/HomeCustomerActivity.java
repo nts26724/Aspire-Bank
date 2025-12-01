@@ -19,6 +19,9 @@ import com.example.app.ui.depositphone.DepositPhoneActivity;
 import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
 import com.example.app.utils.SessionManager;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class HomeCustomerActivity extends AppCompatActivity {
     TextView balance, name;
     ImageView deposit, transfer, utility, mortgage, depositPhone, saving, eye;
@@ -44,7 +47,7 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
         hide.observe(this, hide -> {
-            Account account = SessionManager.getInstance().getAccount();
+            Account account = SessionManager.getInstance(this).getAccount();
             if (account == null) {
                 balance.setText("Unknown");
                 return;
@@ -54,20 +57,21 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
 
-        homeCustomerViewModel.setAccountLiveData(SessionManager.getInstance().getAccount());
+        homeCustomerViewModel.setAccountLiveData(SessionManager.getInstance(this).getAccount());
 
         homeCustomerViewModel.getAccountLiveData().observe(this, account -> {
             if (Boolean.TRUE.equals(hide.getValue())) {
                 balance.setText("***");
             } else {
-                balance.setText(account.getBalance() + " VND");
+                NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+                balance.setText(formatter.format(account.getBalance()) + " VND");
             }
         });
 
 
 
         homeCustomerViewModel.getFullNameByUsername(
-                SessionManager.getInstance().getAccount().getUsername()
+                SessionManager.getInstance(this).getAccount().getUsername()
         );
 
         homeCustomerViewModel.getFullNameLiveData().observe(this, fullName -> {

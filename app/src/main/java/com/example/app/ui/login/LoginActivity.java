@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.loginResult.observe(this, result -> {
+        loginViewModel.getLoginResult().observe(this, result -> {
             switch (result) {
                 case NOT_FOUND:
                     Toast.makeText(this, "Tên đăng nhập không tồn tại", Toast.LENGTH_SHORT).show();

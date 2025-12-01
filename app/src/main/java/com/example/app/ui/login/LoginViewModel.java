@@ -2,6 +2,7 @@ package com.example.app.ui.login;
 
 import android.app.Application;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,8 @@ import com.example.app.utils.SessionManager;
 
 public class LoginViewModel extends AndroidViewModel {
     private AccountRepository accountRepository;
-    public MutableLiveData<Result> loginResult;
+    private MutableLiveData<Result> loginResult;
+    private SessionManager sessionManager;
 
 
 
@@ -25,6 +27,7 @@ public class LoginViewModel extends AndroidViewModel {
         super(application);
         accountRepository = new AccountRepository();
         loginResult = new MutableLiveData<>();
+        sessionManager = new SessionManager(application.getApplicationContext());
     }
 
     public void login(String username, String passwordText) {
@@ -36,10 +39,10 @@ public class LoginViewModel extends AndroidViewModel {
                 } else if(!account.getPassword().equals(passwordText)){
                     loginResult.postValue(Result.WRONG_PASSWORD);
                 } else if(account.getRole().equals("customer")){
-                    SessionManager.getInstance().setAccount(account);
+                    sessionManager.setAccount(account);
                     loginResult.postValue(Result.CUSTOMER);
                 } else {
-                    SessionManager.getInstance().setAccount(account);
+                    sessionManager.setAccount(account);
                     loginResult.postValue(Result.OFFICER);
                 }
             }
@@ -51,4 +54,7 @@ public class LoginViewModel extends AndroidViewModel {
         });
     }
 
+    public MutableLiveData<Result> getLoginResult() {
+        return loginResult;
+    }
 }

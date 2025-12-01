@@ -2,6 +2,7 @@ package com.example.app.ui.customeview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
@@ -42,26 +43,63 @@ public class UtilityBarView extends FrameLayout {
 
 
         receiptPayment.setOnClickListener(v -> {
+            setColorReceiptPayment();
+
             Intent intent = new Intent(getContext(), ReceiptPaymentActivity.class);
             getContext().startActivity(intent);
         });
 
 
         depositPhone.setOnClickListener(v -> {
+            setColorDepositPhone();
+
             Intent intent = new Intent(getContext(), DepositPhoneActivity.class);
             getContext().startActivity(intent);
         });
 
 
         bookTicket.setOnClickListener(v -> {
+            setColorBookTicket();
+
             Intent intent = new Intent(getContext(), BookTicketActivity.class);
             getContext().startActivity(intent);
         });
 
 
         bookRoom.setOnClickListener(v -> {
+            setColorBookRoom();
+
             Intent intent = new Intent(getContext(), BookRoomActivity.class);
             getContext().startActivity(intent);
         });
+    }
+
+
+    public void setColorReceiptPayment() {
+        receiptPayment.setBackgroundColor(Color.parseColor("#FEDDBC"));
+        depositPhone.setBackgroundColor(Color.WHITE);
+        bookTicket.setBackgroundColor(Color.WHITE);
+        bookRoom.setBackgroundColor(Color.WHITE);
+    }
+
+    public void setColorDepositPhone() {
+        receiptPayment.setBackgroundColor(Color.WHITE);
+        depositPhone.setBackgroundColor(Color.parseColor("#FEDDBC"));
+        bookTicket.setBackgroundColor(Color.WHITE);
+        bookRoom.setBackgroundColor(Color.WHITE);
+    }
+
+    public void setColorBookTicket() {
+        receiptPayment.setBackgroundColor(Color.WHITE);
+        depositPhone.setBackgroundColor(Color.WHITE);
+        bookTicket.setBackgroundColor(Color.parseColor("#FEDDBC"));
+        bookRoom.setBackgroundColor(Color.WHITE);
+    }
+
+    public void setColorBookRoom() {
+        receiptPayment.setBackgroundColor(Color.WHITE);
+        depositPhone.setBackgroundColor(Color.WHITE);
+        bookTicket.setBackgroundColor(Color.WHITE);
+        bookRoom.setBackgroundColor(Color.parseColor("#FEDDBC"));
     }
 }

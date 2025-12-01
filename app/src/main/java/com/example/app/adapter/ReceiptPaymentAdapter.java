@@ -66,7 +66,7 @@ public class ReceiptPaymentAdapter extends RecyclerView.Adapter<ReceiptPaymentAd
         holder.payment.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), ReceiptPaymentCheck.class);
             intent.putExtra("type", currReceipt.getType());
-            intent.putExtra("amount", currReceipt.getAmount());
+            intent.putExtra("amount", currReceipt.getAmount() + "");
             intent.putExtra("receiptID", currReceipt.getReceiptID());
             v.getContext().startActivity(intent);
         });
