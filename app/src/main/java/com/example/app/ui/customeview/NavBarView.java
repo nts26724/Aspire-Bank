@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.app.R;
+import com.example.app.ui.bookroom.BookRoomMap;
 import com.example.app.ui.homecustomer.HomeCustomerActivity;
-import com.example.app.ui.map.MapActivity;
 import com.example.app.ui.notification.NotificationActivity;
 import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
 
@@ -61,7 +61,7 @@ public class NavBarView extends FrameLayout {
 
 
         map.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), MapActivity.class);
+            Intent intent = new Intent(getContext(), BookRoomMap.class);
             getContext().startActivity(intent);
         });
 

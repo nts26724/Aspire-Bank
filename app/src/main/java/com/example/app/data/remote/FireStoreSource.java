@@ -1,5 +1,7 @@
 package com.example.app.data.remote;
 
+import android.util.Log;
+
 import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
 import com.example.app.data.model.Receipt;
@@ -11,12 +13,18 @@ import com.example.app.interfaces.TransactionCallback;
 import com.example.app.utils.SessionManager;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FireStoreSource {
     private FirebaseFirestore db;
@@ -123,4 +131,90 @@ public class FireStoreSource {
                 })
                 .addOnFailureListener(e -> receiptPaymentCallback.onFailure());
     }
+
+
+    public void widthraw(String username, long price) {
+        db.collection("account")
+            .whereEqualTo("username", username)
+            .get()
+            .addOnSuccessListener(querySnapshot -> {
+                if (!querySnapshot.isEmpty()) {
+                    DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                    DocumentReference accountRef = doc.getReference();
+
+                    db.runTransaction( transaction -> {
+                        DocumentSnapshot snapshot = transaction.get(accountRef);
+
+                        Long currentBalance = snapshot.getLong("balance");
+                        if (currentBalance == null) currentBalance = 0L;
+
+                        if (currentBalance < price) {
+                            throw new FirebaseFirestoreException(
+                                    "Insufficient balance",
+                                    FirebaseFirestoreException.Code.ABORTED
+                            );
+                        }
+
+                        Long newBalance = currentBalance - price;
+
+                        transaction.update(accountRef, "balance", newBalance);
+
+                        return null;
+                    }).addOnSuccessListener(unused -> {
+                        Log.d("Withdraw", "Withdraw success");
+                    }).addOnFailureListener(e -> {
+                        Log.e("Withdraw", "Failed: " + e.getMessage());
+                    });
+                }
+            });
+    }
+
+
+    public void addTransaction(long amount, String content, boolean transfer,
+                               String usernameTransfer, String usernameReceive) {
+
+        CollectionReference transRef = db.collection("transaction");
+
+        transRef.orderBy("transactionID", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+
+                    long nextID = 1;
+
+                    if (!snapshot.isEmpty()) {
+                        DocumentSnapshot doc = snapshot.getDocuments().get(0);
+                        String lastIDStr = doc.getString("transactionID");
+
+                        try {
+                            long lastID = Long.parseLong(lastIDStr);
+                            nextID = lastID + 1;
+                        } catch (Exception e) {
+                            nextID = 1;
+                        }
+                    }
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("amount", amount);
+                    data.put("content", content);
+                    data.put("time", System.currentTimeMillis());
+                    data.put("transactionID", String.valueOf(nextID));
+                    data.put("transfer", transfer);
+                    data.put("usernameReceive", usernameReceive);
+                    data.put("usernameTransfer", usernameTransfer);
+
+                    transRef.add(data)
+                            .addOnSuccessListener(ref -> {
+                                Log.d("Transaction", "Create success: " + ref.getId());
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("Transaction", "Create FAIL: " + e.getMessage());
+                            });
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Transaction", "Cannot get max ID: " + e.getMessage());
+                });
+    }
+
 }

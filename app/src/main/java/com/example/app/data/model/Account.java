@@ -7,9 +7,9 @@ public class Account {
     private String username;
     private String password;
     private String role;
-    private double balance;
-    private double mortgage;
-    private double saving;
+    private long balance;
+    private long mortgage;
+    private long saving;
 
 
     public Account() {}
@@ -23,7 +23,7 @@ public class Account {
         this.saving = 0;
     }
 
-    public double getBalance() {
+    public long getBalance() {
         return balance;
     }
 
@@ -40,19 +40,19 @@ public class Account {
         return role;
     }
 
-    public double getMortgage() {
+    public long getMortgage() {
         return mortgage;
     }
 
-    public double getSaving() {
+    public long getSaving() {
         return saving;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 
-    public void setMortgage(double mortgage) {
+    public void setMortgage(long mortgage) {
         this.mortgage = mortgage;
     }
 
@@ -64,11 +64,19 @@ public class Account {
         this.role = role;
     }
 
-    public void setSaving(double saving) {
+    public void setSaving(long saving) {
         this.saving = saving;
     }
 
     public void setUsername(@NonNull String username) {
         this.username = username;
+    }
+
+    public void widthraw(long amount) {
+        this.balance -= amount;
+    }
+
+    public void deposit(long amount) {
+        this.balance += amount;
     }
 }

@@ -35,7 +35,7 @@ public class ReceiptPaymentActivity extends AppCompatActivity {
 
         init();
 
-        receiptPaymentViewModel.getReceiptsByUsername(SessionManager.getInstance().getAccount().getUsername());
+        receiptPaymentViewModel.getReceiptsByUsername(SessionManager.getInstance(this).getAccount().getUsername());
 
         receiptPaymentViewModel.getListReceipts().observe(this, receipts -> {
             if(receipts == null) {

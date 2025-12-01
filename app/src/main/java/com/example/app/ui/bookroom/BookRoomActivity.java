@@ -1,20 +1,27 @@
 package com.example.app.ui.bookroom;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.app.R;
+import com.example.app.ui.customeview.UtilityBarView;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class BookRoomActivity extends AppCompatActivity {
-    TextInputEditText source, desination, departureDay, returnDay;
-    TextView find;
+    TextInputEditText checkInDate, checkOutDate, quantityPeople, quantityRoom, radius;
+    CardView find;
+    UtilityBarView utilityBarView;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,21 +35,55 @@ public class BookRoomActivity extends AppCompatActivity {
 
         init();
 
+        utilityBarView.setColorBookRoom();
+
         find.setOnClickListener(v -> {
-            String sourceStr = source.getText().toString();
-            String desinationStr = desination.getText().toString();
-            String departureDayStr = departureDay.getText().toString();
-            String returnDayStr = returnDay.getText().toString();
+            String checkInDateStr = checkInDate.getText().toString();
+            String checkOutDateStr = checkOutDate.getText().toString();
+            String quantityPeopleStr = quantityPeople.getText().toString();
+            String quantityRoomStr = quantityRoom.getText().toString();
+            String radiusStr = radius.getText().toString();
 
+            if (checkInDateStr.isEmpty() ||
+                    checkOutDateStr.isEmpty() ||
+                    quantityPeopleStr.isEmpty() ||
+                    quantityRoomStr.isEmpty() ||
+                    radiusStr.isEmpty()) {
 
+                Toast.makeText(this,
+                        "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+
+            } else if(Integer.parseInt(quantityPeopleStr) > 9 ||
+                    Integer.parseInt(quantityPeopleStr) < 1) {
+
+                Toast.makeText(this,
+                        "Số người phải trong khoảng [0-9]", Toast.LENGTH_SHORT).show();
+
+            } else if(Integer.parseInt(quantityRoomStr) > 9 ||
+                    Integer.parseInt(quantityRoomStr) < 1) {
+
+                Toast.makeText(this,
+                        "Số phòng phải trong khoảng [0-9]", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Intent intentBookRoomMap = new Intent(this, BookRoomMap.class);
+                intentBookRoomMap.putExtra("checkInDate", checkInDateStr);
+                intentBookRoomMap.putExtra("checkOutDate", checkOutDateStr);
+                intentBookRoomMap.putExtra("quantityPeople", quantityPeopleStr);
+                intentBookRoomMap.putExtra("quantityRoom", quantityRoomStr);
+                intentBookRoomMap.putExtra("radius", radiusStr);
+                startActivity(intentBookRoomMap);
+            }
         });
     }
 
     public void init() {
-        source = findViewById(R.id.source);
-        desination = findViewById(R.id.desination);
-        departureDay = findViewById(R.id.departureDay);
-        returnDay = findViewById(R.id.returnDay);
+        checkInDate = findViewById(R.id.checkInDate);
+        checkOutDate = findViewById(R.id.checkOutDate);
+        quantityPeople = findViewById(R.id.quantityPeople);
+        quantityRoom = findViewById(R.id.quantityRoom);
+        radius = findViewById(R.id.radius);
+        utilityBarView = findViewById(R.id.utilityBarView);
 
         find = findViewById(R.id.find);
     }

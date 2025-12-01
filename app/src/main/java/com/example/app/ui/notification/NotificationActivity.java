@@ -39,7 +39,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         init();
 
-        notificationViewModel.getTransactionsByUsername(SessionManager.getInstance().getAccount().getUsername());
+        notificationViewModel.getTransactionsByUsername(SessionManager.getInstance(this).getAccount().getUsername());
 
         notificationViewModel.getListNotification().observe(this, transactions -> {
             if (transactions == null) {
