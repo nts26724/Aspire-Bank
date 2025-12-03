@@ -22,6 +22,7 @@ public class BookRoomCheck extends AppCompatActivity {
             checkInDate, checkOutDate, price, payment, cancel;
     BookRoomViewModel bookRoomViewModel;
     Account account;
+    private String nameCustomerStr;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,14 @@ public class BookRoomCheck extends AppCompatActivity {
 
         init();
 
-        account = SessionManager.getInstance(this).getAccount();
+        bookRoomViewModel.getNameCustomerByUsername(
+                SessionManager.getInstance(this).getAccount().getUsername()
+        );
 
+        bookRoomViewModel.getNameCustomerLiveData().observe(this, nameCustomer -> {
+            nameCustomerStr = nameCustomer;
+            username.setText(nameCustomerStr);
+        });
 
         Intent intentSource = getIntent();
 
@@ -49,10 +56,7 @@ public class BookRoomCheck extends AppCompatActivity {
         String checkOutDateStr = intentSource.getStringExtra("checkOutDate");
         String priceStr = intentSource.getStringExtra("price");
 
-        String usernameStr = account.getUsername();
 
-
-        username.setText(usernameStr);
         hotelName.setText(hotelNameStr);
         quantityPeople.setText(quantityPeopleStr);
         quantityRoom.setText(quantityRoomStr);
@@ -72,7 +76,7 @@ public class BookRoomCheck extends AppCompatActivity {
                 if(isSuccessful) {
                     Log.d("obserBookingLiveData", "if true");
                     Intent intentBookRoomSuccess = new Intent(this, BookRoomSuccess.class);
-                    intentBookRoomSuccess.putExtra("username", usernameStr);
+                    intentBookRoomSuccess.putExtra("username", nameCustomerStr);
                     intentBookRoomSuccess.putExtra("hotelName", hotelNameStr);
                     intentBookRoomSuccess.putExtra("quantityPeople", quantityPeopleStr);
                     intentBookRoomSuccess.putExtra("quantityRoom", quantityRoomStr);

@@ -25,12 +25,12 @@ public class UtilityBarView extends FrameLayout {
 
     public UtilityBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(null);
+        init(attrs);
     }
 
     public UtilityBarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(null);
+        init(attrs);
     }
 
     public void init(AttributeSet attrs) {

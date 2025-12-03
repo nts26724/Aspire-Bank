@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit instance;
+    private static Retrofit instanceDuffel;
 
     public static Retrofit getInstance() {
         if (instance == null) {
@@ -16,16 +17,14 @@ public class RetrofitClient {
         return instance;
     }
 
-//    OkHttpClient client = new OkHttpClient.Builder()
-//            .connectTimeout(15, TimeUnit.SECONDS)
-//            .readTimeout(30, TimeUnit.SECONDS)
-//            .writeTimeout(30, TimeUnit.SECONDS)
-//            .build();
-//
-//    instance = new Retrofit.Builder()
-//            .baseUrl("https://test.api.amadeus.com/")
-//        .client(client)
-//        .addConverterFactory(GsonConverterFactory.create())
-//            .build();
 
+    public static Retrofit getInstanceDuffel() {
+        if (instanceDuffel == null) {
+            instanceDuffel = new Retrofit.Builder()
+                    .baseUrl("https://api.duffel.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return instanceDuffel;
+    }
 }

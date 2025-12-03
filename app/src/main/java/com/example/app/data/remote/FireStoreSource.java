@@ -8,6 +8,7 @@ import com.example.app.data.model.Receipt;
 import com.example.app.data.model.Transaction;
 import com.example.app.interfaces.HomeCustomerCallback;
 import com.example.app.interfaces.LoginCallback;
+import com.example.app.interfaces.PhoneNumberCallBack;
 import com.example.app.interfaces.ReceiptPaymentCallback;
 import com.example.app.interfaces.TransactionCallback;
 import com.example.app.utils.SessionManager;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Callback;
 
 public class FireStoreSource {
     private FirebaseFirestore db;
@@ -217,4 +220,23 @@ public class FireStoreSource {
                 });
     }
 
+
+    public void getPhoneNumberByUsername(String username, PhoneNumberCallBack phoneNumberCallback) {
+        db.collection("customer")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        String phone = doc.getString("phoneNumber");
+                        phoneNumberCallback.onSuccess(phone);
+                    } else {
+                        phoneNumberCallback.onSuccess(null);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    phoneNumberCallback.onFailure();
+                });
+    }
 }
