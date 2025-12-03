@@ -1,10 +1,13 @@
 package com.example.app.data.repository;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.app.data.model.BookingResponse;
 import com.example.app.data.model.HotelList;
 import com.example.app.data.model.OfferList;
 import com.example.app.data.remote.Amadeus;
 import com.example.app.data.remote.FireStoreSource;
+import com.example.app.interfaces.HomeCustomerCallback;
 import com.example.app.interfaces.LoginCallback;
 
 import retrofit2.Callback;
@@ -47,5 +50,20 @@ public class RoomRepository {
                                String usernameTransfer, String usernameReceive) {
         fireStoreSource.addTransaction(amount, content, transfer,
                 usernameTransfer, usernameReceive);
+    }
+
+    public void getNameCustomerByUsername(String username, MutableLiveData<String> nameCustomerLiveData) {
+        fireStoreSource.getCustomerByUsername(username, new HomeCustomerCallback() {
+            @Override
+            public void onSuccess(String fullName) {
+                nameCustomerLiveData.postValue(fullName);
+            }
+
+            @Override
+            public void onFailure() {
+                nameCustomerLiveData.postValue(null);
+            }
+        });
+
     }
 }

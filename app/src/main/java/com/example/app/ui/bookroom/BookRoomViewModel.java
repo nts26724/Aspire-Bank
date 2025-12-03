@@ -33,6 +33,7 @@ public class BookRoomViewModel extends AndroidViewModel {
     private MutableLiveData<List<HotelOffer>> listHotelOfferLiveData;
     private MutableLiveData<Boolean> bookingLiveData;
     private SessionManager sessionManager;
+    private MutableLiveData<String> nameCustomerLiveData;
 
 
 
@@ -225,4 +226,14 @@ public class BookRoomViewModel extends AndroidViewModel {
     public MutableLiveData<Boolean> getBookingLiveData() {
         return bookingLiveData;
     }
+
+
+    public void getNameCustomerByUsername(String username) {
+        roomRepository.getNameCustomerByUsername(username, nameCustomerLiveData);
+    }
+
+    public MutableLiveData<String> getNameCustomerLiveData() {
+        return nameCustomerLiveData;
+    }
+
 }

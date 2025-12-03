@@ -53,6 +53,7 @@ public class BookRoomSuccess extends AppCompatActivity {
         price.setText(priceStr + " VND");
 
 
+
         continueBookRoom.setOnClickListener(v -> {
             Intent intentBookRoomList = new Intent(this, BookRoomActivity.class);
             startActivity(intentBookRoomList);

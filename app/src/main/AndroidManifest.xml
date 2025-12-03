@@ -33,10 +33,14 @@
         <activity android:name=".ui.bookroom.BookRoomSuccess" />
         <activity android:name=".ui.bookroom.BookRoomVerify" />
 
+        <activity android:name=".ui.bookticket.BookTicketActivity" />
+        <activity android:name=".ui.bookticket.BookTicketCheck" />
+        <activity android:name=".ui.bookticket.BookTicketList" />
+        <activity android:name=".ui.bookticket.BookTicketSuccess" />
+
         <activity android:name=".ui.depositphone.DepositPhoneActivity" />
         <activity android:name=".ui.receiptpayment.ReceiptPaymentActivity" />
         <activity android:name=".ui.notification.NotificationActivity" />
-        <activity android:name=".ui.bookticket.BookTicketActivity" />
 
 
         <activity

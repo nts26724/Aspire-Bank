@@ -29,14 +29,16 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-//        buildConfigField("String", "AMADEUS_API_KEY", "\"${project.properties["AMADEUS_API_KEY"]}\"")
-//        buildConfigField("String", "AMADEUS_API_SECRET", "\"${project.properties["AMADEUS_API_SECRET"]}\"")
+        buildConfigField("String", "AMADEUS_API_KEY", "\"${project.properties["AMADEUS_API_KEY"]}\"")
+        buildConfigField("String", "AMADEUS_API_SECRET", "\"${project.properties["AMADEUS_API_SECRET"]}\"")
+        buildConfigField("String", "DUFFEL_API_KEY", "\"${project.properties["DUFFEL_API_KEY"]}\"")
 
-        val amadeusKey: String = project.findProperty("AMADEUS_API_KEY") as String
-        val amadeusSecret: String = project.findProperty("AMADEUS_API_SECRET") as String
 
-        buildConfigField("String", "AMADEUS_API_KEY", "\"$amadeusKey\"")
-        buildConfigField("String", "AMADEUS_API_SECRET", "\"$amadeusSecret\"")
+//        val amadeusKey: String = project.findProperty("AMADEUS_API_KEY") as String
+//        val amadeusSecret: String = project.findProperty("AMADEUS_API_SECRET") as String
+//
+//        buildConfigField("String", "AMADEUS_API_KEY", "\"$amadeusKey\"")
+//        buildConfigField("String", "AMADEUS_API_SECRET", "\"$amadeusSecret\"")
     }
 
     buildTypes {
@@ -70,6 +72,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
 
