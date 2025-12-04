@@ -43,6 +43,7 @@ public class BookRoomViewModel extends AndroidViewModel {
         listHotelOfferLiveData = new MutableLiveData<>();
         roomRepository = new RoomRepository();
         bookingLiveData = new MutableLiveData<>();
+        nameCustomerLiveData = new MutableLiveData<>();
     }
 
 

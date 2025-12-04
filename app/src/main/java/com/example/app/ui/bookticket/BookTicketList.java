@@ -69,7 +69,6 @@ public class BookTicketList extends AppCompatActivity {
 
         bookTicketViewModel = new ViewModelProvider(this).get(BookTicketViewModel.class);
 
-        utilityBarView = findViewById(R.id.utilityBarView);
         textNotification = findViewById(R.id.textNotification);
     }
 }

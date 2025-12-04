@@ -13,14 +13,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.app.R;
+import com.example.app.ui.customeview.UtilityBarView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class DepositPhoneActivity extends AppCompatActivity {
-    MaterialButton btn10, btn20, btn50, btn100, btn200, btn500;
-    TextInputEditText phoneNumber;
-    TextView btnDepositPhone;
-    MaterialButton selectedButton = null;
+    private MaterialButton btn10, btn20, btn50, btn100, btn200, btn500;
+    private TextInputEditText phoneNumber;
+    private TextView btnDepositPhone;
+    private MaterialButton selectedButton = null;
+    private UtilityBarView utilityBarView;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class DepositPhoneActivity extends AppCompatActivity {
         });
 
         init();
+
+        utilityBarView.setColorDepositPhone();
 
         btn10.setOnClickListener(v -> {
             selectButton(btn10);
@@ -60,19 +64,20 @@ public class DepositPhoneActivity extends AppCompatActivity {
         });
 
         btnDepositPhone.setOnClickListener(v -> {
-            String phone = phoneNumber.getText().toString().trim();
-            if (phone.isEmpty()) {
+            String phoneNumberStr = phoneNumber.getText().toString().trim();
+            if (phoneNumberStr.isEmpty()) {
                 Toast.makeText(this, "Hãy nhập số điện thoại", Toast.LENGTH_SHORT).show();
-            } else if(phone.charAt(0) != '0' || phone.length() != 10) {
+            } else if(phoneNumberStr.charAt(0) != '0' || phoneNumberStr.length() != 10) {
                 Toast.makeText(this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intentDepositPhoneCheck = new Intent(DepositPhoneActivity.this, DepositPhoneVerify.class);
-                intentDepositPhoneCheck.putExtra("phone", phone);
-                intentDepositPhoneCheck.putExtra(
+                Intent intentDepositPhoneVerifyOTP = new Intent(DepositPhoneActivity.this, DepositPhoneVerifyOTP.class);
+                intentDepositPhoneVerifyOTP.putExtra("phoneNumber", phoneNumberStr);
+                intentDepositPhoneVerifyOTP.putExtra(
                         "amount",
                         selectedButton.getText().toString().split(" ")[0]
+                                .replaceAll("\\.", "")
                 );
-                startActivity(intentDepositPhoneCheck);
+                startActivity(intentDepositPhoneVerifyOTP);
             }
         });
     }
@@ -88,6 +93,7 @@ public class DepositPhoneActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
         btnDepositPhone = findViewById(R.id.btnDepositPhone);
 
+        utilityBarView = findViewById(R.id.utilityBarView);
     }
 
     private void selectButton(MaterialButton button) {

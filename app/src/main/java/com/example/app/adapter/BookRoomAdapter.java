@@ -56,9 +56,9 @@ public class BookRoomAdapter extends RecyclerView.Adapter<BookRoomAdapter.BookRo
 
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
         String priceStr = formatter.format(
-                Long.parseLong(
-                            currHotelOffer.getPrice().replaceAll("\\.", "")
-                ) * 10
+                Double.parseDouble(
+                    currHotelOffer.getPrice().replaceAll("\\.", "")
+                )
         );
         holder.price.setText(priceStr + " VND");
 

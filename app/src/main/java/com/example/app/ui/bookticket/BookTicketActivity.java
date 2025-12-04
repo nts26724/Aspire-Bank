@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.app.R;
 import com.example.app.ui.customeview.UtilityBarView;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.text.SimpleDateFormat;
 
 public class BookTicketActivity extends AppCompatActivity {
     private TextInputEditText origin, destination, departureDay,
@@ -36,13 +39,45 @@ public class BookTicketActivity extends AppCompatActivity {
         utilityBarView.setColorBookTicket();
 
         find.setOnClickListener(v -> {
-            // check
+            if(origin.getText() == null || destination.getText() == null ||
+                    departureDay.getText() == null || quantityAdult.getText() == null
+                    || quantityChildren.getText() == null) {
+
+                Toast.makeText(this,
+                        "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            String originStr = origin.getText().toString();
+            String destinationStr = destination.getText().toString();
+            String departureDayStr = departureDay.getText().toString();
+            String quantityAdultStr = quantityAdult.getText().toString();
+            String quantityChildrenStr = quantityChildren.getText().toString();
+
+
+            if (!isValidDate(departureDayStr)) {
+                Toast.makeText(this,
+                        "Vui lòng nhập ngày theo định dạng yyyy-MM-dd",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            if(!isIATACode(originStr) || !isIATACode(destinationStr)) {
+                Toast.makeText(this,
+                        "Vui lòng nhập mã sân bay theo định dạng IATA",
+                        Toast.LENGTH_SHORT);
+                return;
+            }
+
+
             Intent intentBookTicketList = new Intent(this, BookTicketList.class);
-            intentBookTicketList.putExtra("origin", origin.getText().toString());
-            intentBookTicketList.putExtra("destination", destination.getText().toString());
-            intentBookTicketList.putExtra("departureDate", departureDay.getText().toString());
-            intentBookTicketList.putExtra("quantityAdult", quantityAdult.getText().toString());
-            intentBookTicketList.putExtra("quantityChildren", quantityChildren.getText().toString());
+            intentBookTicketList.putExtra("origin", originStr);
+            intentBookTicketList.putExtra("destination", destinationStr);
+            intentBookTicketList.putExtra("departureDate", departureDayStr);
+            intentBookTicketList.putExtra("quantityAdult", quantityAdultStr);
+            intentBookTicketList.putExtra("quantityChildren", quantityChildrenStr);
             startActivity(intentBookTicketList);
         });
     }
@@ -58,4 +93,22 @@ public class BookTicketActivity extends AppCompatActivity {
 
         utilityBarView = findViewById(R.id.utilityBarView);
     }
+
+
+    public boolean isValidDate(String input) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+        try {
+            sdf.parse(input);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    public boolean isIATACode(String input) {
+        return input.matches("^[A-Z]{3}$");
+    }
+
 }

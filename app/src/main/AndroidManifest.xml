@@ -31,15 +31,23 @@
         <activity android:name=".ui.bookroom.BookRoomList" />
         <activity android:name=".ui.bookroom.BookRoomMap" />
         <activity android:name=".ui.bookroom.BookRoomSuccess" />
-        <activity android:name=".ui.bookroom.BookRoomVerify" />
+        <activity android:name=".ui.bookroom.BookRoomVerifyOTP" />
 
         <activity android:name=".ui.bookticket.BookTicketActivity" />
         <activity android:name=".ui.bookticket.BookTicketCheck" />
         <activity android:name=".ui.bookticket.BookTicketList" />
         <activity android:name=".ui.bookticket.BookTicketSuccess" />
+        <activity android:name=".ui.bookticket.BookTicketVerifyOTP" />
+
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentActivity" />
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentCheck" />
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentVerifyOTP" />
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentSuccess" />
 
         <activity android:name=".ui.depositphone.DepositPhoneActivity" />
-        <activity android:name=".ui.receiptpayment.ReceiptPaymentActivity" />
+        <activity android:name=".ui.depositphone.DepositPhoneVerifyOTP" />
+        <activity android:name=".ui.depositphone.DepositPhoneSuccess" />
+
         <activity android:name=".ui.notification.NotificationActivity" />
 
 

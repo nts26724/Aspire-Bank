@@ -112,7 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="end"
-                            android:text="EVN TP.HCM"
+                            android:text="EVN"
                             android:textSize="15dp"
                             />
                     </LinearLayout>
@@ -132,6 +132,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/receiptID"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="end"
@@ -150,13 +151,13 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:gravity="start"
-                            android:text="Hóa đơn"
+                            android:text="Số tiền"
                             android:textSize="15dp"
                             android:layout_weight="1"
                             />
 
                         <TextView
-                            android:id="@+id/receiptID"
+                            android:id="@+id/amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="end"

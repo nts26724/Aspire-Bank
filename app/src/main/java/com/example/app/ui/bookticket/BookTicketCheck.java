@@ -63,32 +63,19 @@ public class BookTicketCheck extends AppCompatActivity {
         destination.setText(destinationStr);
         departureArriveTime.setText(departureArriveTimeStr);
         departureDate.setText(departureDateStr);
-        price.setText(priceStr);
+        price.setText(priceStr + " đ");
 
 
         pay.setOnClickListener(v -> {
-            bookTicketViewModel.pay(
-                    nameAirlineStr,
-                    Long.parseLong(priceStr.replaceAll("\\.", ""))
-            );
-
-
-            bookTicketViewModel.getBookingLiveData().observe(this, isSuccessful -> {
-                if(isSuccessful) {
-                    Intent intentBookTicketSuccess = new Intent(this, BookTicketSuccess.class);
-                    intentBookTicketSuccess.putExtra("nameCustomer", nameCustomerStr);
-                    intentBookTicketSuccess.putExtra("nameAirline", nameAirlineStr);
-                    intentBookTicketSuccess.putExtra("origin", originStr);
-                    intentBookTicketSuccess.putExtra("destination", destinationStr);
-                    intentBookTicketSuccess.putExtra("departureArriveTime", departureArriveTimeStr);
-                    intentBookTicketSuccess.putExtra("departureDate", departureDateStr);
-                    intentBookTicketSuccess.putExtra("price", priceStr);
-                    startActivity(intentBookTicketSuccess);
-                } else {
-                    Log.d("obserBookingLiveData", "if false");
-                    Toast.makeText(this, "Số dư không đủ", Toast.LENGTH_SHORT).show();
-                }
-            });
+            Intent intentBookTicketVerifyOTP = new Intent(this, BookTicketVerifyOTP.class);
+            intentBookTicketVerifyOTP.putExtra("nameCustomer", nameCustomerStr);
+            intentBookTicketVerifyOTP.putExtra("nameAirline", nameAirlineStr);
+            intentBookTicketVerifyOTP.putExtra("origin", originStr);
+            intentBookTicketVerifyOTP.putExtra("destination", destinationStr);
+            intentBookTicketVerifyOTP.putExtra("departureArriveTime", departureArriveTimeStr);
+            intentBookTicketVerifyOTP.putExtra("departureDate", departureDateStr);
+            intentBookTicketVerifyOTP.putExtra("price", priceStr);
+            startActivity(intentBookTicketVerifyOTP);
         });
 
         cancel.setOnClickListener(v -> {

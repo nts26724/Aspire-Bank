@@ -107,7 +107,7 @@
                         android:textSize="20dp"
                         android:drawableStart="@drawable/outline_calendar_month_24"
                         android:drawablePadding="10dp"
-                        android:text="2025-12-15"
+                        android:text="2026-02-15"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,7 +131,7 @@
                         android:textSize="20dp"
                         android:drawableStart="@drawable/outline_calendar_month_24"
                         android:drawablePadding="10dp"
-                        android:text="2025-12-16"
+                        android:text="2026-02-16"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,6 +156,7 @@
                         android:drawableStart="@drawable/outline_location_on_24"
                         android:drawablePadding="10dp"
                         android:text="1"
+                        android:inputType="number"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,6 +181,7 @@
                         android:drawableStart="@drawable/outline_location_on_24"
                         android:drawablePadding="10dp"
                         android:text="1"
+                        android:inputType="number"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,6 +206,7 @@
                         android:drawableStart="@drawable/outline_location_on_24"
                         android:drawablePadding="10dp"
                         android:text="5"
+                        android:inputType="number"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 

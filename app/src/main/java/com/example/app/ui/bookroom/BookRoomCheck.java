@@ -18,10 +18,10 @@ import com.example.app.data.model.Account;
 import com.example.app.utils.SessionManager;
 
 public class BookRoomCheck extends AppCompatActivity {
-    TextView username, hotelName, quantityPeople, quantityRoom,
+    private TextView username, hotelName, quantityPeople, quantityRoom,
             checkInDate, checkOutDate, price, payment, cancel;
-    BookRoomViewModel bookRoomViewModel;
-    Account account;
+    private BookRoomViewModel bookRoomViewModel;
+    private Account account;
     private String nameCustomerStr;
 
 
@@ -37,6 +37,7 @@ public class BookRoomCheck extends AppCompatActivity {
 
         init();
 
+
         bookRoomViewModel.getNameCustomerByUsername(
                 SessionManager.getInstance(this).getAccount().getUsername()
         );
@@ -45,6 +46,7 @@ public class BookRoomCheck extends AppCompatActivity {
             nameCustomerStr = nameCustomer;
             username.setText(nameCustomerStr);
         });
+
 
         Intent intentSource = getIntent();
 
@@ -64,32 +66,19 @@ public class BookRoomCheck extends AppCompatActivity {
         checkOutDate.setText(checkOutDateStr);
         price.setText(priceStr + " VND");
 
-        payment.setOnClickListener(v -> {
-            bookRoomViewModel.pay(
-                    hotelNameStr,
-                    offerId,
-                    Long.parseLong(priceStr.replaceAll("\\.", ""))
-            );
 
-            bookRoomViewModel.getBookingLiveData().observe(this, isSuccessful -> {
-                Log.d("obserBookingLiveData", "tren if");
-                if(isSuccessful) {
-                    Log.d("obserBookingLiveData", "if true");
-                    Intent intentBookRoomSuccess = new Intent(this, BookRoomSuccess.class);
-                    intentBookRoomSuccess.putExtra("username", nameCustomerStr);
-                    intentBookRoomSuccess.putExtra("hotelName", hotelNameStr);
-                    intentBookRoomSuccess.putExtra("quantityPeople", quantityPeopleStr);
-                    intentBookRoomSuccess.putExtra("quantityRoom", quantityRoomStr);
-                    intentBookRoomSuccess.putExtra("checkInDate", checkInDateStr);
-                    intentBookRoomSuccess.putExtra("checkOutDate", checkOutDateStr);
-                    intentBookRoomSuccess.putExtra("price", priceStr);
-                    startActivity(intentBookRoomSuccess);
-                } else {
-                    Log.d("obserBookingLiveData", "if false");
-                    Toast.makeText(this, "Số dư không đủ", Toast.LENGTH_SHORT).show();
-                }
-            });
+        payment.setOnClickListener(v -> {
+            Intent intentBookRoomVerifyOTP = new Intent(this, BookRoomVerifyOTP.class);
+            intentBookRoomVerifyOTP.putExtra("username", nameCustomerStr);
+            intentBookRoomVerifyOTP.putExtra("hotelName", hotelNameStr);
+            intentBookRoomVerifyOTP.putExtra("quantityPeople", quantityPeopleStr);
+            intentBookRoomVerifyOTP.putExtra("quantityRoom", quantityRoomStr);
+            intentBookRoomVerifyOTP.putExtra("checkInDate", checkInDateStr);
+            intentBookRoomVerifyOTP.putExtra("checkOutDate", checkOutDateStr);
+            intentBookRoomVerifyOTP.putExtra("price", priceStr);
+            startActivity(intentBookRoomVerifyOTP);
         });
+
 
         cancel.setOnClickListener(v -> {
             finish();
@@ -104,6 +93,7 @@ public class BookRoomCheck extends AppCompatActivity {
         checkInDate = findViewById(R.id.checkInDate);
         checkOutDate = findViewById(R.id.checkOutDate);
         price = findViewById(R.id.price);
+
         payment = findViewById(R.id.payment);
         cancel = findViewById(R.id.cancel);
 

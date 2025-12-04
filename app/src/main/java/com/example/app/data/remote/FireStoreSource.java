@@ -239,4 +239,35 @@ public class FireStoreSource {
                     phoneNumberCallback.onFailure();
                 });
     }
+
+
+    public void deleteReceiptByReceiptID(String receiptID) {
+        db.collection("receipt")
+                .whereEqualTo("receiptID", receiptID)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        String docId = querySnapshot.getDocuments().get(0).getId();
+
+                        db.collection("receipt")
+                                .document(docId)
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d("deleteReceiptByReceiptID", "Success");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.d("deleteReceiptByReceiptID", "Failure");
+                                });
+
+                    } else {
+                        Log.d("deleteReceiptByReceiptID", "Not found");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    Log.d("deleteReceiptByReceiptID", "can't counenct");
+                });
+    }
+
 }

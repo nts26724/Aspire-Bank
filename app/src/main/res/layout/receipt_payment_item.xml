@@ -101,13 +101,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
+                    android:layout_marginVertical="5dp"
                     >
 
                     <TextView
                         android:id="@+id/payment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thanh toan"
+                        android:text="Thanh toán"
                         android:textSize="15dp"
                         android:background="#feddbc"
                         android:paddingVertical="7dp"
