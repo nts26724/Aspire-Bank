@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
     android:background="@color/white"
+    android:layout_marginVertical="10dp"
     >
 
         <LinearLayout
@@ -20,18 +21,24 @@
                 >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:gravity="start"
-                    android:text="Ma giao dich"
+                    android:text="Mã giao dich"
                     android:textSize="16dp"
                     />
 
-                <TextView
+                <View
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
+                    />
+
+
+                <TextView
+                    android:id="@+id/transactionID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="001"
                     android:textSize="16dp"
@@ -44,18 +51,24 @@
                 >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:gravity="start"
-                    android:text="So tien"
+                    android:text="Số tiền"
                     android:textSize="16dp"
                     />
 
-                <TextView
+                <View
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
+                    />
+
+
+                <TextView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="100.000.000"
                     android:textSize="16dp"
@@ -68,20 +81,54 @@
                 >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:gravity="start"
-                    android:text="Noi dung"
+                    android:text="Nội dung"
                     android:textSize="16dp"
                     />
 
-                <TextView
+                <View
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="aaaaaa"
+                    android:textSize="16dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="Thời gian"
+                    android:textSize="16dp"
+                    />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="1/1/2000"
                     android:textSize="16dp"
                     />
             </LinearLayout>

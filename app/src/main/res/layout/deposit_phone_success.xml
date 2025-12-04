@@ -2,16 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/deposit_phone_success"
+    >
 
-    <include
-        layout="@layout/app_bar"
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintBottom_toTopOf="@+id/botBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +69,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/phoneNumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
@@ -90,6 +97,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/amount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
@@ -117,6 +125,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/continueDepositPhone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tiếp tục nạp tiền"
@@ -139,6 +148,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/homeCustomer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Trang chủ"

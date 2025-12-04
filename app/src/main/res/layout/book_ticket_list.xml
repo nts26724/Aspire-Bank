@@ -3,26 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#fff1d6">
+    android:background="#fff1d6"
+    android:id="@+id/book_ticket_list"
+    >
 
-    <include
-        layout="@layout/app_bar"
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
 
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        app:layout_constraintBottom_toTopOf="@+id/nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical"
+        android:layout_marginVertical="20dp"
         >
 
 
-        <include
-            layout="@layout/utility_bar"
+        <com.example.app.ui.customeview.UtilityBarView
+            android:id="@+id/utilityBarView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             />
 
 
@@ -35,15 +45,31 @@
             >
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listTicket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:visibility="gone"
                 />
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textNotification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Không tìm thấy chuyến bay phù hợp"
+            android:textSize="20dp"
+            android:gravity="center"
+            />
     </LinearLayout>
 
-    <include
-        layout="@layout/nav_bar"
+    <com.example.app.ui.customeview.NavBarView
+        android:id="@+id/nav_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

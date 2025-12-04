@@ -4,10 +4,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff1d6"
+    android:id="@+id/book_room"
     >
 
-    <include
-        layout="@layout/app_bar"
+
+
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
 
@@ -15,89 +22,76 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/appBar"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintBottom_toTopOf="@+id/nav_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginVertical="20dp"
         >
 
-        <include
-            layout="@layout/utility_bar"
+        <com.example.app.ui.customeview.UtilityBarView
+            android:id="@+id/utilityBarView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             />
+
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="30dp"
+            android:layout_marginTop="10dp"
             >
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="10dp"
                 >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dịch vụ khác"
+                    android:text="Dịch vụ đặt phòng"
                     android:textSize="20dp"
                     android:gravity="center"
                     />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nhập vị trí"
-                    app:boxBackgroundColor="#eeeeee"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    android:layout_marginTop="20dp"
-                    >
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Nhập vị trí"-->
+<!--                    app:boxBackgroundColor="#eeeeee"-->
+<!--                    app:boxCornerRadiusBottomEnd="20dp"-->
+<!--                    app:boxCornerRadiusBottomStart="20dp"-->
+<!--                    app:boxCornerRadiusTopEnd="20dp"-->
+<!--                    app:boxCornerRadiusTopStart="20dp"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    >-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="20dp"
-                        android:drawableStart="@drawable/outline_location_on_24"
-                        android:drawablePadding="10dp"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Chọn ngày"
-                    app:boxBackgroundColor="#eeeeee"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    android:layout_marginTop="10dp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="20dp"
-                        android:drawableStart="@drawable/outline_location_on_24"
-                        android:drawablePadding="10dp"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/location"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:drawableStart="@drawable/outline_location_on_24"-->
+<!--                        android:drawablePadding="10dp"-->
+<!--                        />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Số người"
+                    android:hint="Chọn ngày thuê phòng"
                     app:boxBackgroundColor="#eeeeee"
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusBottomStart="20dp"
@@ -107,71 +101,199 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/checkInDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:drawableStart="@drawable/outline_calendar_month_24"
+                        android:drawablePadding="10dp"
+                        android:text="2026-02-15"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Chọn ngày trả phòng"
+                    app:boxBackgroundColor="#eeeeee"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/checkOutDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:drawableStart="@drawable/outline_calendar_month_24"
+                        android:drawablePadding="10dp"
+                        android:text="2026-02-16"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập số người [0-9]"
+                    app:boxBackgroundColor="#eeeeee"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/quantityPeople"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
                         android:drawableStart="@drawable/outline_location_on_24"
                         android:drawablePadding="10dp"
+                        android:text="1"
+                        android:inputType="number"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="#fff1d6"
-                    app:cardCornerRadius="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
+                    android:hint="Nhập số phòng [0-9]"
+                    app:boxBackgroundColor="#eeeeee"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    android:layout_marginTop="10dp"
                     >
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/quantityRoom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:textSize="20dp"
+                        android:drawableStart="@drawable/outline_location_on_24"
+                        android:drawablePadding="10dp"
+                        android:text="1"
+                        android:inputType="number"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nhập bán kính tìm kiếm (Km)"
+                    app:boxBackgroundColor="#eeeeee"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/radius"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:drawableStart="@drawable/outline_location_on_24"
+                        android:drawablePadding="10dp"
+                        android:text="5"
+                        android:inputType="number"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/find"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:cardBackgroundColor="#fff1d6"-->
+<!--                    app:cardCornerRadius="30dp"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    >-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="10dp"-->
+<!--                        >-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:src="@mipmap/ic_hotel"-->
+<!--                            />-->
+
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            >-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_toRightOf="@+id/imgHotel"-->
+<!--                                android:text="Đặt phòng khách sạn"-->
+<!--                                android:textSize="20dp"-->
+<!--                                android:textColor="#08364f"-->
+<!--                                />-->
+
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Tìm và đặt phòng khác sạn"-->
+<!--                                android:textSize="20dp"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:textColor="#02314B"-->
+<!--                                />-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/find"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#fff1d6"
+                        app:cardCornerRadius="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
                         >
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_hotel"
-                            />
-
-
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_gravity="center"
-                            >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/imgHotel"
-                                android:text="Đặt phòng khách sạn"
-                                android:textSize="20dp"
-                                android:textColor="#08364f"
-                                />
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Tìm và đặt phòng khác sạn"
-                                android:textSize="20dp"
-                                android:layout_marginTop="5dp"
-                                android:textColor="#02314B"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            android:text="Chọn vị trí"
+                            android:textSize="20dp"
+                            android:gravity="center"
+                            android:paddingVertical="10dp"
+                            />
+                    </androidx.cardview.widget.CardView>
             </LinearLayout>
+        </ScrollView>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 
-    <include
-        layout="@layout/nav_bar"
+    <com.example.app.ui.customeview.NavBarView
+        android:id="@+id/nav_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

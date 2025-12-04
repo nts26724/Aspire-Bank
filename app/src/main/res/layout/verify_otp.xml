@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/verify"
+    android:background="#fff1d6"
+    >
+
+    <com.example.app.ui.customeview.AppBarView
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        app:layout_constraintBottom_toTopOf="@+id/botBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="20dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xác thực OTP"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vui lòng nhập mã OTP"
+                android:textSize="15dp"
+                android:layout_marginVertical="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP1"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:maxLength="1"
+                        android:paddingVertical="10dp"
+                        android:text="1"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP2"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:maxLength="1"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:text="2"
+                        android:paddingVertical="10dp"
+                        android:textStyle="bold"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP3"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:maxLength="1"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:text="3"
+                        android:paddingVertical="10dp"
+                        android:textStyle="bold"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP4"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:maxLength="1"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:text="4"
+                        android:paddingVertical="10dp"
+                        android:textStyle="bold"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP5"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:maxLength="1"
+                        android:paddingVertical="10dp"
+                        android:text="5"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxBackgroundColor="#d9d9d9"
+                    android:gravity="center"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/numberOTP6"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:maxLength="1"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:text="6"
+                        android:paddingVertical="10dp"
+                        android:textStyle="bold"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xác nhận"
+                android:backgroundTint="#feddbc"
+                android:textColor="@color/black"
+                />
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hủy"
+                android:backgroundTint="#d9d9d9"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:id="@+id/reSendOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gửi lại mã OTP"
+                android:textColor="#e96b48"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <include
+        layout="@layout/bot_bar"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

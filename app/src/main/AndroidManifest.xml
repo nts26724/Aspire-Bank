@@ -3,10 +3,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
-    <meta-data
-        android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" />
 
 
     <application
@@ -16,15 +16,50 @@
         android:roundIcon="@mipmap/ic_logo_bank"
         android:supportsRtl="true"
         android:theme="@style/Theme.AspireBank">
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
+
+        <activity android:name=".ui.login.LoginActivity" />
+
+        <activity android:name=".ui.homecustomer.HomeCustomerActivity" />
+
+        <activity android:name=".ui.bookroom.BookRoomActivity" />
+        <activity android:name=".ui.bookroom.BookRoomCheck" />
+        <activity android:name=".ui.bookroom.BookRoomList" />
+        <activity android:name=".ui.bookroom.BookRoomMap" />
+        <activity android:name=".ui.bookroom.BookRoomSuccess" />
+        <activity android:name=".ui.bookroom.BookRoomVerifyOTP" />
+
+        <activity android:name=".ui.bookticket.BookTicketActivity" />
+        <activity android:name=".ui.bookticket.BookTicketCheck" />
+        <activity android:name=".ui.bookticket.BookTicketList" />
+        <activity android:name=".ui.bookticket.BookTicketSuccess" />
+        <activity android:name=".ui.bookticket.BookTicketVerifyOTP" />
+
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentActivity" />
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentCheck" />
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentVerifyOTP" />
+        <activity android:name=".ui.receiptpayment.ReceiptPaymentSuccess" />
+
+        <activity android:name=".ui.depositphone.DepositPhoneActivity" />
+        <activity android:name=".ui.depositphone.DepositPhoneVerifyOTP" />
+        <activity android:name=".ui.depositphone.DepositPhoneSuccess" />
+
+        <activity android:name=".ui.notification.NotificationActivity" />
+
+
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.welcome.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+
+    </application>
 </manifest>
