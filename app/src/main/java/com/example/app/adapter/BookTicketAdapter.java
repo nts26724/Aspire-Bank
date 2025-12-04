@@ -53,7 +53,7 @@ public class BookTicketAdapter extends RecyclerView.Adapter<BookTicketAdapter.Bo
         holder.nameAirline.setText(nameAirlineStr);
 
         String durationStr = currOffer.getSlices().get(0).getDuration();
-        holder.duration.setText(durationStr);
+        holder.duration.setText(durationStr.split("T")[1]);
 
 
         Segment segment = currOffer.getSlices().get(0).getSegments().get(0);
@@ -62,10 +62,9 @@ public class BookTicketAdapter extends RecyclerView.Adapter<BookTicketAdapter.Bo
         holder.departureArriveTime.setText(departure + "-" + arrive);
 
         String priceStr = formatter.format(
-                Long.parseLong(
+                Double.parseDouble(
                         currOffer.getTotalAmount()
-                        .replaceAll("\\.", "")
-                ) * 100
+                ) * 25000
         );
         holder.price.setText(priceStr + " VND");
 
@@ -79,7 +78,7 @@ public class BookTicketAdapter extends RecyclerView.Adapter<BookTicketAdapter.Bo
                     intentSource.getStringExtra("origin"));
 
             intentBookTicketCheck.putExtra("destination",
-                    intentSource.getStringExtra("quantityPeople"));
+                    intentSource.getStringExtra("destination"));
 
             intentBookTicketCheck.putExtra("departureDate",
                     intentSource.getStringExtra("departureDate"));

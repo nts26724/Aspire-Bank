@@ -10,18 +10,21 @@ public class Transaction {
     private String usernameReceive;
     private long amount;
     private String content;
-    private long timestamp;
+    private long time;
     private boolean transfer;
 
     public Transaction() {}
 
-    public Transaction(@NonNull String transactionID, String usernameTransfer, String usernameReceive, long amount, String content, long timestamp, boolean transfer) {
+    public Transaction(@NonNull String transactionID, String usernameTransfer,
+                       String usernameReceive, long amount, String content,
+                       long time, boolean transfer) {
+
         this.transactionID = transactionID;
         this.usernameTransfer = usernameTransfer;
         this.usernameReceive = usernameReceive;
         this.amount = amount;
         this.content = content;
-        this.timestamp = timestamp;
+        this.time = time;
         this.transfer = transfer;
     }
 
@@ -66,12 +69,12 @@ public class Transaction {
         this.content = content;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public long getTime() {
+        return time;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public void setTransfer(boolean transfer) {

@@ -51,7 +51,7 @@ public class NotificationActivity extends AppCompatActivity {
             lstNotification.setVisibility(View.VISIBLE);
             textNotification.setVisibility(View.GONE);
             Collections.sort(transactions, (t1, t2) ->
-                            t2.getTimestamp() < t1.getTimestamp() ? 1 : -1);
+                            t2.getTime() > t1.getTime() ? 1 : -1);
             lstNotification.setAdapter(new NotificationAdapter(transactions));
         });
 

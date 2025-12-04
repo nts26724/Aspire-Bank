@@ -41,7 +41,7 @@ public class ReceiptPaymentCheck extends AppCompatActivity {
         receiptID.setText(receiptIDStr);
 
         payment.setOnClickListener(v -> {
-            Intent intentReceiptPaymentVerify = new Intent(this, ReceiptPaymentVerify.class);
+            Intent intentReceiptPaymentVerify = new Intent(this, ReceiptPaymentVerifyOTP.class);
             intentReceiptPaymentVerify.putExtra("type", typeStr);
             intentReceiptPaymentVerify.putExtra("amount", amountStr);
             intentReceiptPaymentVerify.putExtra("receiptID", receiptIDStr);

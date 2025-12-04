@@ -14,6 +14,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.app.R;
 import com.example.app.ui.homecustomer.HomeCustomerActivity;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class DepositPhoneSuccess extends AppCompatActivity {
     private TextView phoneNumber, amount, continueDepositPhone, homeCustomer;
 
@@ -33,9 +36,11 @@ public class DepositPhoneSuccess extends AppCompatActivity {
         Intent intent = getIntent();
         String phoneNumberStr = intent.getStringExtra("phoneNumber");
         String amountStr = intent.getStringExtra("amount");
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+
 
         phoneNumber.setText(phoneNumberStr);
-        amount.setText(amountStr);
+        amount.setText(formatter.format(Long.parseLong(amountStr)) + " đ");
 
         continueDepositPhone.setOnClickListener(v -> {
             Intent intentDepositPhone = new Intent(this, DepositPhoneActivity.class);

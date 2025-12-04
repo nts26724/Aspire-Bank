@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app.R;
 import com.example.app.data.model.Transaction;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -39,15 +40,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
         Transaction currTransaction = listNotification.get(position);
 
         holder.transactionID.setText(currTransaction.getTransactionID());
-        holder.amount.setText(currTransaction.getAmount() + " VND");
         holder.content.setText(currTransaction.getContent());
+
+        String amountStr = formatter.format(
+                Double.parseDouble(
+                        currTransaction.getAmount() + ""
+                )
+        );
+        holder.amount.setText(amountStr + " VND");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         holder.time.setText(
-                sdf.format(new Date(currTransaction.getTimestamp()))
+                sdf.format(new Date(currTransaction.getTime()))
         );
 
         holder.amount.setTextColor(

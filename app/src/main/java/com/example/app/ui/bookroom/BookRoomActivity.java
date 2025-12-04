@@ -16,6 +16,8 @@ import com.example.app.R;
 import com.example.app.ui.customeview.UtilityBarView;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
+
 public class BookRoomActivity extends AppCompatActivity {
     TextInputEditText checkInDate, checkOutDate, quantityPeople, quantityRoom, radius;
     CardView find;
@@ -38,11 +40,29 @@ public class BookRoomActivity extends AppCompatActivity {
         utilityBarView.setColorBookRoom();
 
         find.setOnClickListener(v -> {
+
+            if(checkInDate.getText() == null || checkOutDate.getText() == null ||
+                    quantityPeople.getText() == null || quantityRoom.getText() == null ||
+                    radius.getText() == null) {
+                Toast.makeText(this,
+                        "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+
             String checkInDateStr = checkInDate.getText().toString();
             String checkOutDateStr = checkOutDate.getText().toString();
             String quantityPeopleStr = quantityPeople.getText().toString();
             String quantityRoomStr = quantityRoom.getText().toString();
             String radiusStr = radius.getText().toString();
+
+            if (!isValidDate(checkInDateStr) || !isValidDate(checkOutDateStr)) {
+                Toast.makeText(this,
+                        "Vui lòng nhập ngày theo định dạng yyyy-MM-dd",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             if (checkInDateStr.isEmpty() ||
                     checkOutDateStr.isEmpty() ||
@@ -87,4 +107,17 @@ public class BookRoomActivity extends AppCompatActivity {
 
         find = findViewById(R.id.find);
     }
+
+
+    public boolean isValidDate(String input) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+        try {
+            sdf.parse(input);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

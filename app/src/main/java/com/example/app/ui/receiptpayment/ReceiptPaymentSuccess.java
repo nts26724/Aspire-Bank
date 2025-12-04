@@ -14,6 +14,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.app.R;
 import com.example.app.ui.homecustomer.HomeCustomerActivity;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class ReceiptPaymentSuccess extends AppCompatActivity {
     private TextView type, amount, receiptID;
     Button continuePayment, homeCustomer;
@@ -35,6 +38,7 @@ public class ReceiptPaymentSuccess extends AppCompatActivity {
         String typeStr = intent.getStringExtra("type");
         String amountStr = intent.getStringExtra("amount");
         String receiptIDStr = intent.getStringExtra("receiptID");
+
 
         type.setText(typeStr);
         amount.setText(amountStr);
