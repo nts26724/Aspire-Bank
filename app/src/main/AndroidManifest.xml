@@ -60,6 +60,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.officer.OfficerDashboardActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.AspireBank" />
+
+        <activity
+            android:name=".ui.officer.OfficerCustomerListActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/Theme.AspireBank" />
+
 
     </application>
 </manifest>
