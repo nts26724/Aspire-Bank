@@ -17,7 +17,7 @@ public class RoomRepository {
     private FireStoreSource fireStoreSource;
 
     public RoomRepository() {
-        amadeus = new Amadeus();
+        amadeus = Amadeus.getInstance();
         fireStoreSource = new FireStoreSource();
     }
 

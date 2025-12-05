@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 
 public class Transaction {
     @NonNull
-    private String transactionID;
+    private long transactionID;
     private String usernameTransfer;
     private String usernameReceive;
     private long amount;
@@ -15,7 +15,7 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(@NonNull String transactionID, String usernameTransfer,
+    public Transaction(@NonNull long transactionID, String usernameTransfer,
                        String usernameReceive, long amount, String content,
                        long time, boolean transfer) {
 
@@ -29,7 +29,7 @@ public class Transaction {
     }
 
     @NonNull
-    public String getTransactionID() {
+    public long getTransactionID() {
         return transactionID;
     }
 
@@ -49,7 +49,7 @@ public class Transaction {
         return content;
     }
 
-    public void setTransactionID(@NonNull String transactionID) {
+    public void setTransactionID(@NonNull long transactionID) {
         this.transactionID = transactionID;
     }
 

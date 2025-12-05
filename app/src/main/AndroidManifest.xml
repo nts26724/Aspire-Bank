@@ -50,6 +50,11 @@
 
         <activity android:name=".ui.notification.NotificationActivity" />
 
+        <activity android:name=".ui.depositaccount.DepositAccountActivity" />
+        <activity android:name=".ui.depositaccount.DepositAccountCheck" />
+        <activity android:name=".ui.depositaccount.DepositAccountVerifyOTP" />
+        <activity android:name=".ui.depositaccount.DepositAccountSuccess" />
+
 
         <activity
             android:name=".ui.welcome.WelcomeActivity"

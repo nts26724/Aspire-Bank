@@ -15,7 +15,7 @@ public class Duffel {
     private static Duffel insance;
     private DuffelFlightApi duffelFlightApi;
 
-    public Duffel() {
+    private Duffel() {
         Retrofit retrofit = RetrofitClient.getInstanceDuffel();
 
         duffelFlightApi = retrofit.create(DuffelFlightApi.class);
