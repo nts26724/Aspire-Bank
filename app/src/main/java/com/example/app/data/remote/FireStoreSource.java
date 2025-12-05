@@ -136,7 +136,7 @@ public class FireStoreSource {
     }
 
 
-    public void widthraw(String username, long price) {
+    public void widthraw(String username, long amount) {
         db.collection("account")
             .whereEqualTo("username", username)
             .get()
@@ -151,14 +151,14 @@ public class FireStoreSource {
                         Long currentBalance = snapshot.getLong("balance");
                         if (currentBalance == null) currentBalance = 0L;
 
-                        if (currentBalance < price) {
+                        if (currentBalance < amount) {
                             throw new FirebaseFirestoreException(
                                     "Insufficient balance",
                                     FirebaseFirestoreException.Code.ABORTED
                             );
                         }
 
-                        Long newBalance = currentBalance - price;
+                        Long newBalance = currentBalance - amount;
 
                         transaction.update(accountRef, "balance", newBalance);
 
@@ -187,10 +187,9 @@ public class FireStoreSource {
 
                     if (!snapshot.isEmpty()) {
                         DocumentSnapshot doc = snapshot.getDocuments().get(0);
-                        String lastIDStr = doc.getString("transactionID");
+                        Long lastID = doc.getLong("transactionID");
 
                         try {
-                            long lastID = Long.parseLong(lastIDStr);
                             nextID = lastID + 1;
                         } catch (Exception e) {
                             nextID = 1;
@@ -201,7 +200,7 @@ public class FireStoreSource {
                     data.put("amount", amount);
                     data.put("content", content);
                     data.put("time", System.currentTimeMillis());
-                    data.put("transactionID", String.valueOf(nextID));
+                    data.put("transactionID", nextID);
                     data.put("transfer", transfer);
                     data.put("usernameReceive", usernameReceive);
                     data.put("usernameTransfer", usernameTransfer);
@@ -270,4 +269,33 @@ public class FireStoreSource {
                 });
     }
 
+
+    public void deposit(String username, long amount) {
+        db.collection("account")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        DocumentReference accountRef = doc.getReference();
+
+                        db.runTransaction( transaction -> {
+                            DocumentSnapshot snapshot = transaction.get(accountRef);
+
+                            Long currentBalance = snapshot.getLong("balance");
+                            if (currentBalance == null) currentBalance = 0L;
+
+                            Long newBalance = currentBalance + amount;
+
+                            transaction.update(accountRef, "balance", newBalance);
+
+                            return null;
+                        }).addOnSuccessListener(unused -> {
+                            Log.d("Withdraw", "Withdraw success");
+                        }).addOnFailureListener(e -> {
+                            Log.e("Withdraw", "Failed: " + e.getMessage());
+                        });
+                    }
+                });
+    }
 }

@@ -34,4 +34,8 @@ public class VerifyOTPRepository {
     public void getAccountByUsername(String username, LoginCallback loginCallback) {
         fireStoreSource.getAccountByUsername(username, loginCallback);
     }
+
+    public void deposit(String username, long amount) {
+        fireStoreSource.deposit(username, amount);
+    }
 }

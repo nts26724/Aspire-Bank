@@ -20,6 +20,8 @@ import com.example.app.adapter.BookRoomAdapter;
 import com.example.app.ui.customeview.UtilityBarView;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Collections;
+
 public class BookRoomList extends AppCompatActivity {
     private RecyclerView listRoom;
     private BookRoomViewModel bookRoomViewModel;
@@ -67,6 +69,8 @@ public class BookRoomList extends AppCompatActivity {
             } else {
                 listRoom.setVisibility(View.VISIBLE);
                 textNotification.setVisibility(View.GONE);
+                Collections.sort(listHotelOffer, (ho1, ho2) ->
+                        ho2.getDistance() < ho1.getDistance() ? 1 : -1);
                 listRoom.setAdapter(new BookRoomAdapter(listHotelOffer));
                 Log.d("load data", "listHotelOffer != null");
             }

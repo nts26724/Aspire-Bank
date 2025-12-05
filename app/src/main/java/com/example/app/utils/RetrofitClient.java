@@ -6,6 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     private static Retrofit instance;
     private static Retrofit instanceDuffel;
+    private static Retrofit instanceVNPay;
+
 
     public static Retrofit getInstance() {
         if (instance == null) {

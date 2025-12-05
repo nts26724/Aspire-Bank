@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.app.R;
 import com.example.app.data.model.Account;
+import com.example.app.ui.depositaccount.DepositAccountActivity;
 import com.example.app.ui.depositphone.DepositPhoneActivity;
 import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
 import com.example.app.utils.SessionManager;
@@ -83,8 +84,8 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
         deposit.setOnClickListener(v -> {
-//           Intent intent = new Intent(this, DepositActivity.class);
-//           startActivity(intent);
+           Intent intent = new Intent(this, DepositAccountActivity.class);
+           startActivity(intent);
         });
 
         transfer.setOnClickListener(v -> {

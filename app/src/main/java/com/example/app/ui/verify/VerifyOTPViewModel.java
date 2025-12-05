@@ -32,6 +32,7 @@ public class VerifyOTPViewModel extends AndroidViewModel {
     private FirebaseAuth mAuth;
     private SessionManager sessionManager;
     private MutableLiveData<Boolean> booleanLiveData;
+    private MutableLiveData<Boolean> depositLiveData;
 
 
 
@@ -45,6 +46,7 @@ public class VerifyOTPViewModel extends AndroidViewModel {
         mAuth = FirebaseAuth.getInstance();
         sessionManager = SessionManager.getInstance(application);
         booleanLiveData = new MutableLiveData<>();
+        depositLiveData = new MutableLiveData<>();
 
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -166,5 +168,20 @@ public class VerifyOTPViewModel extends AndroidViewModel {
 
     public MutableLiveData<Boolean> getBooleanLiveData() {
         return booleanLiveData;
+    }
+
+
+    public void deposit(String username, long amount) {
+        verifyOTPRepository.deposit(username, amount);
+        sessionManager.getAccount().deposit(amount);
+
+        verifyOTPRepository.addTransaction(amount, "Deposit account", false,
+                username, sessionManager.getAccount().getUsername());
+
+        depositLiveData.postValue(true);
+    }
+
+    public MutableLiveData<Boolean> getDepositLiveData() {
+        return depositLiveData;
     }
 }

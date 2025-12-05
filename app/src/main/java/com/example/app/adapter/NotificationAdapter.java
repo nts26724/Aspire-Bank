@@ -43,7 +43,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
         Transaction currTransaction = listNotification.get(position);
 
-        holder.transactionID.setText(currTransaction.getTransactionID());
+        holder.transactionID.setText(currTransaction.getTransactionID() + "");
         holder.content.setText(currTransaction.getContent());
 
         String amountStr = formatter.format(

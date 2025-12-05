@@ -26,7 +26,7 @@ public class Amadeus  {
     private AmadeusHotelApi amadeusHotelApi;
 
 
-    public Amadeus() {
+    private Amadeus() {
         Retrofit retrofit = RetrofitClient.getInstance();
 
         amadeusAuthApi = retrofit.create(AmadeusAuthApi.class);

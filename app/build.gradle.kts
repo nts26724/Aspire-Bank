@@ -1,6 +1,6 @@
 plugins {
-//    alias(libs.plugins.android.application)
-    id("com.android.application")
+//    id("com.android.application")
+    alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
 }
 
@@ -31,14 +31,13 @@ android {
 
         buildConfigField("String", "AMADEUS_API_KEY", "\"${project.properties["AMADEUS_API_KEY"]}\"")
         buildConfigField("String", "AMADEUS_API_SECRET", "\"${project.properties["AMADEUS_API_SECRET"]}\"")
+
         buildConfigField("String", "DUFFEL_API_KEY", "\"${project.properties["DUFFEL_API_KEY"]}\"")
 
+        buildConfigField("String", "VNP_TMNCODE", "\"${project.properties["VNP_TMNCODE"]}\"")
+        buildConfigField("String", "VNP_HASHSECRET", "\"${project.properties["VNP_HASHSECRET"]}\"")
 
-//        val amadeusKey: String = project.findProperty("AMADEUS_API_KEY") as String
-//        val amadeusSecret: String = project.findProperty("AMADEUS_API_SECRET") as String
-//
-//        buildConfigField("String", "AMADEUS_API_KEY", "\"$amadeusKey\"")
-//        buildConfigField("String", "AMADEUS_API_SECRET", "\"$amadeusSecret\"")
+
     }
 
     buildTypes {
@@ -55,9 +54,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
-
 }
+
 
 dependencies {
 

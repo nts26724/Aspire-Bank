@@ -17,6 +17,8 @@ import com.example.app.R;
 import com.example.app.adapter.BookTicketAdapter;
 import com.example.app.ui.customeview.UtilityBarView;
 
+import java.util.Collections;
+
 public class BookTicketList extends AppCompatActivity {
     private RecyclerView listTicket;
     private BookTicketViewModel bookTicketViewModel;
@@ -57,6 +59,10 @@ public class BookTicketList extends AppCompatActivity {
             } else {
                 listTicket.setVisibility(View.VISIBLE);
                 textNotification.setVisibility(View.GONE);
+                Collections.sort(listFlightOffer, (fo1, fo2) ->
+                        Double.parseDouble(fo2.getTotalAmount()) * 25000 <
+                        Double.parseDouble(fo1.getTotalAmount()) * 25000
+                        ? 1 : -1);
                 listTicket.setAdapter(new BookTicketAdapter(listFlightOffer));
             }
         });
