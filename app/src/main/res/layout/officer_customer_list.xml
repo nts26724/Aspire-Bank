@@ -6,6 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
     <LinearLayout
@@ -96,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="24dp">
+                        android:padding="16dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -109,32 +110,34 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Danh sách Khách hàng"
+                                android:text="Danh sách"
                                 android:fontFamily="@font/adamina"
                                 android:textStyle="bold"
-                                android:textSize="20sp"
+                                android:textSize="16sp"
                                 android:textColor="@color/aspire_dark_text"/>
 
                             <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_add_customer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Thêm khách hàng"
+                                android:text="Thêm mới"
                                 android:textSize="12sp"
                                 android:textAllCaps="false"
                                 android:backgroundTint="#5D99C6"
                                 android:textColor="@color/white"
                                 app:cornerRadius="20dp"
-                                android:paddingHorizontal="16dp"/>
+                                android:paddingHorizontal="12dp"/>
                         </LinearLayout>
 
                         <EditText
+                            android:id="@+id/et_search_customer"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:background="@drawable/bg_rounded_card"
                             android:backgroundTint="#6FA3CC"
-                            android:hint="Tìm theo tên, số tài khoản, điện thoại"
+                            android:hint="Tìm kiếm..."
                             android:textColorHint="#E0E0E0"
-                            android:paddingStart="20dp"
+                            android:paddingStart="16dp"
                             android:textSize="14sp"
                             android:layout_marginBottom="24dp"
                             android:textColor="@color/white"/>
@@ -147,17 +150,19 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:minWidth="800dp"> <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingBottom="12dp">
-                                <TextView android:text="Số tài khoản" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="100dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
-                                <TextView android:text="Tên khách hàng" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
-                                <TextView android:text="SĐT" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="100dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
-                                <TextView android:text="Email" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="160dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
-                                <TextView android:text="Trạng thái" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                            </LinearLayout>
+                                android:minWidth="600dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingBottom="12dp">
+                                    <TextView android:text="Số tài khoản" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="100dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
+                                    <TextView android:text="Tên khách hàng" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
+                                    <TextView android:text="SĐT" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="100dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
+                                    <TextView android:text="Email" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="160dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
+                                    <TextView android:text="Trạng thái" android:fontFamily="@font/adamina" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/aspire_dark_text" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                                </LinearLayout>
 
                                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#BDC3C7" android:layout_marginBottom="12dp"/>
 
@@ -173,16 +178,8 @@
                                     <TextView android:text="nva@gmail.com" android:textSize="13sp" android:textColor="@color/aspire_dark_text" android:fontFamily="@font/adamina" android:layout_width="160dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
 
                                     <TextView
-                                        android:text="Hoạt động"
-                                        android:textSize="11sp"
-                                        android:textColor="#006400"
-                                        android:fontFamily="@font/adamina"
-                                        android:background="@drawable/bg_rounded_card"
-                                        android:backgroundTint="#90EE90"
-                                        android:paddingHorizontal="12dp"
-                                        android:paddingVertical="6dp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"/>
+                                        style="@style/StatusActive"
+                                        android:text="Hoạt động" />
                                 </LinearLayout>
 
                                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginVertical="4dp"/>
@@ -199,16 +196,8 @@
                                     <TextView android:text="ttb@gmail.com" android:textSize="13sp" android:textColor="@color/aspire_dark_text" android:fontFamily="@font/adamina" android:layout_width="160dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp"/>
 
                                     <TextView
-                                        android:text="Khóa"
-                                        android:textSize="11sp"
-                                        android:textColor="#A04000"
-                                        android:fontFamily="@font/adamina"
-                                        android:background="@drawable/bg_rounded_card"
-                                        android:backgroundTint="#FFCCBC"
-                                        android:paddingHorizontal="20dp"
-                                        android:paddingVertical="6dp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"/>
+                                        style="@style/StatusLocked"
+                                        android:text="Khóa" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -247,6 +236,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/menu_dashboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -257,6 +247,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/menu_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -270,6 +261,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/menu_interest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -281,6 +273,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/menu_ekyc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -292,6 +285,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/menu_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

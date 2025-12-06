@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aspire_cream_background"
-    tools:context=".SavingsConfirmActivity">
+    tools:context=".ui.savings.SavingsConfirmActivity">
 
     <com.example.app.ui.customeview.AppBarView
         android:id="@+id/app_bar"
@@ -56,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -65,8 +64,8 @@
                         android:text="Tài khoản"
                         android:textColor="@color/aspire_dark_text"
                         android:textSize="16sp" />
-
                     <TextView
+                        android:id="@+id/tv_value_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -81,7 +80,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -90,8 +88,8 @@
                         android:text="Số tiền"
                         android:textColor="@color/aspire_dark_text"
                         android:textSize="16sp" />
-
                     <TextView
+                        android:id="@+id/tv_value_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -106,7 +104,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -115,8 +112,8 @@
                         android:text="Kỳ hạn"
                         android:textColor="@color/aspire_dark_text"
                         android:textSize="16sp" />
-
                     <TextView
+                        android:id="@+id/tv_value_term"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -131,7 +128,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -140,8 +136,8 @@
                         android:text="Lãi suất"
                         android:textColor="@color/aspire_dark_text"
                         android:textSize="16sp" />
-
                     <TextView
+                        android:id="@+id/tv_value_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -156,7 +152,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -165,8 +160,8 @@
                         android:text="Ngày gửi"
                         android:textColor="@color/aspire_dark_text"
                         android:textSize="16sp" />
-
                     <TextView
+                        android:id="@+id/tv_value_date_sent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -181,7 +176,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -190,8 +184,8 @@
                         android:text="Ngày đáo hạn"
                         android:textColor="@color/aspire_dark_text"
                         android:textSize="16sp" />
-
                     <TextView
+                        android:id="@+id/tv_value_date_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -206,7 +200,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -215,8 +208,8 @@
                         android:text="Tổng tiền nhận được"
                         android:textColor="@color/aspire_dark_text"
                         android:textSize="16sp" />
-
                     <TextView
+                        android:id="@+id/tv_value_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
