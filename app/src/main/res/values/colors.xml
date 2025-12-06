@@ -19,4 +19,10 @@
     <color name="aspire_red_transfer">#FF0000</color>
     <color name="aspire_green_receive">#00cc00</color>
 
+    <color name="officer_sidebar_bg">#9DC3E6</color>
+    <color name="officer_card_blue">#D6EAF8</color>
+    <color name="officer_card_green">#D4EFDF</color>
+    <color name="officer_card_pink">#FADBD8</color>
+    <color name="status_green_bg">#A9DFBF</color>
+    <color name="status_orange_bg">#F5CBA7</color>
 </resources>
