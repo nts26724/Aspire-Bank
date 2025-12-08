@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aspire_cream_background"
-    tools:context=".SavingsSuccessActivity">
+    tools:context=".ui.savings.SavingsSuccessActivity">
 
     <com.example.app.ui.customeview.AppBarView
         android:id="@+id/app_bar"
@@ -14,7 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
-
 
     <ScrollView
         android:layout_width="0dp"
@@ -66,6 +65,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/tv_value_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -89,6 +89,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/tv_value_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -112,6 +113,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/tv_value_term"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -135,6 +137,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/tv_value_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -158,6 +161,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/tv_value_date_sent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -181,6 +185,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/tv_value_date_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -204,6 +209,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/tv_value_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -221,7 +227,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_continue_saving"
-                        style="@style/Widget.MaterialComponents.Button"
+                        style="@style/Style.App.Button.Success"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
