@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
+import com.example.app.data.model.Account;
 import com.example.app.ui.customeview.AppBarView;
 import com.example.app.ui.customeview.NavBarView;
 import com.example.app.ui.login.LoginActivity;
@@ -36,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        appBar = findViewById(R.id.appBar);
+        appBar = findViewById(R.id.app_bar);
         navBar = findViewById(R.id.nav_bar);
         imgAvatar = findViewById(R.id.img_avatar);
         tvProfileName = findViewById(R.id.tv_profile_name);
@@ -51,19 +52,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserData() {
-        String name = "Nguyen Van A";
-        String dob = "01/01/2000";
-        String address = "19 Nguyen Huu Tho, Tan Hung";
-        String phone = "0123456789";
-        String email = "nva@gmail.com";
+        Account account = SessionManager.getInstance(this).getAccount();
 
-        tvProfileName.setText(name);
+        if (account != null) {
+            tvProfileName.setText(account.getUsername());
 
-        if (etName != null) etName.setText(name);
-        if (etDob != null) etDob.setText(dob);
-        if (etAddress != null) etAddress.setText(address);
-        if (etPhone != null) etPhone.setText(phone);
-        if (etEmail != null) etEmail.setText(email);
+            if (etName != null) etName.setText(account.getUsername());
+            if (etPhone != null) etPhone.setText(account.getPhoneNumber());
+            if (etEmail != null) etEmail.setText(account.getEmail());
+            if (etDob != null) etDob.setText(account.getDob());
+            if (etAddress != null) etAddress.setText(account.getAddress());
+        }
     }
 
     private void setupListeners() {

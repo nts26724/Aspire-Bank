@@ -33,7 +33,7 @@ public class SavingsActivity extends AppCompatActivity {
 
     private Button btn5M, btn10M, btn50M;
 
-    private TextView tvTermLabel, tvInterestRateLabel;
+    private TextView tvScreenTitle, tvTermLabel, tvInterestRateLabel;
     private TextView tvPrincipal, tvInterestAmount, tvTotalAmount, tvNote;
 
     private List<MaterialButton> termButtons = new ArrayList<>();
@@ -42,12 +42,19 @@ public class SavingsActivity extends AppCompatActivity {
     private String selectedTerm = "1 tháng";
     private double currentInterestRate = 3.5;
 
+    private String transactionType = "SAVINGS";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.savings_fragment);
 
+        if (getIntent().hasExtra("TRANSACTION_TYPE")) {
+            transactionType = getIntent().getStringExtra("TRANSACTION_TYPE");
+        }
+
         initViews();
+        setupDynamicUI();
         setupTermButtons();
         setupQuickAmountButtons();
         setupAmountInput();
@@ -63,6 +70,8 @@ public class SavingsActivity extends AppCompatActivity {
         btn5M = findViewById(R.id.btn_5m);
         btn10M = findViewById(R.id.btn_10m);
         btn50M = findViewById(R.id.btn_50m);
+
+        tvScreenTitle = findViewById(R.id.tv_screen_title);
 
         tvTermLabel = findViewById(R.id.tv_term_value);
         tvInterestRateLabel = findViewById(R.id.tv_rate_value);
@@ -82,6 +91,18 @@ public class SavingsActivity extends AppCompatActivity {
         }
     }
 
+    private void setupDynamicUI() {
+        if ("MORTGAGE".equals(transactionType)) {
+            if (tvScreenTitle != null) tvScreenTitle.setText("Tài khoản vay vốn");
+            btnSubmit.setText("Xác nhận khoản vay");
+            currentInterestRate = 8.5;
+        } else {
+            if (tvScreenTitle != null) tvScreenTitle.setText("Tài khoản tiết kiệm");
+            btnSubmit.setText("Xác nhận gửi tiết kiệm");
+            currentInterestRate = 3.5;
+        }
+    }
+
     private void setupTermButtons() {
         for (MaterialButton btn : termButtons) {
             btn.setOnClickListener(v -> {
@@ -94,58 +115,17 @@ public class SavingsActivity extends AppCompatActivity {
                 String[] parts = text.split("\n");
                 if (parts.length >= 2) {
                     selectedTerm = parts[0];
-                    String rateString = parts[1].replace("%/năm", "");
-                    currentInterestRate = Double.parseDouble(rateString);
+                    if ("MORTGAGE".equals(transactionType)) {
+                        double baseRate = Double.parseDouble(parts[1].replace("%/năm", ""));
+                        currentInterestRate = baseRate + 5.0;
+                    } else {
+                        String rateString = parts[1].replace("%/năm", "");
+                        currentInterestRate = Double.parseDouble(rateString);
+                    }
                 }
-
                 updateCalculations();
             });
         }
-    }
-
-    private void setupQuickAmountButtons() {
-        View.OnClickListener quickAddListener = v -> {
-            Button b = (Button) v;
-            String text = b.getText().toString();
-            double addAmount = 0;
-            if (text.equals("5M")) addAmount = 5000000;
-            else if (text.equals("10M")) addAmount = 10000000;
-            else if (text.equals("50M")) addAmount = 50000000;
-
-            currentAmount = addAmount;
-            etAmount.setText(String.format("%.0f", currentAmount));
-        };
-
-        if(btn5M != null) btn5M.setOnClickListener(quickAddListener);
-        if(btn10M != null) btn10M.setOnClickListener(quickAddListener);
-        if(btn50M != null) btn50M.setOnClickListener(quickAddListener);
-    }
-
-    private void setupAmountInput() {
-        if(etAmount == null) return;
-
-        etAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    String cleanString = s.toString().replaceAll("[,.]", "").trim();
-                    if (!cleanString.isEmpty()) {
-                        currentAmount = Double.parseDouble(cleanString);
-                    } else {
-                        currentAmount = 0;
-                    }
-                    updateCalculations();
-                } catch (NumberFormatException e) {
-                    currentAmount = 0;
-                }
-            }
-        });
     }
 
     private void updateCalculations() {
@@ -162,12 +142,49 @@ public class SavingsActivity extends AppCompatActivity {
         if (tvTermLabel != null) tvTermLabel.setText(selectedTerm);
         if (tvInterestRateLabel != null) tvInterestRateLabel.setText(currentInterestRate + "%/năm");
         if (tvPrincipal != null) tvPrincipal.setText(df.format(currentAmount) + " đ");
-        if (tvInterestAmount != null) tvInterestAmount.setText("+" + df.format(interest) + " đ");
+
+        if (tvInterestAmount != null) {
+            String sign = "MORTGAGE".equals(transactionType) ? "-" : "+";
+            tvInterestAmount.setText(sign + df.format(interest) + " đ");
+        }
+
         if (tvTotalAmount != null) tvTotalAmount.setText(df.format(total) + " đ");
 
         if (tvNote != null) {
-            tvNote.setText("Sau " + selectedTerm + ", bạn sẽ nhận được " + df.format(total) + "đ khi đáo hạn");
+            String action = "MORTGAGE".equals(transactionType) ? "phải trả" : "nhận được";
+            tvNote.setText("Sau " + selectedTerm + ", bạn sẽ " + action + " " + df.format(total) + "đ");
         }
+    }
+
+    private void setupAmountInput() {
+        if(etAmount == null) return;
+        etAmount.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                try {
+                    String cleanString = s.toString().replaceAll("[,.]", "").trim();
+                    currentAmount = !cleanString.isEmpty() ? Double.parseDouble(cleanString) : 0;
+                    updateCalculations();
+                } catch (NumberFormatException e) { currentAmount = 0; }
+            }
+        });
+    }
+
+    private void setupQuickAmountButtons() {
+        View.OnClickListener quickAddListener = v -> {
+            Button b = (Button) v;
+            String text = b.getText().toString();
+            double addAmount = 0;
+            if (text.equals("5M")) addAmount = 5000000;
+            else if (text.equals("10M")) addAmount = 10000000;
+            else if (text.equals("50M")) addAmount = 50000000;
+            currentAmount = addAmount;
+            etAmount.setText(String.format("%.0f", currentAmount));
+        };
+        if(btn5M != null) btn5M.setOnClickListener(quickAddListener);
+        if(btn10M != null) btn10M.setOnClickListener(quickAddListener);
+        if(btn50M != null) btn50M.setOnClickListener(quickAddListener);
     }
 
     private void setupSubmitButton() {
@@ -176,8 +193,8 @@ public class SavingsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Số tiền tối thiểu là 1.000.000đ", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             Intent intent = new Intent(SavingsActivity.this, SavingsConfirmActivity.class);
+            intent.putExtra("TRANSACTION_TYPE", transactionType);
             intent.putExtra("AMOUNT", currentAmount);
             intent.putExtra("TERM", selectedTerm);
             intent.putExtra("RATE", currentInterestRate);
