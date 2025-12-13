@@ -6,16 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aspire_cream_background"
-    android:id="@+id/main"
-    >
-<!--    tools:context=".register.RegisterStep1Activity"-->
+    android:id="@+id/main">
 
     <ImageView
         android:id="@+id/img_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/ic_aspire_logo" app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_aspire_logo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,18 +76,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint=""
             app:boxBackgroundColor="@color/aspire_input_background"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_name"
             app:boxCornerRadiusTopStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_name">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_reg_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/adamina"
@@ -113,18 +113,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint=""
             app:boxBackgroundColor="@color/aspire_input_background"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_cccd"
             app:boxCornerRadiusTopStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_cccd">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_reg_cccd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -150,18 +151,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint=""
             app:boxBackgroundColor="@color/aspire_input_background"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_phone"
             app:boxCornerRadiusTopStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_phone">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_reg_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
@@ -187,18 +189,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint=""
             app:boxBackgroundColor="@color/aspire_input_background"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_email"
             app:boxCornerRadiusTopStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_email">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_reg_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -216,10 +219,10 @@
             android:backgroundTint="@color/aspire_orange_primary"
             android:text="Tiếp tục"
             android:fontFamily="@font/adamina"
+            app:cornerRadius="999dp"
             app:layout_constraintEnd_toStartOf="@id/btn_cancel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_email"
-            app:cornerRadius="999dp" />
+            app:layout_constraintTop_toBottomOf="@id/til_email" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
@@ -230,12 +233,12 @@
             android:text="Hủy"
             android:textColor="@color/aspire_orange_primary"
             android:fontFamily="@font/adamina"
+            android:backgroundTint="@color/aspire_light_orange_background"
+            app:cornerRadius="999dp"
             app:layout_constraintBottom_toBottomOf="@id/btn_continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_continue"
-            app:layout_constraintTop_toTopOf="@id/btn_continue"
-            android:backgroundTint="@color/aspire_light_orange_background"
-            app:cornerRadius="999dp" />
+            app:layout_constraintTop_toTopOf="@id/btn_continue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
