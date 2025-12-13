@@ -12,11 +12,14 @@ public class SessionManager {
     private static final String PREF_NAME = "app_session";
     private static final String KEY_ACCOUNT = "account_json";
     private final SharedPreferences prefs;
+    private final SharedPreferences.Editor editor;
 
 
     public SessionManager(Context context) {
         prefs = context.getSharedPreferences(PREF_NAME,
                 Context.MODE_PRIVATE);
+
+        editor = prefs.edit();
 
         String json = prefs.getString(KEY_ACCOUNT, null);
         if (json != null) {
@@ -45,5 +48,10 @@ public class SessionManager {
     public void clear() {
         account = null;
         prefs.edit().clear().apply();
+    }
+
+    public void logout() {
+        editor.clear();
+        editor.commit();
     }
 }

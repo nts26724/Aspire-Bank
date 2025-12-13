@@ -18,6 +18,7 @@ import com.example.app.data.model.Account;
 import com.example.app.ui.depositaccount.DepositAccountActivity;
 import com.example.app.ui.depositphone.DepositPhoneActivity;
 import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
+import com.example.app.ui.savings.SavingsActivity;
 import com.example.app.utils.SessionManager;
 
 import java.text.NumberFormat;
@@ -29,7 +30,7 @@ public class HomeCustomerActivity extends AppCompatActivity {
     private HomeCustomerViewModel homeCustomerViewModel;
     private MutableLiveData<Boolean> hide;
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -41,7 +42,6 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
         init();
-
 
         eye.setOnClickListener(v -> {
             hide.postValue(Boolean.FALSE.equals(hide.getValue()));
@@ -57,7 +57,6 @@ public class HomeCustomerActivity extends AppCompatActivity {
             balance.setText(hide ? "****** VND" : account.getBalance() + " VND");
         });
 
-
         homeCustomerViewModel.setAccountLiveData(SessionManager.getInstance(this).getAccount());
 
         homeCustomerViewModel.getAccountLiveData().observe(this, account -> {
@@ -68,8 +67,6 @@ public class HomeCustomerActivity extends AppCompatActivity {
                 balance.setText(formatter.format(account.getBalance()) + " VND");
             }
         });
-
-
 
         homeCustomerViewModel.getFullNameByUsername(
                 SessionManager.getInstance(this).getAccount().getUsername()
@@ -84,14 +81,11 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
         deposit.setOnClickListener(v -> {
-           Intent intent = new Intent(this, DepositAccountActivity.class);
-           startActivity(intent);
+            Intent intent = new Intent(this, DepositAccountActivity.class);
+            startActivity(intent);
         });
 
-        transfer.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, TransferActivity.class);
-//            startActivity(intent);
-        });
+        transfer.setOnClickListener(v -> {});
 
         utility.setOnClickListener(v -> {
             Intent intent = new Intent(this, ReceiptPaymentActivity.class);
@@ -99,8 +93,9 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
         mortgage.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, MortgageActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, SavingsActivity.class);
+            intent.putExtra("TRANSACTION_TYPE", "MORTGAGE");
+            startActivity(intent);
         });
 
         depositPhone.setOnClickListener(v -> {
@@ -109,8 +104,9 @@ public class HomeCustomerActivity extends AppCompatActivity {
         });
 
         saving.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, SavingActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, SavingsActivity.class);
+            intent.putExtra("TRANSACTION_TYPE", "SAVINGS");
+            startActivity(intent);
         });
     }
 

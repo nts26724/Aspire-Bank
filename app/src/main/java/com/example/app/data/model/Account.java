@@ -11,6 +11,10 @@ public class Account {
     private long mortgage;
     private long saving;
 
+    private String phoneNumber;
+    private String email;
+    private String address;
+    private String dob;
 
     public Account() {}
 
@@ -21,6 +25,11 @@ public class Account {
         this.balance = 0;
         this.mortgage = 0;
         this.saving = 0;
+
+        this.phoneNumber = "Chưa cập nhật";
+        this.email = "Chưa cập nhật";
+        this.address = "Chưa cập nhật";
+        this.dob = "01/01/2000";
     }
 
     public long getBalance() {
@@ -48,6 +57,22 @@ public class Account {
         return saving;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
     public void setBalance(long balance) {
         this.balance = balance;
     }
@@ -72,7 +97,23 @@ public class Account {
         this.username = username;
     }
 
-    public void widthraw(long amount) {
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public void withdraw(long amount) {
         this.balance -= amount;
     }
 

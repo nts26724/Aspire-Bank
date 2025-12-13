@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo_bank"
@@ -17,44 +15,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AspireBank">
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
 
         <activity android:name=".ui.login.LoginActivity" />
-
         <activity android:name=".ui.homecustomer.HomeCustomerActivity" />
-
         <activity android:name=".ui.bookroom.BookRoomActivity" />
         <activity android:name=".ui.bookroom.BookRoomCheck" />
         <activity android:name=".ui.bookroom.BookRoomList" />
         <activity android:name=".ui.bookroom.BookRoomMap" />
         <activity android:name=".ui.bookroom.BookRoomSuccess" />
         <activity android:name=".ui.bookroom.BookRoomVerifyOTP" />
-
         <activity android:name=".ui.bookticket.BookTicketActivity" />
         <activity android:name=".ui.bookticket.BookTicketCheck" />
         <activity android:name=".ui.bookticket.BookTicketList" />
         <activity android:name=".ui.bookticket.BookTicketSuccess" />
         <activity android:name=".ui.bookticket.BookTicketVerifyOTP" />
-
         <activity android:name=".ui.receiptpayment.ReceiptPaymentActivity" />
         <activity android:name=".ui.receiptpayment.ReceiptPaymentCheck" />
         <activity android:name=".ui.receiptpayment.ReceiptPaymentVerifyOTP" />
         <activity android:name=".ui.receiptpayment.ReceiptPaymentSuccess" />
-
         <activity android:name=".ui.depositphone.DepositPhoneActivity" />
         <activity android:name=".ui.depositphone.DepositPhoneVerifyOTP" />
         <activity android:name=".ui.depositphone.DepositPhoneSuccess" />
-
         <activity android:name=".ui.notification.NotificationActivity" />
-
         <activity android:name=".ui.depositaccount.DepositAccountActivity" />
         <activity android:name=".ui.depositaccount.DepositAccountCheck" />
         <activity android:name=".ui.depositaccount.DepositAccountVerifyOTP" />
         <activity android:name=".ui.depositaccount.DepositAccountSuccess" />
-
 
         <activity
             android:name=".ui.welcome.WelcomeActivity"
@@ -75,6 +64,13 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AspireBank" />
 
+        <activity android:name=".ui.verify.VerifyOTPActivity" />
+
+        <activity android:name=".ui.profile.ProfileActivity" />
+
+        <activity android:name=".ui.savings.SavingsActivity" />
+        <activity android:name=".ui.savings.SavingsConfirmActivity" />
+        <activity android:name=".ui.savings.SavingsSuccessActivity" />
 
     </application>
 </manifest>
