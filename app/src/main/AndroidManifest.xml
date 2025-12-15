@@ -72,5 +72,9 @@
         <activity android:name=".ui.savings.SavingsConfirmActivity" />
         <activity android:name=".ui.savings.SavingsSuccessActivity" />
 
+        <activity android:name=".ui.register.RegisterActivity" />
+        <activity android:name=".ui.register.RegisterFaceAuthActivity" />
+        <activity android:name=".ui.register.RegisterSuccessActivity" />
+
     </application>
 </manifest>

@@ -16,6 +16,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
+import com.example.app.data.model.InterestRate;
+import com.example.app.data.repository.RateRepository;
+import com.example.app.interfaces.RateCallback;
 import com.example.app.ui.customeview.AppBarView;
 import com.example.app.ui.customeview.NavBarView;
 import com.google.android.material.button.MaterialButton;
@@ -30,24 +33,25 @@ public class SavingsActivity extends AppCompatActivity {
     private NavBarView navBar;
     private EditText etAmount;
     private MaterialButton btnSubmit;
-
     private Button btn5M, btn10M, btn50M;
-
     private TextView tvScreenTitle, tvTermLabel, tvInterestRateLabel;
     private TextView tvPrincipal, tvInterestAmount, tvTotalAmount, tvNote;
 
     private List<MaterialButton> termButtons = new ArrayList<>();
-
     private double currentAmount = 0;
-    private String selectedTerm = "1 tháng";
+    private String selectedTermString = "1 tháng";
+    private int selectedTermMonths = 1;
     private double currentInterestRate = 3.5;
 
     private String transactionType = "SAVINGS";
+    private RateRepository rateRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.savings_fragment);
+
+        rateRepository = new RateRepository();
 
         if (getIntent().hasExtra("TRANSACTION_TYPE")) {
             transactionType = getIntent().getStringExtra("TRANSACTION_TYPE");
@@ -59,6 +63,8 @@ public class SavingsActivity extends AppCompatActivity {
         setupQuickAmountButtons();
         setupAmountInput();
         setupSubmitButton();
+
+        updateRateFromDatabase();
     }
 
     private void initViews() {
@@ -66,13 +72,10 @@ public class SavingsActivity extends AppCompatActivity {
         navBar = findViewById(R.id.nav_bar);
         btnSubmit = findViewById(R.id.btn_submit_savings);
         etAmount = findViewById(R.id.et_savings_amount);
-
         btn5M = findViewById(R.id.btn_5m);
         btn10M = findViewById(R.id.btn_10m);
         btn50M = findViewById(R.id.btn_50m);
-
         tvScreenTitle = findViewById(R.id.tv_screen_title);
-
         tvTermLabel = findViewById(R.id.tv_term_value);
         tvInterestRateLabel = findViewById(R.id.tv_rate_value);
         tvPrincipal = findViewById(R.id.tv_principal_value);
@@ -94,13 +97,31 @@ public class SavingsActivity extends AppCompatActivity {
     private void setupDynamicUI() {
         if ("MORTGAGE".equals(transactionType)) {
             if (tvScreenTitle != null) tvScreenTitle.setText("Tài khoản vay vốn");
-            btnSubmit.setText("Xác nhận khoản vay");
-            currentInterestRate = 8.5;
+            btnSubmit.setText("Xác nhận vay vốn");
         } else {
             if (tvScreenTitle != null) tvScreenTitle.setText("Tài khoản tiết kiệm");
             btnSubmit.setText("Xác nhận gửi tiết kiệm");
-            currentInterestRate = 3.5;
         }
+        updateRateFromDatabase();
+    }
+
+    private void updateRateFromDatabase() {
+        rateRepository.getRateByTerm(selectedTermMonths, new RateCallback() {
+            @Override
+            public void onRateLoaded(InterestRate rateObj) {
+                if ("MORTGAGE".equals(transactionType)) {
+                    currentInterestRate = rateObj.getMortgageRate();
+                } else {
+                    currentInterestRate = rateObj.getSavingsRate();
+                }
+                updateCalculations();
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(SavingsActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setupTermButtons() {
@@ -113,17 +134,16 @@ public class SavingsActivity extends AppCompatActivity {
 
                 String text = btn.getText().toString();
                 String[] parts = text.split("\n");
-                if (parts.length >= 2) {
-                    selectedTerm = parts[0];
-                    if ("MORTGAGE".equals(transactionType)) {
-                        double baseRate = Double.parseDouble(parts[1].replace("%/năm", ""));
-                        currentInterestRate = baseRate + 5.0;
-                    } else {
-                        String rateString = parts[1].replace("%/năm", "");
-                        currentInterestRate = Double.parseDouble(rateString);
+                if (parts.length > 0) {
+                    selectedTermString = parts[0];
+                    try {
+                        selectedTermMonths = Integer.parseInt(selectedTermString.replace(" tháng", "").trim());
+                    } catch (Exception e) {
+                        selectedTermMonths = 1;
                     }
                 }
-                updateCalculations();
+
+                updateRateFromDatabase();
             });
         }
     }
@@ -131,15 +151,10 @@ public class SavingsActivity extends AppCompatActivity {
     private void updateCalculations() {
         DecimalFormat df = new DecimalFormat("#,###");
 
-        int months = 1;
-        try {
-            months = Integer.parseInt(selectedTerm.replace(" tháng", "").trim());
-        } catch (Exception e) { months = 1; }
-
-        double interest = (currentAmount * currentInterestRate / 100) / 12 * months;
+        double interest = (currentAmount * currentInterestRate / 100) / 12 * selectedTermMonths;
         double total = currentAmount + interest;
 
-        if (tvTermLabel != null) tvTermLabel.setText(selectedTerm);
+        if (tvTermLabel != null) tvTermLabel.setText(selectedTermString);
         if (tvInterestRateLabel != null) tvInterestRateLabel.setText(currentInterestRate + "%/năm");
         if (tvPrincipal != null) tvPrincipal.setText(df.format(currentAmount) + " đ");
 
@@ -152,7 +167,7 @@ public class SavingsActivity extends AppCompatActivity {
 
         if (tvNote != null) {
             String action = "MORTGAGE".equals(transactionType) ? "phải trả" : "nhận được";
-            tvNote.setText("Sau " + selectedTerm + ", bạn sẽ " + action + " " + df.format(total) + "đ");
+            tvNote.setText("Sau " + selectedTermString + ", bạn sẽ " + action + " " + df.format(total) + "đ");
         }
     }
 
@@ -196,7 +211,7 @@ public class SavingsActivity extends AppCompatActivity {
             Intent intent = new Intent(SavingsActivity.this, SavingsConfirmActivity.class);
             intent.putExtra("TRANSACTION_TYPE", transactionType);
             intent.putExtra("AMOUNT", currentAmount);
-            intent.putExtra("TERM", selectedTerm);
+            intent.putExtra("TERM", selectedTermString);
             intent.putExtra("RATE", currentInterestRate);
             startActivity(intent);
         });
