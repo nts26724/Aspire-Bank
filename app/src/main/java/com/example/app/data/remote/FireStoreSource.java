@@ -10,7 +10,9 @@ import com.example.app.interfaces.HomeCustomerCallback;
 import com.example.app.interfaces.LoginCallback;
 import com.example.app.interfaces.PhoneNumberCallBack;
 import com.example.app.interfaces.ReceiptPaymentCallback;
+import com.example.app.interfaces.RegisterCallback;
 import com.example.app.interfaces.TransactionCallback;
+import com.example.app.interfaces.CustomerCallback;
 import com.example.app.utils.SessionManager;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -241,7 +243,6 @@ public class FireStoreSource {
                 });
     }
 
-
     public void deleteReceiptByReceiptID(String receiptID) {
         db.collection("receipt")
                 .whereEqualTo("receiptID", receiptID)
@@ -318,32 +319,19 @@ public class FireStoreSource {
                 });
     }
 
-    public void registerUser(com.example.app.data.model.User user, com.example.app.interfaces.UserCallback callback) {
-        Map<String, Object> customerData = new HashMap<>();
-        customerData.put("username", user.getUsername());
-        customerData.put("fullName", user.getFullName());
-        customerData.put("phoneNumber", user.getUsername());
-        customerData.put("email", "user@email.com");
-        customerData.put("cccd", "000000000000");
-
-        Map<String, Object> accountData = new HashMap<>();
-        accountData.put("username", user.getUsername());
-        accountData.put("password", user.getPassword());
-        accountData.put("balance", 0);
-        accountData.put("accountNumber", "123" + user.getUsername());
+    public void registerUser(Account account, Customer customer, RegisterCallback callback) {
 
         WriteBatch batch = db.batch();
-
-        DocumentReference customerRef = db.collection("customer").document();
         DocumentReference accountRef = db.collection("account").document();
+        DocumentReference customerRef = db.collection("customer").document();
 
-        batch.set(customerRef, customerData);
-        batch.set(accountRef, accountData);
+        batch.set(accountRef, account);
+        batch.set(customerRef, customer);
 
         batch.commit()
                 .addOnSuccessListener(aVoid -> {
                     callback.onSuccess();
-                    Log.d("Register", "Đăng ký thành công cho: " + user.getUsername());
+                    Log.d("Register", "Đăng ký thành công cho: " + account.getUsername());
                 })
                 .addOnFailureListener(e -> {
                     callback.onError("Lỗi khi tạo tài khoản: " + e.getMessage());
@@ -377,6 +365,23 @@ public class FireStoreSource {
                         db.collection("account").document(accountId)
                                 .update("mortgage", FieldValue.increment(amount));
                     }
+                });
+    }
+
+    public void getCustomerDetail(String username, CustomerCallback callback) {
+        db.collection("customer")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        Customer customer = querySnapshot.getDocuments().get(0).toObject(Customer.class);
+                        callback.onSuccess(customer);
+                    } else {
+                        callback.onFailure("Không tìm thấy thông tin khách hàng");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    callback.onFailure("Lỗi kết nối: " + e.getMessage());
                 });
     }
 }

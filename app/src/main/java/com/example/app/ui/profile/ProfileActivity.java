@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
 import com.example.app.data.model.Account;
+import com.example.app.data.model.Customer;
+import com.example.app.data.remote.FireStoreSource;
+import com.example.app.interfaces.CustomerCallback;
 import com.example.app.ui.customeview.AppBarView;
 import com.example.app.ui.customeview.NavBarView;
 import com.example.app.ui.login.LoginActivity;
@@ -26,10 +29,14 @@ public class ProfileActivity extends AppCompatActivity {
     private Button btnUploadPhoto, btnLogout;
     private TextInputEditText etName, etDob, etAddress, etPhone, etEmail;
 
+    private FireStoreSource fireStoreSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_fragment);
+
+        fireStoreSource = new FireStoreSource();
 
         initViews();
         loadUserData();
@@ -56,12 +63,23 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (account != null) {
             tvProfileName.setText(account.getUsername());
+            fireStoreSource.getCustomerDetail(account.getUsername(), new CustomerCallback() {
+                @Override
+                public void onSuccess(Customer customer) {
+                    if (customer != null) {
+                        if (etName != null) etName.setText(customer.getFullName());
+                        if (etPhone != null) etPhone.setText(customer.getPhoneNumber());
+                        if (etEmail != null) etEmail.setText(customer.getEmail());
+                        if (etDob != null) etDob.setText(customer.getBirthDay());
+                        if (etAddress != null) etAddress.setText(customer.getAddress());
+                    }
+                }
 
-            if (etName != null) etName.setText(account.getUsername());
-            if (etPhone != null) etPhone.setText(account.getPhoneNumber());
-            if (etEmail != null) etEmail.setText(account.getEmail());
-            if (etDob != null) etDob.setText(account.getDob());
-            if (etAddress != null) etAddress.setText(account.getAddress());
+                @Override
+                public void onFailure(String message) {
+                    Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
