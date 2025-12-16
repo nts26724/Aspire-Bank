@@ -22,6 +22,9 @@ import com.example.app.interfaces.RateCallback;
 import com.example.app.ui.customeview.AppBarView;
 import com.example.app.ui.customeview.NavBarView;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -36,6 +39,11 @@ public class SavingsActivity extends AppCompatActivity {
     private Button btn5M, btn10M, btn50M;
     private TextView tvScreenTitle, tvTermLabel, tvInterestRateLabel;
     private TextView tvPrincipal, tvInterestAmount, tvTotalAmount, tvNote;
+
+    private TextView tvSourceAccountNumber, tvSourceBalance;
+    private double sourceAccountBalance = 0.0;
+
+    private String currentAccountId = null;
 
     private List<MaterialButton> termButtons = new ArrayList<>();
     private double currentAmount = 0;
@@ -58,6 +66,7 @@ public class SavingsActivity extends AppCompatActivity {
         }
 
         initViews();
+        fetchUserAccountInfo();
         setupDynamicUI();
         setupTermButtons();
         setupQuickAmountButtons();
@@ -83,6 +92,9 @@ public class SavingsActivity extends AppCompatActivity {
         tvTotalAmount = findViewById(R.id.tv_total_value);
         tvNote = findViewById(R.id.tv_note);
 
+        tvSourceAccountNumber = findViewById(R.id.tv_source_account);
+        tvSourceBalance = findViewById(R.id.tv_source_balance);
+
         GridLayout gridLayout = findViewById(R.id.grid_terms);
         if (gridLayout != null) {
             for (int i = 0; i < gridLayout.getChildCount(); i++) {
@@ -92,6 +104,52 @@ public class SavingsActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void fetchUserAccountInfo() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(this, "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userId = user.getUid();
+
+        db.collection("customer").document(userId).get()
+                .addOnSuccessListener(custDoc -> {
+                    if (custDoc.exists()) {
+                        currentAccountId = custDoc.getString("account");
+
+                        if (currentAccountId != null && !currentAccountId.isEmpty()) {
+                            db.collection("account").document(currentAccountId).get()
+                                    .addOnSuccessListener(accDoc -> {
+                                        if (accDoc.exists()) {
+                                            Double balance = accDoc.getDouble("balance");
+                                            String accNum = accDoc.getString("accountNumber");
+
+                                            sourceAccountBalance = (balance != null) ? balance : 0.0;
+
+                                            DecimalFormat df = new DecimalFormat("#,###");
+                                            if (tvSourceBalance != null) {
+                                                tvSourceBalance.setText(df.format(sourceAccountBalance) + " đ");
+                                            }
+
+                                            if (tvSourceAccountNumber != null && accNum != null && accNum.length() > 3) {
+                                                tvSourceAccountNumber.setText("*******" + accNum.substring(accNum.length() - 3));
+                                            }
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(this, "Lỗi dữ liệu: User chưa liên kết tài khoản", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Không tìm thấy thông tin khách hàng", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Lỗi kết nối: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void setupDynamicUI() {
@@ -118,9 +176,7 @@ public class SavingsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError(String message) {
-                Toast.makeText(SavingsActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
+            public void onError(String message) {}
         });
     }
 
@@ -143,7 +199,17 @@ public class SavingsActivity extends AppCompatActivity {
                     }
                 }
 
-                updateRateFromDatabase();
+                if (text.contains("1 tháng")) currentInterestRate = 3.5;
+                else if (text.contains("3 tháng")) currentInterestRate = 4.5;
+                else if (text.contains("6 tháng")) currentInterestRate = 5.5;
+                else if (text.contains("12 tháng")) currentInterestRate = 6.5;
+                else if (text.contains("24 tháng")) currentInterestRate = 7.2;
+                else if (text.contains("36 tháng")) currentInterestRate = 7.5;
+
+                if (tvInterestRateLabel != null) {
+                    tvInterestRateLabel.setText(currentInterestRate + "%/năm");
+                }
+                updateCalculations();
             });
         }
     }
@@ -159,7 +225,7 @@ public class SavingsActivity extends AppCompatActivity {
         if (tvPrincipal != null) tvPrincipal.setText(df.format(currentAmount) + " đ");
 
         if (tvInterestAmount != null) {
-            String sign = "MORTGAGE".equals(transactionType) ? "-" : "+";
+            String sign = "+";
             tvInterestAmount.setText(sign + df.format(interest) + " đ");
         }
 
@@ -204,15 +270,29 @@ public class SavingsActivity extends AppCompatActivity {
 
     private void setupSubmitButton() {
         btnSubmit.setOnClickListener(v -> {
+            if (currentAccountId == null) {
+                Toast.makeText(this, "Đang tải dữ liệu tài khoản, vui lòng đợi...", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (currentAmount < 1000000) {
                 Toast.makeText(this, "Số tiền tối thiểu là 1.000.000đ", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            if ("SAVINGS".equals(transactionType)) {
+                if (currentAmount > sourceAccountBalance) {
+                    Toast.makeText(this, "Số dư tài khoản không đủ!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
             Intent intent = new Intent(SavingsActivity.this, SavingsConfirmActivity.class);
             intent.putExtra("TRANSACTION_TYPE", transactionType);
             intent.putExtra("AMOUNT", currentAmount);
             intent.putExtra("TERM", selectedTermString);
             intent.putExtra("RATE", currentInterestRate);
+            intent.putExtra("ACCOUNT_ID", currentAccountId);
             startActivity(intent);
         });
     }

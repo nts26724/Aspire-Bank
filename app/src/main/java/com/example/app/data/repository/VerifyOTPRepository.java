@@ -11,21 +11,18 @@ public class VerifyOTPRepository {
         fireStoreSource = new FireStoreSource();
     }
 
-
     public void getPhoneNumberByUsername(String username, PhoneNumberCallBack phoneNumberCallBack) {
         fireStoreSource.getPhoneNumberByUsername(username, phoneNumberCallBack);
     }
-
 
     public void widthraw(String username, long amount) {
         fireStoreSource.widthraw(username, amount);
     }
 
     public void addTransaction(long amount, String content, boolean transfer,
-                                String usernameTransfer, String usernameReceive) {
+                               String usernameTransfer, String usernameReceive) {
         fireStoreSource.addTransaction(amount, content, transfer, usernameTransfer, usernameReceive);
     }
-
 
     public void deleteReceiptByReceiptID(String receiptID) {
         fireStoreSource.deleteReceiptByReceiptID(receiptID);
@@ -37,5 +34,13 @@ public class VerifyOTPRepository {
 
     public void deposit(String username, long amount) {
         fireStoreSource.deposit(username, amount);
+    }
+
+    public void updateSaving(String username, long amount) {
+        fireStoreSource.updateSaving(username, amount);
+    }
+
+    public void updateMortgage(String username, long amount) {
+        fireStoreSource.updateMortgage(username, amount);
     }
 }

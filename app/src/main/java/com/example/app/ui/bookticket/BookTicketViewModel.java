@@ -129,7 +129,7 @@ public class BookTicketViewModel extends AndroidViewModel {
                                     SessionManager.getInstance(getApplication()).getAccount().getUsername(),
                                     price);
 
-                            sessionManager.getAccount().widthraw(price);
+                            sessionManager.getAccount().withdraw(price);
 
                             bookTicketRepository.addTransaction(price, "BookRoom Payment", true,
                                     sessionManager.getAccount().getUsername(), nameAirline);

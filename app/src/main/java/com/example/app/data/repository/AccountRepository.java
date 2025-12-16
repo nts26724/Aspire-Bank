@@ -8,7 +8,6 @@ public class AccountRepository {
 
     public AccountRepository() {
         fireStoreSource = new FireStoreSource();
-
     }
 
     public void getUserByUsername(String username, LoginCallback loginCallback) {

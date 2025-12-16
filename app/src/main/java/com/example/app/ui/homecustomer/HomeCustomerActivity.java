@@ -47,21 +47,27 @@ public class HomeCustomerActivity extends AppCompatActivity {
             hide.postValue(Boolean.FALSE.equals(hide.getValue()));
         });
 
-        hide.observe(this, hide -> {
+        hide.observe(this, isHidden -> {
             Account account = SessionManager.getInstance(this).getAccount();
             if (account == null) {
                 balance.setText("Unknown");
                 return;
             }
-            eye.setImageResource(hide ? R.mipmap.ic_eye_round : R.mipmap.ic_eye_hide);
-            balance.setText(hide ? "****** VND" : account.getBalance() + " VND");
+            eye.setImageResource(isHidden ? R.mipmap.ic_eye_round : R.mipmap.ic_eye_hide);
+
+            if (isHidden) {
+                balance.setText("****** VND");
+            } else {
+                NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+                balance.setText(formatter.format(account.getBalance()) + " VND");
+            }
         });
 
         homeCustomerViewModel.setAccountLiveData(SessionManager.getInstance(this).getAccount());
 
         homeCustomerViewModel.getAccountLiveData().observe(this, account -> {
             if (Boolean.TRUE.equals(hide.getValue())) {
-                balance.setText("***");
+                balance.setText("****** VND");
             } else {
                 NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
                 balance.setText(formatter.format(account.getBalance()) + " VND");
