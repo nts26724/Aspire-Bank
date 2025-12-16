@@ -34,9 +34,6 @@ public class VerifyOTPViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> booleanLiveData;
     private MutableLiveData<Boolean> depositLiveData;
 
-
-
-
     public VerifyOTPViewModel(@NonNull Application application) {
         super(application);
 
@@ -47,7 +44,6 @@ public class VerifyOTPViewModel extends AndroidViewModel {
         sessionManager = SessionManager.getInstance(application);
         booleanLiveData = new MutableLiveData<>();
         depositLiveData = new MutableLiveData<>();
-
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
@@ -61,7 +57,6 @@ public class VerifyOTPViewModel extends AndroidViewModel {
 
             }
 
-
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
 
@@ -69,16 +64,13 @@ public class VerifyOTPViewModel extends AndroidViewModel {
         };
     }
 
-
     public MutableLiveData<Boolean> getVerifyLiveData() {
         return verifyLiveData;
     }
 
-
     public MutableLiveData<String> getPhoneNumberLiveData() {
         return phoneNumberLiveData;
     }
-
 
     public void getPhoneNumberByUsername(String username) {
         verifyOTPRepository.getPhoneNumberByUsername(username, new PhoneNumberCallBack() {
@@ -93,7 +85,6 @@ public class VerifyOTPViewModel extends AndroidViewModel {
             }
         });
     }
-
 
     public void sendOTP(String phoneNumber, VerifyOTPActivity activity) {
         PhoneAuthOptions options =
@@ -110,13 +101,10 @@ public class VerifyOTPViewModel extends AndroidViewModel {
         Toast.makeText(getApplication(), "Mã OTP là: 123456", Toast.LENGTH_SHORT).show();
     }
 
-
     public void verifyOTP(String userOTP) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, userOTP);
-
         signInWithCredential(credential);
     }
-
 
     private void signInWithCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
@@ -124,7 +112,6 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                     verifyLiveData.postValue(task.isSuccessful());
                 });
     }
-
 
     public void widthraw(String usernameTransfer, long amount, String content, String usernameReceive) {
         verifyOTPRepository.getAccountByUsername(
@@ -140,7 +127,12 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                                     sessionManager.getAccount().getUsername(),
                                     amount);
 
-                            sessionManager.getAccount().widthraw(amount);
+                            sessionManager.getAccount().withdraw(amount);
+                            if (content != null && content.contains("SAVINGS")) {
+                                verifyOTPRepository.updateSaving(sessionManager.getAccount().getUsername(), amount);
+                                long currentSaving = sessionManager.getAccount().getSaving();
+                                sessionManager.getAccount().setSaving(currentSaving + amount);
+                            }
 
                             if(usernameReceive.contains("EVN")){
                                 deleteReceiptByReceiptID(usernameReceive);
@@ -160,22 +152,29 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                 });
     }
 
-
     public void deleteReceiptByReceiptID(String receiptID) {
         verifyOTPRepository.deleteReceiptByReceiptID(receiptID);
     }
-
 
     public MutableLiveData<Boolean> getBooleanLiveData() {
         return booleanLiveData;
     }
 
-
     public void deposit(String username, long amount) {
+        deposit(username, amount, "Deposit account");
+    }
+
+    public void deposit(String username, long amount, String type) {
         verifyOTPRepository.deposit(username, amount);
         sessionManager.getAccount().deposit(amount);
 
-        verifyOTPRepository.addTransaction(amount, "Deposit account", false,
+        if ("MORTGAGE".equals(type)) {
+            verifyOTPRepository.updateMortgage(username, amount);
+            long currentMortgage = sessionManager.getAccount().getMortgage();
+            sessionManager.getAccount().setMortgage(currentMortgage + amount);
+        }
+
+        verifyOTPRepository.addTransaction(amount, type, false,
                 username, sessionManager.getAccount().getUsername());
 
         depositLiveData.postValue(true);

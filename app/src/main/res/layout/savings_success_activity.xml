@@ -41,15 +41,27 @@
                 android:padding="24dp">
 
                 <TextView
+                    android:id="@+id/tv_success_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="12dp"
                     android:fontFamily="@font/adamina"
                     android:text="Gửi tiết kiệm thành công"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_success_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="24dp"
+                    android:fontFamily="@font/adamina"
+                    android:text="Giao dịch đã được ghi nhận vào hệ thống."
+                    android:textColor="#555555"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
-                        android:text="0123456789"
+                        android:text="*******"
                         android:textStyle="bold"
                         android:textColor="#000000"
                         android:textSize="14sp" />
@@ -89,7 +101,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
-                        android:id="@+id/tv_value_amount"
+                        android:id="@+id/tv_success_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -113,7 +125,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
-                        android:id="@+id/tv_value_term"
+                        android:id="@+id/tv_success_term"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -141,7 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
-                        android:text="3.5%/năm"
+                        android:text="--%"
                         android:textStyle="bold"
                         android:textColor="#000000"
                         android:textSize="14sp" />
@@ -161,7 +173,7 @@
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
-                        android:id="@+id/tv_value_date_sent"
+                        android:id="@+id/tv_success_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
@@ -189,7 +201,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
-                        android:text="22/12/2025"
+                        android:text="--"
                         android:textStyle="bold"
                         android:textColor="#000000"
                         android:textSize="14sp" />
@@ -205,7 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/adamina"
-                        android:text="Tổng tiền nhận được"
+                        android:text="Tổng tiền dự kiến"
                         android:textColor="#000000"
                         android:textSize="14sp" />
                     <TextView
@@ -213,7 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/adamina"
-                        android:text="10.029.167 đ"
+                        android:text="--"
                         android:textStyle="bold"
                         android:textColor="#000000"
                         android:textSize="14sp" />
@@ -231,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:text="Tiếp tục tiết kiệm"
+                        android:text="Tiếp tục"
                         android:backgroundTint="@color/aspire_light_orange_background"
                         android:textColor="#000000"
                         android:fontFamily="@font/adamina"
@@ -240,7 +252,7 @@
                         app:cornerRadius="999dp"/>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_home"
+                        android:id="@+id/btn_go_home"
                         style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

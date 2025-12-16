@@ -17,10 +17,12 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +51,7 @@ public class FireStoreSource {
 
                     loginCallback.onSuccess(
                             queryDocumentSnapshots.getDocuments().get(0)
-                            .toObject(Account.class)
+                                    .toObject(Account.class)
                     );
 
                 })
@@ -60,23 +62,23 @@ public class FireStoreSource {
 
     public void getCustomerByUsername(String username, HomeCustomerCallback homeCustomerCallback) {
         db.collection("customer")
-            .whereEqualTo("username", username)
-            .get()
-            .addOnSuccessListener(queryDocumentSnapshots -> {
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
 
-                if (queryDocumentSnapshots.isEmpty()) {
-                    homeCustomerCallback.onSuccess(null);
-                    return;
-                }
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        homeCustomerCallback.onSuccess(null);
+                        return;
+                    }
 
-                homeCustomerCallback.onSuccess(
-                    queryDocumentSnapshots.getDocuments().get(0)
-                            .toObject(Customer.class).getFullName()
-                );
-            })
-            .addOnFailureListener(e -> {
-                homeCustomerCallback.onFailure();
-            });
+                    homeCustomerCallback.onSuccess(
+                            queryDocumentSnapshots.getDocuments().get(0)
+                                    .toObject(Customer.class).getFullName()
+                    );
+                })
+                .addOnFailureListener(e -> {
+                    homeCustomerCallback.onFailure();
+                });
     }
 
 
@@ -138,38 +140,38 @@ public class FireStoreSource {
 
     public void widthraw(String username, long amount) {
         db.collection("account")
-            .whereEqualTo("username", username)
-            .get()
-            .addOnSuccessListener(querySnapshot -> {
-                if (!querySnapshot.isEmpty()) {
-                    DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
-                    DocumentReference accountRef = doc.getReference();
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        DocumentReference accountRef = doc.getReference();
 
-                    db.runTransaction( transaction -> {
-                        DocumentSnapshot snapshot = transaction.get(accountRef);
+                        db.runTransaction( transaction -> {
+                            DocumentSnapshot snapshot = transaction.get(accountRef);
 
-                        Long currentBalance = snapshot.getLong("balance");
-                        if (currentBalance == null) currentBalance = 0L;
+                            Long currentBalance = snapshot.getLong("balance");
+                            if (currentBalance == null) currentBalance = 0L;
 
-                        if (currentBalance < amount) {
-                            throw new FirebaseFirestoreException(
-                                    "Insufficient balance",
-                                    FirebaseFirestoreException.Code.ABORTED
-                            );
-                        }
+                            if (currentBalance < amount) {
+                                throw new FirebaseFirestoreException(
+                                        "Insufficient balance",
+                                        FirebaseFirestoreException.Code.ABORTED
+                                );
+                            }
 
-                        Long newBalance = currentBalance - amount;
+                            Long newBalance = currentBalance - amount;
 
-                        transaction.update(accountRef, "balance", newBalance);
+                            transaction.update(accountRef, "balance", newBalance);
 
-                        return null;
-                    }).addOnSuccessListener(unused -> {
-                        Log.d("Withdraw", "Withdraw success");
-                    }).addOnFailureListener(e -> {
-                        Log.e("Withdraw", "Failed: " + e.getMessage());
-                    });
-                }
-            });
+                            return null;
+                        }).addOnSuccessListener(unused -> {
+                            Log.d("Withdraw", "Withdraw success");
+                        }).addOnFailureListener(e -> {
+                            Log.e("Withdraw", "Failed: " + e.getMessage());
+                        });
+                    }
+                });
     }
 
 
@@ -295,6 +297,85 @@ public class FireStoreSource {
                         }).addOnFailureListener(e -> {
                             Log.e("Withdraw", "Failed: " + e.getMessage());
                         });
+                    }
+                });
+    }
+
+    public void getInterestRates(int termMonths, com.example.app.interfaces.RateCallback callback) {
+        db.collection("rates")
+                .whereEqualTo("termMonths", termMonths)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        com.example.app.data.model.InterestRate rate = querySnapshot.getDocuments().get(0).toObject(com.example.app.data.model.InterestRate.class);
+                        callback.onRateLoaded(rate);
+                    } else {
+                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(termMonths, 3.5, 8.5));
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    callback.onError(e.getMessage());
+                });
+    }
+
+    public void registerUser(com.example.app.data.model.User user, com.example.app.interfaces.UserCallback callback) {
+        Map<String, Object> customerData = new HashMap<>();
+        customerData.put("username", user.getUsername());
+        customerData.put("fullName", user.getFullName());
+        customerData.put("phoneNumber", user.getUsername());
+        customerData.put("email", "user@email.com");
+        customerData.put("cccd", "000000000000");
+
+        Map<String, Object> accountData = new HashMap<>();
+        accountData.put("username", user.getUsername());
+        accountData.put("password", user.getPassword());
+        accountData.put("balance", 0);
+        accountData.put("accountNumber", "123" + user.getUsername());
+
+        WriteBatch batch = db.batch();
+
+        DocumentReference customerRef = db.collection("customer").document();
+        DocumentReference accountRef = db.collection("account").document();
+
+        batch.set(customerRef, customerData);
+        batch.set(accountRef, accountData);
+
+        batch.commit()
+                .addOnSuccessListener(aVoid -> {
+                    callback.onSuccess();
+                    Log.d("Register", "Đăng ký thành công cho: " + user.getUsername());
+                })
+                .addOnFailureListener(e -> {
+                    callback.onError("Lỗi khi tạo tài khoản: " + e.getMessage());
+                });
+    }
+
+    public void updateSaving(String username, long amount) {
+        db.collection("account")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                        String accountId = documentSnapshot.getId();
+
+                        db.collection("account").document(accountId)
+                                .update("saving", FieldValue.increment(amount));
+                    }
+                });
+    }
+
+    public void updateMortgage(String username, long amount) {
+        db.collection("account")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                        String accountId = documentSnapshot.getId();
+
+                        db.collection("account").document(accountId)
+                                .update("mortgage", FieldValue.increment(amount));
                     }
                 });
     }

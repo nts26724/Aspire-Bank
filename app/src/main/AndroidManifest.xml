@@ -71,6 +71,7 @@
         <activity android:name=".ui.savings.SavingsActivity" />
         <activity android:name=".ui.savings.SavingsConfirmActivity" />
         <activity android:name=".ui.savings.SavingsSuccessActivity" />
+        <activity android:name=".ui.savings.SavingsVerifyOTP"/>
 
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.register.RegisterFaceAuthActivity" />
