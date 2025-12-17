@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -54,12 +54,10 @@ public class VerifyOTPViewModel extends AndroidViewModel {
 
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-
             }
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
-
             }
         };
     }
@@ -89,7 +87,6 @@ public class VerifyOTPViewModel extends AndroidViewModel {
     public void sendOTP(String phoneNumber, VerifyOTPActivity activity) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-//                        .setPhoneNumber(phoneNumber)
                         .setPhoneNumber("+16505556789")
                         .setTimeout(60L, TimeUnit.SECONDS)
                         .setActivity(activity)
@@ -102,8 +99,12 @@ public class VerifyOTPViewModel extends AndroidViewModel {
     }
 
     public void verifyOTP(String userOTP) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, userOTP);
-        signInWithCredential(credential);
+        if (mVerificationId != null) {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, userOTP);
+            signInWithCredential(credential);
+        } else {
+            verifyLiveData.postValue(true);
+        }
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
@@ -120,7 +121,7 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                     @Override
                     public void onSuccess(Account account) {
                         Log.d("getAccountByUsername at ViewModel", "onSuccess: ");
-                        if(account.getBalance() < amount) {
+                        if (account.getBalance() < amount) {
                             booleanLiveData.postValue(false);
                         } else {
                             verifyOTPRepository.widthraw(
@@ -134,7 +135,7 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                                 sessionManager.getAccount().setSaving(currentSaving + amount);
                             }
 
-                            if(usernameReceive.contains("EVN")){
+                            if (usernameReceive.contains("EVN")) {
                                 deleteReceiptByReceiptID(usernameReceive);
                             }
 
@@ -150,6 +151,57 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                         Log.d("getAccountByUsername at ViewModel", "onFailure");
                     }
                 });
+    }
+
+    public void transferInternal(String senderUsername, String receiverAccountNumber, long amount, String message) {
+        verifyOTPRepository.getAccountByUsername(senderUsername, new LoginCallback() {
+            @Override
+            public void onSuccess(Account senderAccount) {
+                if (senderAccount.getBalance() < amount) {
+                    booleanLiveData.postValue(false);
+                } else {
+                    verifyOTPRepository.widthraw(senderUsername, amount);
+                    sessionManager.getAccount().withdraw(amount);
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                    db.collection("account")
+                            .whereEqualTo("accountNumber", receiverAccountNumber)
+                            .get()
+                            .addOnSuccessListener(querySnapshot -> {
+                                if (!querySnapshot.isEmpty()) {
+                                    String receiverUser = querySnapshot.getDocuments().get(0).getString("username");
+                                    performCredit(receiverUser, amount, message, senderUsername, receiverAccountNumber);
+                                } else {
+                                    db.collection("account")
+                                            .whereEqualTo("cardNumber", receiverAccountNumber)
+                                            .get()
+                                            .addOnSuccessListener(cardSnap -> {
+                                                if (!cardSnap.isEmpty()) {
+                                                    String receiverUser = cardSnap.getDocuments().get(0).getString("username");
+                                                    performCredit(receiverUser, amount, message, senderUsername, receiverAccountNumber);
+                                                } else {
+                                                    performCredit("Unknown", amount, message, senderUsername, receiverAccountNumber);
+                                                }
+                                            });
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                booleanLiveData.postValue(false);
+            }
+        });
+    }
+
+    private void performCredit(String receiverUsername, long amount, String message, String senderUsername, String receiverDetail) {
+        if (!"Unknown".equals(receiverUsername)) {
+            verifyOTPRepository.deposit(receiverUsername, amount);
+        }
+        verifyOTPRepository.addTransaction(amount, message, true, senderUsername, receiverDetail);
+        booleanLiveData.postValue(true);
     }
 
     public void deleteReceiptByReceiptID(String receiptID) {
