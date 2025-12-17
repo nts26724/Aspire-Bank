@@ -19,6 +19,7 @@ import com.example.app.ui.depositaccount.DepositAccountActivity;
 import com.example.app.ui.depositphone.DepositPhoneActivity;
 import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
 import com.example.app.ui.savings.SavingsActivity;
+import com.example.app.ui.transfer.TransferActivity;
 import com.example.app.utils.SessionManager;
 
 import java.text.NumberFormat;
@@ -91,7 +92,10 @@ public class HomeCustomerActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        transfer.setOnClickListener(v -> {});
+        transfer.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TransferActivity.class);
+            startActivity(intent);
+        });
 
         utility.setOnClickListener(v -> {
             Intent intent = new Intent(this, ReceiptPaymentActivity.class);
