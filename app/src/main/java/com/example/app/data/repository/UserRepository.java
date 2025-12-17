@@ -1,7 +1,10 @@
 package com.example.app.data.repository;
 
+import com.example.app.data.model.Account;
+import com.example.app.data.model.Customer;
 import com.example.app.data.model.User;
 import com.example.app.data.remote.FireStoreSource;
+import com.example.app.interfaces.RegisterCallback;
 import com.example.app.interfaces.UserCallback;
 
 import java.util.ArrayList;
@@ -19,8 +22,8 @@ public class UserRepository {
         fireStoreSource = new FireStoreSource();
     }
 
-    public void registerUser(User user, UserCallback callback) {
-        fireStoreSource.registerUser(user, callback);
+    public void registerUser(Account account, Customer customer, RegisterCallback callback) {
+        fireStoreSource.registerUser(account, customer, callback);
     }
 
     public void login(String username, String password, UserCallback callback) {

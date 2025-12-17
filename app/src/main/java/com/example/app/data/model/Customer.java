@@ -10,16 +10,18 @@ public class Customer {
     private String address;
     private String phoneNumber;
     private String email;
+    private String gender;
 
     public Customer() {}
 
-    public Customer(@NonNull String username, String fullName, String birthDay, String address, String phoneNumber, String email) {
+    public Customer(@NonNull String username, String fullName, String birthDay, String address, String phoneNumber, String email, String gender) {
         this.username = username;
         this.fullName = fullName;
         this.birthDay = birthDay;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.gender = gender;
     }
 
     @NonNull
@@ -46,6 +48,7 @@ public class Customer {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+    public String getGender() {return gender;}
 
     public void setUsername(@NonNull String username) {
         this.username = username;
@@ -70,4 +73,5 @@ public class Customer {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    public void setGender(String gender) {this.gender = gender;}
 }

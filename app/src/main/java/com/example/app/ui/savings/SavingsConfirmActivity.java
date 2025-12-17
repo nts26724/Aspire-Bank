@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
 import com.example.app.ui.customeview.AppBarView;
-import com.example.app.ui.savings.SavingsVerifyOTP;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,6 +29,7 @@ public class SavingsConfirmActivity extends AppCompatActivity {
     private double rate;
     private String accountId;
     private String transactionType;
+    private String userPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +66,34 @@ public class SavingsConfirmActivity extends AppCompatActivity {
         DecimalFormat df = new DecimalFormat("#,###");
 
         if (accountId != null) {
-            FirebaseFirestore.getInstance().collection("account").document(accountId)
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            db.collection("account").document(accountId)
                     .get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
-                            String accNum = documentSnapshot.getString("accountNumber");
-                            if (tvAccount != null) tvAccount.setText(accNum);
+                            String cardNum = documentSnapshot.getString("cardNumber");
+                            String username = documentSnapshot.getString("username");
+
+                            // Hiển thị 3 số cuối của thẻ
+                            if (tvAccount != null) {
+                                if (cardNum != null && cardNum.length() > 3) {
+                                    tvAccount.setText("*******" + cardNum.substring(cardNum.length() - 3));
+                                } else {
+                                    tvAccount.setText("*******");
+                                }
+                            }
+
+                            if (username != null) {
+                                db.collection("customer")
+                                        .whereEqualTo("username", username)
+                                        .get()
+                                        .addOnSuccessListener(querySnapshot -> {
+                                            if (!querySnapshot.isEmpty()) {
+                                                userPhoneNumber = querySnapshot.getDocuments().get(0).getString("phoneNumber");
+                                            }
+                                        });
+                            }
                         }
                     });
         }
@@ -107,6 +129,11 @@ public class SavingsConfirmActivity extends AppCompatActivity {
                 return;
             }
 
+            if (userPhoneNumber == null) {
+                Toast.makeText(this, "Đang tải thông tin khách hàng, vui lòng thử lại...", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(SavingsConfirmActivity.this, SavingsVerifyOTP.class);
 
             intent.putExtra("TRANSACTION_TYPE", transactionType);
@@ -114,6 +141,7 @@ public class SavingsConfirmActivity extends AppCompatActivity {
             intent.putExtra("TERM", term);
             intent.putExtra("RATE", rate);
             intent.putExtra("ACCOUNT_ID", accountId);
+            intent.putExtra("PHONE_NUMBER", userPhoneNumber);
 
             startActivity(intent);
         });

@@ -16,8 +16,15 @@ public class SavingsVerifyOTP extends VerifyOTPActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Button btnVerify = findViewById(R.id.confirm);
+        String phoneNumber = getIntent().getStringExtra("PHONE_NUMBER");
 
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            Toast.makeText(this, "Mã OTP đã được gửi đến: " + phoneNumber, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Cảnh báo: Không tìm thấy số điện thoại nhận OTP", Toast.LENGTH_SHORT).show();
+        }
+
+        Button btnVerify = findViewById(R.id.confirm);
         TextInputEditText et1 = findViewById(R.id.numberOTP1);
         TextInputEditText et2 = findViewById(R.id.numberOTP2);
         TextInputEditText et3 = findViewById(R.id.numberOTP3);
@@ -48,11 +55,13 @@ public class SavingsVerifyOTP extends VerifyOTPActivity {
 
     @Override
     public void customeAction() {
-        String transactionType = intentSource.getStringExtra("TRANSACTION_TYPE");
-        double amountDouble = intentSource.getDoubleExtra("AMOUNT", 0);
+        Intent intent = getIntent();
+
+        String transactionType = intent.getStringExtra("TRANSACTION_TYPE");
+        double amountDouble = intent.getDoubleExtra("AMOUNT", 0);
         long amount = (long) amountDouble;
-        String term = intentSource.getStringExtra("TERM");
-        double rate = intentSource.getDoubleExtra("RATE", 0);
+        String term = intent.getStringExtra("TERM");
+        double rate = intent.getDoubleExtra("RATE", 0);
 
         String username = SessionManager.getInstance(this).getAccount().getUsername();
 
@@ -63,9 +72,10 @@ public class SavingsVerifyOTP extends VerifyOTPActivity {
                 if (isSuccessful) {
                     navigateToSuccess(transactionType, amountDouble, term, rate);
                 } else {
-                    Toast.makeText(this, "Giao dịch thất bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Giao dịch vay vốn thất bại", Toast.LENGTH_SHORT).show();
                 }
             });
+
         } else {
             verifyOTPViewModel.widthraw(
                     username,
@@ -78,7 +88,7 @@ public class SavingsVerifyOTP extends VerifyOTPActivity {
                 if (isSuccessful) {
                     navigateToSuccess(transactionType, amountDouble, term, rate);
                 } else {
-                    Toast.makeText(this, "Số dư không đủ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Số dư không đủ để gửi tiết kiệm", Toast.LENGTH_SHORT).show();
                 }
             });
         }

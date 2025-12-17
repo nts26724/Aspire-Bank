@@ -16,14 +16,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
+import com.example.app.data.model.Account;
 import com.example.app.data.model.InterestRate;
 import com.example.app.data.repository.RateRepository;
 import com.example.app.interfaces.RateCallback;
 import com.example.app.ui.customeview.AppBarView;
 import com.example.app.ui.customeview.NavBarView;
+import com.example.app.utils.SessionManager;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
@@ -107,46 +108,40 @@ public class SavingsActivity extends AppCompatActivity {
     }
 
     private void fetchUserAccountInfo() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user == null) {
+        Account account = SessionManager.getInstance(this).getAccount();
+        if (account == null) {
             Toast.makeText(this, "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
+        String username = account.getUsername();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String userId = user.getUid();
 
-        db.collection("customer").document(userId).get()
-                .addOnSuccessListener(custDoc -> {
-                    if (custDoc.exists()) {
-                        currentAccountId = custDoc.getString("account");
+        db.collection("account")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot accDoc = querySnapshot.getDocuments().get(0);
+                        currentAccountId = accDoc.getId();
+                        Double balance = accDoc.getDouble("balance");
+                        String cardNum = accDoc.getString("cardNumber");
 
-                        if (currentAccountId != null && !currentAccountId.isEmpty()) {
-                            db.collection("account").document(currentAccountId).get()
-                                    .addOnSuccessListener(accDoc -> {
-                                        if (accDoc.exists()) {
-                                            Double balance = accDoc.getDouble("balance");
-                                            String accNum = accDoc.getString("accountNumber");
+                        sourceAccountBalance = (balance != null) ? balance : 0.0;
 
-                                            sourceAccountBalance = (balance != null) ? balance : 0.0;
+                        DecimalFormat df = new DecimalFormat("#,###");
+                        if (tvSourceBalance != null) {
+                            tvSourceBalance.setText(df.format(sourceAccountBalance) + " đ");
+                        }
 
-                                            DecimalFormat df = new DecimalFormat("#,###");
-                                            if (tvSourceBalance != null) {
-                                                tvSourceBalance.setText(df.format(sourceAccountBalance) + " đ");
-                                            }
-
-                                            if (tvSourceAccountNumber != null && accNum != null && accNum.length() > 3) {
-                                                tvSourceAccountNumber.setText("*******" + accNum.substring(accNum.length() - 3));
-                                            }
-                                        }
-                                    });
-                        } else {
-                            Toast.makeText(this, "Lỗi dữ liệu: User chưa liên kết tài khoản", Toast.LENGTH_LONG).show();
+                        if (tvSourceAccountNumber != null && cardNum != null && cardNum.length() > 3) {
+                            tvSourceAccountNumber.setText("*******" + cardNum.substring(cardNum.length() - 3));
+                        } else if (tvSourceAccountNumber != null) {
+                            tvSourceAccountNumber.setText("*******");
                         }
                     } else {
-                        Toast.makeText(this, "Không tìm thấy thông tin khách hàng", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Không tìm thấy thông tin tài khoản", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Lỗi kết nối: " + e.getMessage(), Toast.LENGTH_SHORT).show());
