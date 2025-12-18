@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -77,6 +78,14 @@
         <activity android:name=".ui.savings.SavingsActivity" />
         <activity android:name=".ui.savings.SavingsConfirmActivity" />
         <activity android:name=".ui.savings.SavingsSuccessActivity" />
+        <activity android:name=".ui.savings.SavingsVerifyOTP"/>
 
+        <activity android:name=".ui.register.RegisterActivity" />
+        <activity android:name=".ui.register.RegisterFaceAuthActivity" />
+        <activity android:name=".ui.register.RegisterSuccessActivity" />
+
+        <activity android:name=".ui.transfer.TransferActivity" />
+        <activity android:name=".ui.transfer.TransferVerifyOTP" />
+        <activity android:name=".ui.transfer.TransferSuccessActivity" />
     </application>
 </manifest>

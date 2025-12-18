@@ -1,68 +1,45 @@
 package com.example.app.data.model;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-
 public class Transaction {
-    @NonNull
     private long transactionID;
-    private String usernameTransfer;
-    private String usernameReceive;
     private long amount;
     private String content;
     private long time;
     private boolean transfer;
+    private String usernameTransfer;
+    private String usernameReceive;
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
-    public Transaction(@NonNull long transactionID, String usernameTransfer,
-                       String usernameReceive, long amount, String content,
-                       long time, boolean transfer) {
-
+    public Transaction(long transactionID, long amount, String content, long time, boolean transfer, String usernameTransfer, String usernameReceive) {
         this.transactionID = transactionID;
-        this.usernameTransfer = usernameTransfer;
-        this.usernameReceive = usernameReceive;
         this.amount = amount;
         this.content = content;
         this.time = time;
         this.transfer = transfer;
+        this.usernameTransfer = usernameTransfer;
+        this.usernameReceive = usernameReceive;
     }
 
-    @NonNull
     public long getTransactionID() {
         return transactionID;
     }
 
-    public String getUsernameReceive() {
-        return usernameReceive;
-    }
-
-    public String getUsernameTransfer() {
-        return usernameTransfer;
+    public void setTransactionID(long transactionID) {
+        this.transactionID = transactionID;
     }
 
     public long getAmount() {
         return amount;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setTransactionID(@NonNull long transactionID) {
-        this.transactionID = transactionID;
-    }
-
-    public void setUsernameReceive(String usernameReceive) {
-        this.usernameReceive = usernameReceive;
-    }
-
-    public void setUsernameTransfer(String usernameTransfer) {
-        this.usernameTransfer = usernameTransfer;
-    }
-
     public void setAmount(long amount) {
         this.amount = amount;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public void setContent(String content) {
@@ -77,10 +54,27 @@ public class Transaction {
         this.time = time;
     }
 
+    public boolean isTransfer() {
+        return transfer;
+    }
+
     public void setTransfer(boolean transfer) {
         this.transfer = transfer;
     }
-    public boolean isTransfer() {
-        return transfer;
+
+    public String getUsernameTransfer() {
+        return usernameTransfer;
+    }
+
+    public void setUsernameTransfer(String usernameTransfer) {
+        this.usernameTransfer = usernameTransfer;
+    }
+
+    public String getUsernameReceive() {
+        return usernameReceive;
+    }
+
+    public void setUsernameReceive(String usernameReceive) {
+        this.usernameReceive = usernameReceive;
     }
 }

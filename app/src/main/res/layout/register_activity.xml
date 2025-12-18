@@ -1,241 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/aspire_cream_background"
-    android:id="@+id/main"
-    >
-<!--    tools:context=".register.RegisterStep1Activity"-->
+    android:background="@color/aspire_cream_background">
 
-    <ImageView
-        android:id="@+id/img_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_aspire_logo" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_welcome"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Chào mừng đến với Aspire Bank"
-        android:textColor="@color/aspire_dark_text"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/adamina"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_logo" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="40dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/card_form"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_rounded_card"
-        android:elevation="4dp"
-        android:padding="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_welcome">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_aspire_logo"/>
 
         <TextView
-            android:id="@+id/tv_form_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thông tin cá nhân"
-            android:textColor="@color/aspire_dark_text"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/adamina"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/label_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Họ và tên"
-            android:textColor="@color/aspire_dark_text"
-            android:fontFamily="@font/adamina"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_form_title" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint=""
-            app:boxBackgroundColor="@color/aspire_input_background"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_name"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/adamina"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/label_cccd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Số CCCD/CMND"
-            android:textColor="@color/aspire_dark_text"
             android:fontFamily="@font/adamina"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_name" />
+            android:text="Chào mừng đến với\nAspire Bank"
+            android:textAlignment="center"
+            android:textColor="@color/aspire_dark_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_cccd"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="0dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_container">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint=""
-            app:boxBackgroundColor="@color/aspire_input_background"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_cccd"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
-            <com.google.android.material.textfield.TextInputEditText
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:fontFamily="@font/adamina"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:padding="24dp">
 
-        <TextView
-            android:id="@+id/label_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Số điện thoại"
-            android:textColor="@color/aspire_dark_text"
-            android:fontFamily="@font/adamina"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_cccd" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="24dp"
+                    android:fontFamily="@font/adamina"
+                    android:text="Thông tin đăng ký"
+                    android:textColor="@color/aspire_orange_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_phone"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint=""
-            app:boxBackgroundColor="@color/aspire_input_background"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_phone"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:fontFamily="@font/adamina"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Họ và tên" />
 
-        <TextView
-            android:id="@+id/label_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Email"
-            android:textColor="@color/aspire_dark_text"
-            android:fontFamily="@font/adamina"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_phone" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint=""
-            app:boxBackgroundColor="@color/aspire_input_background"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_email"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:fontFamily="@font/adamina"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_fullname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:hint="Nhập họ và tên"
+                        android:textColor="@color/aspire_dark_text"
+                        android:inputType="textPersonName"
+                        android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_continue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/aspire_orange_primary"
-            android:text="Tiếp tục"
-            android:fontFamily="@font/adamina"
-            app:layout_constraintEnd_toStartOf="@id/btn_cancel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_email"
-            app:cornerRadius="999dp" />
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tên đăng nhập" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_cancel"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Hủy"
-            android:textColor="@color/aspire_orange_primary"
-            android:fontFamily="@font/adamina"
-            app:layout_constraintBottom_toBottomOf="@id/btn_continue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_continue"
-            app:layout_constraintTop_toTopOf="@id/btn_continue"
-            android:backgroundTint="@color/aspire_light_orange_background"
-            app:cornerRadius="999dp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:hint="Tạo username"
+                        android:textColor="@color/aspire_dark_text"
+                        android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Email" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:hint="example@email.com"
+                        android:textColor="@color/aspire_dark_text"
+                        android:inputType="textEmailAddress"
+                        android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Số điện thoại" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:hint="09xxxxxxxx"
+                        android:textColor="@color/aspire_dark_text"
+                        android:inputType="phone"
+                        android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Ngày sinh" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:hint="DD/MM/YYYY"
+                        android:textColor="@color/aspire_dark_text"
+                        android:inputType="date"
+                        android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Địa chỉ" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:hint="Nhập địa chỉ"
+                        android:textColor="@color/aspire_dark_text"
+                        android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Giới tính" />
+
+                <RadioGroup
+                    android:id="@+id/rg_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <RadioButton
+                        android:id="@+id/rb_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:text="Nam"
+                        android:layout_marginEnd="24dp"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:text="Nữ"/>
+                </RadioGroup>
+
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Mật khẩu" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:passwordToggleEnabled="true"> <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/adamina"
+                    android:hint="******"
+                    android:textColor="@color/aspire_dark_text"
+                    android:inputType="textPassword"
+                    android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Style.App.TextView.TransferLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Nhập lại mật khẩu" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.App.TextInputLayout.Transfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_re_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/adamina"
+                        android:hint="******"
+                        android:textColor="@color/aspire_dark_text"
+                        android:inputType="textPassword"
+                        android:paddingVertical="12dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="14dp"
+                    android:text="Đăng ký"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/adamina"
+                    android:textAllCaps="true"
+                    app:backgroundTint="@color/aspire_orange_primary"
+                    app:cornerRadius="999dp"/>
+
+                <TextView
+                    android:id="@+id/tv_login_now"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/adamina"
+                    android:text="Hủy bỏ / Quay về đăng nhập"
+                    android:textColor="@color/aspire_orange_primary"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,24 +13,27 @@ import com.example.app.interfaces.HomeCustomerCallback;
 import com.example.app.interfaces.LoginCallback;
 import com.example.app.interfaces.PhoneNumberCallBack;
 import com.example.app.interfaces.ReceiptPaymentCallback;
+import com.example.app.interfaces.RegisterCallback;
 import com.example.app.interfaces.TransactionCallback;
+import com.example.app.interfaces.CustomerCallback;
+import com.example.app.interfaces.ReceiverCallback;
 import com.example.app.utils.SessionManager;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit2.Callback;
 
 public class FireStoreSource {
     private FirebaseFirestore db;
@@ -39,12 +42,54 @@ public class FireStoreSource {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void getAccountByUsername(String username, LoginCallback loginCallback) {
+    public void getAccountByNumber(String number, ReceiverCallback callback) {
         db.collection("account")
+                .whereEqualTo("cardNumber", number)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        String username = querySnapshot.getDocuments().get(0).getString("username");
+                        getCustomerNameByUsername(username, callback);
+                    } else {
+                        checkAccountNumber(number, callback);
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure("Lỗi kết nối Server"));
+    }
+
+    private void checkAccountNumber(String number, ReceiverCallback callback) {
+        db.collection("account")
+                .whereEqualTo("accountNumber", number)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        String username = querySnapshot.getDocuments().get(0).getString("username");
+                        getCustomerNameByUsername(username, callback);
+                    } else {
+                        callback.onFailure("Số thẻ/Tài khoản không tồn tại");
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure("Lỗi tìm kiếm"));
+    }
+
+    private void getCustomerNameByUsername(String username, ReceiverCallback callback) {
+        db.collection("customer")
                 .whereEqualTo("username", username)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
+                .addOnSuccessListener(custSnap -> {
+                    if (!custSnap.isEmpty()) {
+                        String fullName = custSnap.getDocuments().get(0).getString("fullName");
+                        callback.onSuccess(fullName);
+                    } else {
+                        callback.onFailure("Tài khoản chưa định danh");
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure("Lỗi lấy thông tin khách hàng"));
+    }
 
+    public void getAccountByUsername(String username, LoginCallback loginCallback) {
+        db.collection("account").whereEqualTo("username", username).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.isEmpty()) {
                         loginCallback.onSuccess(null);
                         return;
@@ -56,9 +101,7 @@ public class FireStoreSource {
                     );
 
                 })
-                .addOnFailureListener(e -> {
-                    loginCallback.onFailure();
-                });
+                .addOnFailureListener(e -> loginCallback.onFailure());
     }
 
     public void getCustomerByUsername(String username, HomeCustomerCallback homeCustomerCallback) {
@@ -82,7 +125,6 @@ public class FireStoreSource {
                 });
     }
 
-
     public void getTransactionByUsername(String username, TransactionCallback transactionCallback) {
         Task<QuerySnapshot> q1 = db.collection("transaction")
                 .whereEqualTo("usernameTransfer", username)
@@ -95,28 +137,30 @@ public class FireStoreSource {
 
         Tasks.whenAllSuccess(q1, q2)
                 .addOnSuccessListener(results -> {
-                    List<DocumentSnapshot> allDocs = new ArrayList<>();
+                    Map<String, Transaction> uniqueTransactions = new HashMap<>();
 
                     QuerySnapshot r1 = (QuerySnapshot) results.get(0);
-                    if (r1 != null) allDocs.addAll(r1.getDocuments());
-
+                    if (r1 != null) {
+                        for (DocumentSnapshot doc : r1.getDocuments()) {
+                            uniqueTransactions.put(doc.getId(), doc.toObject(Transaction.class));
+                        }
+                    }
                     QuerySnapshot r2 = (QuerySnapshot) results.get(1);
-                    if (r2 != null) allDocs.addAll(r2.getDocuments());
-
-                    if (allDocs.isEmpty()) {
+                    if (r2 != null) {
+                        for (DocumentSnapshot doc : r2.getDocuments()) {
+                            uniqueTransactions.put(doc.getId(), doc.toObject(Transaction.class));
+                        }
+                    }
+                    if (uniqueTransactions.isEmpty()) {
                         transactionCallback.onSuccess(null);
                         return;
                     }
-
-                    List<Transaction> allTransactions = new ArrayList<>();
-                    for (DocumentSnapshot doc : allDocs) {
-                        allTransactions.add(doc.toObject(Transaction.class));
-                    }
+                    List<Transaction> allTransactions = new ArrayList<>(uniqueTransactions.values());
+                    allTransactions.sort((t1, t2) -> Long.compare(t2.getTime(), t1.getTime()));
                     transactionCallback.onSuccess(allTransactions);
                 })
                 .addOnFailureListener(e -> transactionCallback.onFailure());
     }
-
 
     public void getReceiptByUsername(String username, ReceiptPaymentCallback receiptPaymentCallback) {
         db.collection("receipt")
@@ -127,7 +171,6 @@ public class FireStoreSource {
                         receiptPaymentCallback.onSuccess(null);
                         return;
                     }
-
                     List<Receipt> receipts = new ArrayList<>();
                     for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                         receipts.add(doc.toObject(Receipt.class));
@@ -136,7 +179,6 @@ public class FireStoreSource {
                 })
                 .addOnFailureListener(e -> receiptPaymentCallback.onFailure());
     }
-
 
     public void widthraw(String username, long amount) {
         db.collection("account")
@@ -174,30 +216,16 @@ public class FireStoreSource {
                 });
     }
 
-
-    public void addTransaction(long amount, String content, boolean transfer,
-                               String usernameTransfer, String usernameReceive) {
-
+    public void addTransaction(long amount, String content, boolean transfer, String usernameTransfer, String usernameReceive) {
         CollectionReference transRef = db.collection("transaction");
-
-        transRef.orderBy("transactionID", Query.Direction.DESCENDING)
-                .limit(1)
-                .get()
+        transRef.orderBy("transactionID", Query.Direction.DESCENDING).limit(1).get()
                 .addOnSuccessListener(snapshot -> {
-
                     long nextID = 1;
-
                     if (!snapshot.isEmpty()) {
                         DocumentSnapshot doc = snapshot.getDocuments().get(0);
                         Long lastID = doc.getLong("transactionID");
-
-                        try {
-                            nextID = lastID + 1;
-                        } catch (Exception e) {
-                            nextID = 1;
-                        }
+                        try { nextID = lastID + 1; } catch (Exception e) { nextID = 1; }
                     }
-
                     Map<String, Object> data = new HashMap<>();
                     data.put("amount", amount);
                     data.put("content", content);
@@ -206,76 +234,35 @@ public class FireStoreSource {
                     data.put("transfer", transfer);
                     data.put("usernameReceive", usernameReceive);
                     data.put("usernameTransfer", usernameTransfer);
-
-                    transRef.add(data)
-                            .addOnSuccessListener(ref -> {
-                                Log.d("Transaction", "Create success: " + ref.getId());
-                            })
-                            .addOnFailureListener(e -> {
-                                Log.e("Transaction", "Create FAIL: " + e.getMessage());
-                            });
-
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("Transaction", "Cannot get max ID: " + e.getMessage());
+                    transRef.add(data);
                 });
     }
 
-
     public void getPhoneNumberByUsername(String username, PhoneNumberCallBack phoneNumberCallback) {
-        db.collection("customer")
-                .whereEqualTo("username", username)
-                .get()
+        db.collection("customer").whereEqualTo("username", username).get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
-                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
-                        String phone = doc.getString("phoneNumber");
+                        String phone = querySnapshot.getDocuments().get(0).getString("phoneNumber");
                         phoneNumberCallback.onSuccess(phone);
                     } else {
                         phoneNumberCallback.onSuccess(null);
                     }
                 })
-                .addOnFailureListener(e -> {
-                    e.printStackTrace();
-                    phoneNumberCallback.onFailure();
-                });
+                .addOnFailureListener(e -> phoneNumberCallback.onFailure());
     }
 
-
     public void deleteReceiptByReceiptID(String receiptID) {
-        db.collection("receipt")
-                .whereEqualTo("receiptID", receiptID)
-                .limit(1)
-                .get()
+        db.collection("receipt").whereEqualTo("receiptID", receiptID).limit(1).get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
                         String docId = querySnapshot.getDocuments().get(0).getId();
-
-                        db.collection("receipt")
-                                .document(docId)
-                                .delete()
-                                .addOnSuccessListener(aVoid -> {
-                                    Log.d("deleteReceiptByReceiptID", "Success");
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.d("deleteReceiptByReceiptID", "Failure");
-                                });
-
-                    } else {
-                        Log.d("deleteReceiptByReceiptID", "Not found");
+                        db.collection("receipt").document(docId).delete();
                     }
-                })
-                .addOnFailureListener(e -> {
-                    e.printStackTrace();
-                    Log.d("deleteReceiptByReceiptID", "can't counenct");
                 });
     }
 
-
     public void deposit(String username, long amount) {
-        db.collection("account")
-                .whereEqualTo("username", username)
-                .get()
+        db.collection("account").whereEqualTo("username", username).get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
                         DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
@@ -283,21 +270,56 @@ public class FireStoreSource {
 
                         db.runTransaction(transaction -> {
                             DocumentSnapshot snapshot = transaction.get(accountRef);
-
                             Long currentBalance = snapshot.getLong("balance");
                             if (currentBalance == null) currentBalance = 0L;
-
-                            Long newBalance = currentBalance + amount;
-
-                            transaction.update(accountRef, "balance", newBalance);
-
+                            transaction.update(accountRef, "balance", currentBalance + amount);
                             return null;
-                        }).addOnSuccessListener(unused -> {
-                            Log.d("Withdraw", "Withdraw success");
-                        }).addOnFailureListener(e -> {
-                            Log.e("Withdraw", "Failed: " + e.getMessage());
                         });
                     }
+                });
+    }
+
+    public void getInterestRates(int termMonths, com.example.app.interfaces.RateCallback callback) {
+        db.collection("rateProfit")
+                .whereEqualTo("term", termMonths)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+
+                        Double savings = doc.getDouble("savingsRate");
+                        Double mortgage = doc.getDouble("mortgageRate");
+
+                        double finalSavings = (savings != null) ? savings : 3.5;
+                        double finalMortgage = (mortgage != null) ? mortgage : 8.5;
+
+                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(termMonths, finalSavings, finalMortgage));
+                    } else {
+                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(termMonths, 3.5, 8.5));
+                    }
+                }).addOnFailureListener(e -> callback.onError(e.getMessage()));
+    }
+
+    public void registerUser(Account account, Customer customer, RegisterCallback callback) {
+        WriteBatch batch = db.batch();
+        batch.set(db.collection("account").document(), account);
+        batch.set(db.collection("customer").document(), customer);
+        batch.commit()
+                .addOnSuccessListener(aVoid -> callback.onSuccess())
+                .addOnFailureListener(e -> callback.onError(e.getMessage()));
+    }
+
+    public void updateSaving(String username, long amount) {
+        db.collection("account").whereEqualTo("username", username).get()
+                .addOnSuccessListener(doc -> {
+                    if(!doc.isEmpty()) db.collection("account").document(doc.getDocuments().get(0).getId()).update("saving", FieldValue.increment(amount));
+                });
+    }
+
+    public void updateMortgage(String username, long amount) {
+        db.collection("account").whereEqualTo("username", username).get()
+                .addOnSuccessListener(doc -> {
+                    if(!doc.isEmpty()) db.collection("account").document(doc.getDocuments().get(0).getId()).update("mortgage", FieldValue.increment(amount));
                 });
     }
 
@@ -532,5 +554,34 @@ public class FireStoreSource {
                     isUpdateCustomerSuccess.postValue(false);
                     Log.d("updateOfficer", "updateOfficer: False");
                 });
+    }
+}
+    public void getCustomerDetail(String username, CustomerCallback callback) {
+        db.collection("customer").whereEqualTo("username", username).get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        callback.onSuccess(querySnapshot.getDocuments().get(0).toObject(Customer.class));
+                    } else {
+                        callback.onFailure("Không tìm thấy");
+                    }
+                }).addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+    }
+
+    public void updateCustomerAvatar(String username, String avatarUrl, CustomerCallback callback) {
+        db.collection("customer")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        String docId = querySnapshot.getDocuments().get(0).getId();
+                        db.collection("customer").document(docId)
+                                .update("avatarUrl", avatarUrl)
+                                .addOnSuccessListener(aVoid -> callback.onSuccess(null))
+                                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+                    } else {
+                        callback.onFailure("Không tìm thấy thông tin khách hàng để cập nhật ảnh.");
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure("Lỗi kết nối: " + e.getMessage()));
     }
 }

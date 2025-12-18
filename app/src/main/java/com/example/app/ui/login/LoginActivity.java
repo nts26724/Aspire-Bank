@@ -18,6 +18,7 @@ import com.example.app.data.model.Account;
 import com.example.app.interfaces.LoginCallback;
 import com.example.app.ui.homecustomer.HomeCustomerActivity;
 import com.example.app.ui.homeofficer.HomeOfficerActivity;
+import com.example.app.ui.register.RegisterActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         init();
 
         btnRegister.setOnClickListener(v -> {
-//            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
 
         btnLogin.setOnClickListener(v -> {

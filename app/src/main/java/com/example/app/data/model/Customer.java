@@ -11,6 +11,7 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String gender;
+    private String avatarUrl;
 
     public Customer() {}
 
@@ -48,6 +49,7 @@ public class Customer {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+    public String getGender() {return gender;}
 
     public void setUsername(@NonNull String username) {
         this.username = username;
@@ -77,7 +79,9 @@ public class Customer {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    public void setGender(String gender) {this.gender = gender;}
+
+    public String getAvatarUrl() {return avatarUrl;}
+
+    public void setAvatarUrl(String avatarUrl) {this.avatarUrl = avatarUrl;}
 }

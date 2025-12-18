@@ -3,13 +3,14 @@ package com.example.app.ui.savings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
-import com.example.app.ui.verify.VerifyOTPActivity;
-import com.google.android.material.button.MaterialButton;
 import com.example.app.ui.customeview.AppBarView;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,9 @@ public class SavingsConfirmActivity extends AppCompatActivity {
     private double amount;
     private String term;
     private double rate;
+    private String accountId;
+    private String transactionType;
+    private String userPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,8 @@ public class SavingsConfirmActivity extends AppCompatActivity {
         amount = intent.getDoubleExtra("AMOUNT", 0);
         term = intent.getStringExtra("TERM");
         rate = intent.getDoubleExtra("RATE", 0);
+        accountId = intent.getStringExtra("ACCOUNT_ID");
+        transactionType = intent.getStringExtra("TRANSACTION_TYPE");
 
         initViews();
         displayData();
@@ -59,7 +65,39 @@ public class SavingsConfirmActivity extends AppCompatActivity {
     private void displayData() {
         DecimalFormat df = new DecimalFormat("#,###");
 
-        if (tvAccount != null) tvAccount.setText("0123456789");
+        if (accountId != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            db.collection("account").document(accountId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String cardNum = documentSnapshot.getString("cardNumber");
+                            String username = documentSnapshot.getString("username");
+
+                            // Hiển thị 3 số cuối của thẻ
+                            if (tvAccount != null) {
+                                if (cardNum != null && cardNum.length() > 3) {
+                                    tvAccount.setText("*******" + cardNum.substring(cardNum.length() - 3));
+                                } else {
+                                    tvAccount.setText("*******");
+                                }
+                            }
+
+                            if (username != null) {
+                                db.collection("customer")
+                                        .whereEqualTo("username", username)
+                                        .get()
+                                        .addOnSuccessListener(querySnapshot -> {
+                                            if (!querySnapshot.isEmpty()) {
+                                                userPhoneNumber = querySnapshot.getDocuments().get(0).getString("phoneNumber");
+                                            }
+                                        });
+                            }
+                        }
+                    });
+        }
+
         if (tvAmount != null) tvAmount.setText(df.format(amount) + " đ");
         if (tvTerm != null) tvTerm.setText(term);
         if (tvRate != null) tvRate.setText(rate + "%/năm");
@@ -86,12 +124,24 @@ public class SavingsConfirmActivity extends AppCompatActivity {
 
     private void setupListeners() {
         btnConfirm.setOnClickListener(v -> {
-            Intent intent = new Intent(SavingsConfirmActivity.this, VerifyOTPActivity.class);
+            if (accountId == null) {
+                Toast.makeText(this, "Lỗi: Không tìm thấy tài khoản", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            intent.putExtra("NEXT_SCREEN", "SAVINGS_SUCCESS");
+            if (userPhoneNumber == null) {
+                Toast.makeText(this, "Đang tải thông tin khách hàng, vui lòng thử lại...", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Intent intent = new Intent(SavingsConfirmActivity.this, SavingsVerifyOTP.class);
+
+            intent.putExtra("TRANSACTION_TYPE", transactionType);
             intent.putExtra("AMOUNT", amount);
             intent.putExtra("TERM", term);
             intent.putExtra("RATE", rate);
+            intent.putExtra("ACCOUNT_ID", accountId);
+            intent.putExtra("PHONE_NUMBER", userPhoneNumber);
 
             startActivity(intent);
         });

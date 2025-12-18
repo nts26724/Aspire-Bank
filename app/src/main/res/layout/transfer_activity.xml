@@ -6,15 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aspire_cream_background"
-    tools:context=".TransferFragment">
+    tools:context=".ui.transfer.TransferActivity">
 
     <com.example.app.ui.customeview.AppBarView
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -45,21 +44,23 @@
                     app:singleSelection="true"
                     app:checkedButton="@+id/btn_tab_internal">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_tab_internal"
-                        style="@style/Widget.App.Button.Toggle.Transfer"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Nội Bộ" />
+                        android:text="Nội Bộ"
+                        app:strokeWidth="0dp" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_tab_external"
-                        style="@style/Widget.App.Button.Toggle.Transfer"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Ngân hàng khác" />
+                        android:text="Ngân hàng khác"
+                        app:strokeWidth="0dp" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </androidx.cardview.widget.CardView>
@@ -84,7 +85,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/adamina"
-                        android:text="Chuyển tiền nội bộ" android:textColor="@color/aspire_dark_text"
+                        android:text="Chuyển tiền nội bộ"
+                        android:textColor="@color/aspire_dark_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -108,13 +110,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp">
+
                             <AutoCompleteTextView
+                                android:id="@+id/actv_bank_selector"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/adamina"
                                 android:textColor="@color/aspire_dark_text"
                                 android:paddingTop="10dp"
-                                android:paddingBottom="10dp" />
+                                android:paddingBottom="10dp"
+                                android:inputType="none" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
@@ -123,13 +128,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Số tài khoản" />
+                        android:text="Số tài khoản / Số thẻ" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Style.App.TextInputLayout.Transfer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
+
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_receiver_account"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/adamina"
@@ -140,17 +148,31 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
+                        android:id="@+id/tv_receiver_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/aspire_dark_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="end"
+                        tools:text="NGUYEN VAN A" />
+
+                    <TextView
                         style="@style/Style.App.TextView.TransferLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Số tiền" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Style.App.TextInputLayout.Transfer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
+
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_transfer_amount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/adamina"
@@ -166,12 +188,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Nội dung chuyển khoản" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Style.App.TextInputLayout.Transfer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
+
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_transfer_message"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/adamina"
@@ -187,7 +212,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:fontFamily="@font/adamina"
-                        android:text="Chuyển tiền"
+                        android:text="Tiếp tục"
                         android:textColor="@color/aspire_dark_text"
                         android:backgroundTint="@color/aspire_light_orange_background"
                         app:cornerRadius="999dp" />
@@ -203,6 +228,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

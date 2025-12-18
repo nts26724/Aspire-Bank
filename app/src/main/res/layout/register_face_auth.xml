@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aspire_cream_background"
-    tools:context=".FaceAuthActivity">
+    tools:context=".ui.register.RegisterFaceAuthActivity">
 
     <ImageView
         android:id="@+id/img_logo"
@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@id/img_camera_icon" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_continue"
+                android:id="@+id/btn_start_scan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -115,10 +115,10 @@
                 android:text="Hủy"
                 android:textColor="@color/aspire_orange_primary"
                 app:cornerRadius="999dp"
-                app:layout_constraintBottom_toBottomOf="@id/btn_continue"
+                app:layout_constraintBottom_toBottomOf="@id/btn_start_scan"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_continue"
-                app:layout_constraintTop_toTopOf="@id/btn_continue" />
+                app:layout_constraintStart_toEndOf="@id/btn_start_scan"
+                app:layout_constraintTop_toTopOf="@id/btn_start_scan" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
