@@ -112,20 +112,26 @@ public class FireStoreSource {
 
         Tasks.whenAllSuccess(q1, q2)
                 .addOnSuccessListener(results -> {
-                    List<DocumentSnapshot> allDocs = new ArrayList<>();
-                    QuerySnapshot r1 = (QuerySnapshot) results.get(0);
-                    if (r1 != null) allDocs.addAll(r1.getDocuments());
-                    QuerySnapshot r2 = (QuerySnapshot) results.get(1);
-                    if (r2 != null) allDocs.addAll(r2.getDocuments());
+                    Map<String, Transaction> uniqueTransactions = new HashMap<>();
 
-                    if (allDocs.isEmpty()) {
+                    QuerySnapshot r1 = (QuerySnapshot) results.get(0);
+                    if (r1 != null) {
+                        for (DocumentSnapshot doc : r1.getDocuments()) {
+                            uniqueTransactions.put(doc.getId(), doc.toObject(Transaction.class));
+                        }
+                    }
+                    QuerySnapshot r2 = (QuerySnapshot) results.get(1);
+                    if (r2 != null) {
+                        for (DocumentSnapshot doc : r2.getDocuments()) {
+                            uniqueTransactions.put(doc.getId(), doc.toObject(Transaction.class));
+                        }
+                    }
+                    if (uniqueTransactions.isEmpty()) {
                         transactionCallback.onSuccess(null);
                         return;
                     }
-                    List<Transaction> allTransactions = new ArrayList<>();
-                    for (DocumentSnapshot doc : allDocs) {
-                        allTransactions.add(doc.toObject(Transaction.class));
-                    }
+                    List<Transaction> allTransactions = new ArrayList<>(uniqueTransactions.values());
+                    allTransactions.sort((t1, t2) -> Long.compare(t2.getTime(), t1.getTime()));
                     transactionCallback.onSuccess(allTransactions);
                 })
                 .addOnFailureListener(e -> transactionCallback.onFailure());
@@ -234,10 +240,20 @@ public class FireStoreSource {
     }
 
     public void getInterestRates(int termMonths, com.example.app.interfaces.RateCallback callback) {
-        db.collection("rates").whereEqualTo("termMonths", termMonths).get()
+        db.collection("rateProfit")
+                .whereEqualTo("term", termMonths)
+                .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
-                        callback.onRateLoaded(querySnapshot.getDocuments().get(0).toObject(com.example.app.data.model.InterestRate.class));
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+
+                        Double savings = doc.getDouble("savingsRate");
+                        Double mortgage = doc.getDouble("mortgageRate");
+
+                        double finalSavings = (savings != null) ? savings : 3.5;
+                        double finalMortgage = (mortgage != null) ? mortgage : 8.5;
+
+                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(termMonths, finalSavings, finalMortgage));
                     } else {
                         callback.onRateLoaded(new com.example.app.data.model.InterestRate(termMonths, 3.5, 8.5));
                     }
@@ -276,5 +292,23 @@ public class FireStoreSource {
                         callback.onFailure("Không tìm thấy");
                     }
                 }).addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+    }
+
+    public void updateCustomerAvatar(String username, String avatarUrl, CustomerCallback callback) {
+        db.collection("customer")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        String docId = querySnapshot.getDocuments().get(0).getId();
+                        db.collection("customer").document(docId)
+                                .update("avatarUrl", avatarUrl)
+                                .addOnSuccessListener(aVoid -> callback.onSuccess(null))
+                                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+                    } else {
+                        callback.onFailure("Không tìm thấy thông tin khách hàng để cập nhật ảnh.");
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure("Lỗi kết nối: " + e.getMessage()));
     }
 }

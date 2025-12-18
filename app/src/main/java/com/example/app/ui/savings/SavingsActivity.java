@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SavingsActivity extends AppCompatActivity {
 
@@ -39,7 +40,7 @@ public class SavingsActivity extends AppCompatActivity {
     private MaterialButton btnSubmit;
     private Button btn5M, btn10M, btn50M;
     private TextView tvScreenTitle, tvTermLabel, tvInterestRateLabel;
-    private TextView tvPrincipal, tvInterestAmount, tvTotalAmount, tvNote;
+    private TextView tvPrincipal, tvInterestAmount, tvTotalAmount, tvNote, tvTotalLabel;
 
     private TextView tvSourceAccountNumber, tvSourceBalance;
     private double sourceAccountBalance = 0.0;
@@ -74,7 +75,7 @@ public class SavingsActivity extends AppCompatActivity {
         setupAmountInput();
         setupSubmitButton();
 
-        updateRateFromDatabase();
+        updateAllButtonsFromDB();
     }
 
     private void initViews() {
@@ -92,6 +93,7 @@ public class SavingsActivity extends AppCompatActivity {
         tvInterestAmount = findViewById(R.id.tv_interest_value);
         tvTotalAmount = findViewById(R.id.tv_total_value);
         tvNote = findViewById(R.id.tv_note);
+        tvTotalLabel = findViewById(R.id.tv_total_label);
 
         tvSourceAccountNumber = findViewById(R.id.tv_source_account);
         tvSourceBalance = findViewById(R.id.tv_source_balance);
@@ -155,7 +157,49 @@ public class SavingsActivity extends AppCompatActivity {
             if (tvScreenTitle != null) tvScreenTitle.setText("Tài khoản tiết kiệm");
             btnSubmit.setText("Xác nhận gửi tiết kiệm");
         }
-        updateRateFromDatabase();
+    }
+
+    private void updateAllButtonsFromDB() {
+        for (MaterialButton btn : termButtons) {
+            String originalText = btn.getText().toString();
+            int months = 1;
+            try {
+                String[] parts = originalText.split("\n");
+                String termPart = parts[0];
+                months = Integer.parseInt(termPart.replace(" THÁNG", "").replace(" tháng", "").trim());
+            } catch (Exception e) {
+                continue;
+            }
+
+            final int termMonths = months;
+
+            rateRepository.getRateByTerm(termMonths, new RateCallback() {
+                @Override
+                public void onRateLoaded(InterestRate rateObj) {
+                    double realRate;
+                    if ("MORTGAGE".equals(transactionType)) {
+                        realRate = rateObj.getMortgageRate();
+                    } else {
+                        realRate = rateObj.getSavingsRate();
+                    }
+
+                    String newText = termMonths + " THÁNG\n" + realRate + "%/NĂM";
+                    btn.setText(newText);
+
+                    if (selectedTermMonths == termMonths) {
+                        currentInterestRate = realRate;
+                        if (tvInterestRateLabel != null) {
+                            tvInterestRateLabel.setText(currentInterestRate + "%/năm");
+                        }
+                        updateCalculations();
+                    }
+                }
+
+                @Override
+                public void onError(String message) {
+                }
+            });
+        }
     }
 
     private void updateRateFromDatabase() {
@@ -182,29 +226,17 @@ public class SavingsActivity extends AppCompatActivity {
                     b.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F5F5F5")));
                 }
                 btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFF3E0")));
-
                 String text = btn.getText().toString();
                 String[] parts = text.split("\n");
                 if (parts.length > 0) {
                     selectedTermString = parts[0];
                     try {
-                        selectedTermMonths = Integer.parseInt(selectedTermString.replace(" tháng", "").trim());
+                        selectedTermMonths = Integer.parseInt(selectedTermString.replace(" THÁNG", "").replace(" tháng", "").trim());
                     } catch (Exception e) {
                         selectedTermMonths = 1;
                     }
                 }
-
-                if (text.contains("1 tháng")) currentInterestRate = 3.5;
-                else if (text.contains("3 tháng")) currentInterestRate = 4.5;
-                else if (text.contains("6 tháng")) currentInterestRate = 5.5;
-                else if (text.contains("12 tháng")) currentInterestRate = 6.5;
-                else if (text.contains("24 tháng")) currentInterestRate = 7.2;
-                else if (text.contains("36 tháng")) currentInterestRate = 7.5;
-
-                if (tvInterestRateLabel != null) {
-                    tvInterestRateLabel.setText(currentInterestRate + "%/năm");
-                }
-                updateCalculations();
+                updateRateFromDatabase();
             });
         }
     }
@@ -215,7 +247,7 @@ public class SavingsActivity extends AppCompatActivity {
         double interest = (currentAmount * currentInterestRate / 100) / 12 * selectedTermMonths;
         double total = currentAmount + interest;
 
-        if (tvTermLabel != null) tvTermLabel.setText(selectedTermString);
+        if (tvTermLabel != null) tvTermLabel.setText(selectedTermMonths + " tháng");
         if (tvInterestRateLabel != null) tvInterestRateLabel.setText(currentInterestRate + "%/năm");
         if (tvPrincipal != null) tvPrincipal.setText(df.format(currentAmount) + " đ");
 
@@ -226,9 +258,17 @@ public class SavingsActivity extends AppCompatActivity {
 
         if (tvTotalAmount != null) tvTotalAmount.setText(df.format(total) + " đ");
 
+        if (tvTotalLabel != null) {
+            if ("MORTGAGE".equals(transactionType)) {
+                tvTotalLabel.setText("Tổng gốc và lãi phải trả");
+            } else {
+                tvTotalLabel.setText("Tổng tiền nhận được");
+            }
+        }
+
         if (tvNote != null) {
             String action = "MORTGAGE".equals(transactionType) ? "phải trả" : "nhận được";
-            tvNote.setText("Sau " + selectedTermString + ", bạn sẽ " + action + " " + df.format(total) + "đ");
+            tvNote.setText("Sau " + selectedTermMonths + " tháng, bạn sẽ " + action + " " + df.format(total) + "đ");
         }
     }
 
@@ -256,7 +296,7 @@ public class SavingsActivity extends AppCompatActivity {
             else if (text.equals("10M")) addAmount = 10000000;
             else if (text.equals("50M")) addAmount = 50000000;
             currentAmount = addAmount;
-            etAmount.setText(String.format("%.0f", currentAmount));
+            etAmount.setText(String.format(Locale.US, "%.0f", currentAmount));
         };
         if(btn5M != null) btn5M.setOnClickListener(quickAddListener);
         if(btn10M != null) btn10M.setOnClickListener(quickAddListener);
@@ -285,7 +325,7 @@ public class SavingsActivity extends AppCompatActivity {
             Intent intent = new Intent(SavingsActivity.this, SavingsConfirmActivity.class);
             intent.putExtra("TRANSACTION_TYPE", transactionType);
             intent.putExtra("AMOUNT", currentAmount);
-            intent.putExtra("TERM", selectedTermString);
+            intent.putExtra("TERM", selectedTermMonths + " tháng");
             intent.putExtra("RATE", currentInterestRate);
             intent.putExtra("ACCOUNT_ID", currentAccountId);
             startActivity(intent);
