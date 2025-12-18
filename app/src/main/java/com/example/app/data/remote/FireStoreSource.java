@@ -17,7 +17,6 @@ import com.example.app.interfaces.RegisterCallback;
 import com.example.app.interfaces.TransactionCallback;
 import com.example.app.interfaces.CustomerCallback;
 import com.example.app.interfaces.ReceiverCallback;
-import com.example.app.utils.SessionManager;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -281,21 +280,18 @@ public class FireStoreSource {
 
     public void getInterestRates(int termMonths, com.example.app.interfaces.RateCallback callback) {
         db.collection("rateProfit")
-                .whereEqualTo("term", termMonths)
+                .limit(1)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
                         DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        Double rate = doc.getDouble("rate");
+                        if (rate == null) rate = doc.getDouble("savingsRate");
+                        double finalRate = (rate != null) ? rate : 5.0;
 
-                        Double savings = doc.getDouble("savingsRate");
-                        Double mortgage = doc.getDouble("mortgageRate");
-
-                        double finalSavings = (savings != null) ? savings : 3.5;
-                        double finalMortgage = (mortgage != null) ? mortgage : 8.5;
-
-                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(termMonths, finalSavings, finalMortgage));
+                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(finalRate));
                     } else {
-                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(termMonths, 3.5, 8.5));
+                        callback.onRateLoaded(new com.example.app.data.model.InterestRate(5.0));
                     }
                 }).addOnFailureListener(e -> callback.onError(e.getMessage()));
     }
@@ -338,7 +334,6 @@ public class FireStoreSource {
     }
 
 
-
     public void getNumberOfOfficer(MutableLiveData<String> numberOfCustomerLiveData) {
         db.collection("officer")
                 .get()
@@ -351,7 +346,6 @@ public class FireStoreSource {
                     numberOfCustomerLiveData.postValue("0");
                 });
     }
-
 
 
     public void getRate(MutableLiveData<String> rateLiveData) {
@@ -522,9 +516,9 @@ public class FireStoreSource {
 
 
     public void updateCustomer(String username, String fullName,
-                              String birthDay, String phoneNumber,
-                              String address, String email, String gender,
-                              MutableLiveData<Boolean> isUpdateCustomerSuccess) {
+                               String birthDay, String phoneNumber,
+                               String address, String email, String gender,
+                               MutableLiveData<Boolean> isUpdateCustomerSuccess) {
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("fullName", fullName);

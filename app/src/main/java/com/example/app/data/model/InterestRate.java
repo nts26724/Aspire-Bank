@@ -1,17 +1,21 @@
 package com.example.app.data.model;
 
 public class InterestRate {
-    private int termMonths;
-    private double savingsRate;
-    private double mortgageRate;
+    private double rate;
 
-    public InterestRate(int termMonths, double savingsRate, double mortgageRate) {
-        this.termMonths = termMonths;
-        this.savingsRate = savingsRate;
-        this.mortgageRate = mortgageRate;
+    public InterestRate(double rate) {
+        this.rate = rate;
     }
 
-    public int getTermMonths() { return termMonths; }
-    public double getSavingsRate() { return savingsRate; }
-    public double getMortgageRate() { return mortgageRate; }
+    public double getRate() {
+        return rate;
+    }
+
+    public double getSavingsRate() {
+        return rate;
+    }
+
+    public double getMortgageRate() {
+        return rate;
+    }
 }
