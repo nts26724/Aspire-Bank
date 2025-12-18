@@ -6,6 +6,7 @@ import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
 import com.example.app.data.remote.FireStoreSource;
 import com.example.app.interfaces.HomeCustomerCallback;
+import com.example.app.interfaces.RegisterCallback;
 
 import java.util.List;
 
@@ -32,10 +33,7 @@ public class ListCustomerRepository {
         fireStoreSource.getCustomerObjectByUsername(username, customerLiveData);
     }
 
-    public void registerUser(String username, String password, String fullName,
-                             String gender, String birthDay, String phoneNumber,
-                             String address, String email, RegisterCallback registerCallback) {
-        fireStoreSource.registerUser(username, password, fullName,
-                gender, birthDay, phoneNumber, address, email, registerCallback);
+    public void registerUser(Account account, Customer customer, RegisterCallback registerCallback) {
+        fireStoreSource.registerUser(account, customer, registerCallback);
     }
 }

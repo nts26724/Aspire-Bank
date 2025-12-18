@@ -15,7 +15,8 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(@NonNull String username, String fullName, String birthDay, String address, String phoneNumber, String email, String gender) {
+    public Customer(@NonNull String username, String fullName, String birthDay,
+                    String address, String phoneNumber, String email, String gender) {
         this.username = username;
         this.fullName = fullName;
         this.birthDay = birthDay;
@@ -73,10 +74,6 @@ public class Customer {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getGender() {
-        return gender;
     }
 
     public void setGender(String gender) {this.gender = gender;}

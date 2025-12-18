@@ -34,13 +34,21 @@
             android:orientation="horizontal"
             >
 
-            <com.google.android.material.search.SearchBar
-                android:id="@+id/search"
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Tìm kiếm theo số tài khoản"
-                />
+                app:cardCornerRadius="30dp"
+                >
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:queryHint="Tìm kiếm theo số tài khoản"
+                    />
+            </androidx.cardview.widget.CardView>
+
 
             <ImageView
                 android:id="@+id/add"
@@ -49,6 +57,7 @@
                 android:src="@drawable/outline_add_24"
                 android:background="#02314b"
                 android:layout_gravity="center"
+                android:layout_marginStart="10dp"
                 />
         </LinearLayout>
 
@@ -57,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="20dp"
             />
 
         <androidx.cardview.widget.CardView
@@ -64,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="30dp"
+            android:layout_marginTop="20dp"
             >
 
             <TextView

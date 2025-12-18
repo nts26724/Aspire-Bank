@@ -2,12 +2,15 @@ package com.example.app.ui.listcustomer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,14 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.R;
 import com.example.app.adapter.ListCustomerAdapter;
-import com.google.android.material.search.SearchBar;
 
 public class ListCustomerActivity extends AppCompatActivity {
     private ImageView add;
     private RecyclerView listCustomer;
-    private SearchBar search;
+    private SearchView search;
     private ListCustomerViewModel listCustomerViewModel;
     private CardView emptyNotification;
+    private ListCustomerAdapter listCustomerAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +53,26 @@ public class ListCustomerActivity extends AppCompatActivity {
 
                 emptyNotification.setVisibility(View.GONE);
                 listCustomer.setVisibility(View.VISIBLE);
-                listCustomer.setAdapter(
-                        new ListCustomerAdapter(listCustomerLiveData));
+                listCustomerAdapter = new ListCustomerAdapter(listCustomerLiveData);
+                listCustomer.setAdapter(listCustomerAdapter);
                 Log.d("listCustomerLiveData", "listCustomerLiveData: >0");
             }
         );
+
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listCustomerAdapter.setFilteredList(newText);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        });
+
 
         add.setOnClickListener(v -> {
             Intent intentListCustomerDetail = new Intent(this, ListCustomerDetail.class);
