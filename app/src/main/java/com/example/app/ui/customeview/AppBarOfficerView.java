@@ -10,22 +10,23 @@ import android.widget.TextView;
 
 import com.example.app.R;
 import com.example.app.ui.homecustomer.HomeCustomerActivity;
+import com.example.app.ui.homeofficer.HomeOfficerActivity;
 
-public class AppBarView extends FrameLayout {
+public class AppBarOfficerView extends FrameLayout {
     private TextView appBar;
 
-    public AppBarView(Context context) {
+    public AppBarOfficerView(Context context) {
         super(context);
         init(null);
     }
 
 
-    public AppBarView(Context context, AttributeSet attrs) {
+    public AppBarOfficerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public AppBarView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AppBarOfficerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -36,8 +37,8 @@ public class AppBarView extends FrameLayout {
         appBar = findViewById(R.id.appBar);
 
         appBar.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), HomeCustomerActivity.class);
-            getContext().startActivity(intent);
+            Intent intentHomeOfficer = new Intent(getContext(), HomeOfficerActivity.class);
+            getContext().startActivity(intentHomeOfficer);
         });
     }
 }

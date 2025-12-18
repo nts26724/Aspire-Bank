@@ -22,7 +22,7 @@ public class BookTicketActivity extends AppCompatActivity {
     private TextInputEditText origin, destination, departureDay,
             quantityAdult, quantityChildren;
     private TextView find;
-    UtilityBarView utilityBarView;
+    private UtilityBarView utilityBarView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

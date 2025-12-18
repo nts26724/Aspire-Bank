@@ -87,7 +87,7 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="text"
                                 android:textSize="18dp"
-                                android:text="customer1"
+                                android:text="officer1"
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,7 +129,7 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="textPassword"
                                 android:textSize="18dp"
-                                android:text="customer1"
+                                android:text="officer1"
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
 

@@ -74,6 +74,11 @@ public class Customer {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
     public void setGender(String gender) {this.gender = gender;}
 
     public String getAvatarUrl() {return avatarUrl;}

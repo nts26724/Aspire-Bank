@@ -1,5 +1,7 @@
 package com.example.app.data.repository;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.app.data.remote.FireStoreSource;
 import com.example.app.interfaces.RateCallback;
 
@@ -10,6 +12,14 @@ public class RateRepository {
         fireStoreSource = new FireStoreSource();
     }
 
+    public void getRate(MutableLiveData<String> rateLiveData) {
+        fireStoreSource.getRate(rateLiveData);
+    }
+
+    public void updateRate(String rate, MutableLiveData<Boolean> isUpdateRateLiveData) {
+        fireStoreSource.updateRate(rate, isUpdateRateLiveData);
+    }
+}
     public void getRateByTerm(int termMonths, RateCallback callback) {
         fireStoreSource.getInterestRates(termMonths, callback);
     }

@@ -15,7 +15,7 @@ import com.example.app.ui.profile.ProfileActivity;
 import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
 
 public class NavBarView extends FrameLayout {
-    ImageView homeCustomer, notification, utility, map, profile;
+    private ImageView homeCustomer, notification, utility, map, profile;
 
     public NavBarView(Context context) {
         super(context);
