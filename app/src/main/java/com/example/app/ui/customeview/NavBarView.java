@@ -11,6 +11,7 @@ import com.example.app.R;
 import com.example.app.ui.bookroom.BookRoomMap;
 import com.example.app.ui.homecustomer.HomeCustomerActivity;
 import com.example.app.ui.notification.NotificationActivity;
+import com.example.app.ui.profile.ProfileActivity;
 import com.example.app.ui.receiptpayment.ReceiptPaymentActivity;
 
 public class NavBarView extends FrameLayout {
@@ -67,8 +68,8 @@ public class NavBarView extends FrameLayout {
 
 
         profile.setOnClickListener(v -> {
-//            Intent intent = new Intent(getContext(), ProfileActivity.class);
-//            getContext().startActivity(intent);
+            Intent intent = new Intent(getContext(), ProfileActivity.class);
+            getContext().startActivity(intent);
         });
     }
 }

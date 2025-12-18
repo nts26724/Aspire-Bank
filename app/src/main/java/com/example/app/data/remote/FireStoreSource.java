@@ -293,4 +293,22 @@ public class FireStoreSource {
                     }
                 }).addOnFailureListener(e -> callback.onFailure(e.getMessage()));
     }
+
+    public void updateCustomerAvatar(String username, String avatarUrl, CustomerCallback callback) {
+        db.collection("customer")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        String docId = querySnapshot.getDocuments().get(0).getId();
+                        db.collection("customer").document(docId)
+                                .update("avatarUrl", avatarUrl)
+                                .addOnSuccessListener(aVoid -> callback.onSuccess(null))
+                                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+                    } else {
+                        callback.onFailure("Không tìm thấy thông tin khách hàng để cập nhật ảnh.");
+                    }
+                })
+                .addOnFailureListener(e -> callback.onFailure("Lỗi kết nối: " + e.getMessage()));
+    }
 }

@@ -1,7 +1,17 @@
 package com.example.app.ui.transfer;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +24,7 @@ import com.example.app.ui.homecustomer.HomeCustomerActivity;
 import com.example.app.utils.SessionManager;
 import com.google.android.material.button.MaterialButton;
 
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 
 public class TransferSuccessActivity extends AppCompatActivity {
@@ -64,7 +75,9 @@ public class TransferSuccessActivity extends AppCompatActivity {
         if (senderName != null) {
             tvSenderName.setText(senderName);
         } else {
-            tvSenderName.setText(SessionManager.getInstance(this).getAccount().getUsername());
+            if (SessionManager.getInstance(this).getAccount() != null) {
+                tvSenderName.setText(SessionManager.getInstance(this).getAccount().getUsername());
+            }
         }
 
         if (receiverName != null) {
@@ -106,7 +119,60 @@ public class TransferSuccessActivity extends AppCompatActivity {
         });
 
         btnSaveImage.setOnClickListener(v -> {
-            Toast.makeText(this, "Tính năng đang phát triển", Toast.LENGTH_SHORT).show();
+            setButtonsVisibility(View.INVISIBLE);
+            View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+            rootView.post(() -> {
+                captureAndSaveImage(rootView);
+                setButtonsVisibility(View.VISIBLE);
+            });
         });
+    }
+
+    private void setButtonsVisibility(int visibility) {
+        btnSaveImage.setVisibility(visibility);
+        btnHome.setVisibility(visibility);
+        btnContinue.setVisibility(visibility);
+    }
+
+    private void captureAndSaveImage(View viewToCapture) {
+        try {
+            Bitmap bitmap = Bitmap.createBitmap(viewToCapture.getWidth(), viewToCapture.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+
+            Drawable bgDrawable = viewToCapture.getBackground();
+            if (bgDrawable != null) {
+                bgDrawable.draw(canvas);
+            } else {
+                canvas.drawColor(Color.WHITE);
+            }
+            viewToCapture.draw(canvas);
+
+            OutputStream fos;
+            String imageName = "Bill_" + System.currentTimeMillis() + ".png";
+            ContentResolver resolver = getContentResolver();
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, imageName);
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/AppBanking");
+            }
+
+            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+            if (imageUri != null) {
+                fos = resolver.openOutputStream(imageUri);
+                if (fos != null) {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    fos.close();
+                    Toast.makeText(this, "Đã lưu hóa đơn vào thư viện ảnh!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Lỗi khi lưu ảnh: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

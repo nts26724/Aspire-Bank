@@ -11,6 +11,7 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String gender;
+    private String avatarUrl;
 
     public Customer() {}
 
@@ -74,4 +75,8 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
     public void setGender(String gender) {this.gender = gender;}
+
+    public String getAvatarUrl() {return avatarUrl;}
+
+    public void setAvatarUrl(String avatarUrl) {this.avatarUrl = avatarUrl;}
 }
