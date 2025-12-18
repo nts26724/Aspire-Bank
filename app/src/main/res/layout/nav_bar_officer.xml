@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/nav_bar"
+        android:id="@+id/nav_bar_officer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
@@ -13,39 +11,31 @@
         >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:background="@color/white"
             >
 
             <ImageView
-                android:id="@+id/homeCustomer"
+                android:id="@+id/homeOfficer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_home"
                 />
 
             <ImageView
-                android:id="@+id/notification"
+                android:id="@+id/lstCustomer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_notification"
+                android:src="@mipmap/ic_double_person"
                 />
 
             <ImageView
-                android:id="@+id/utility"
+                android:id="@+id/rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_utility_white_bg"
-                />
-
-            <ImageView
-                android:id="@+id/map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_location"
-                android:visibility="gone"
+                android:src="@mipmap/ic_home_rate"
                 />
 
             <ImageView
@@ -56,5 +46,4 @@
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </merge>

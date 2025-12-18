@@ -2,8 +2,11 @@ package com.example.app.data.remote;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
+import com.example.app.data.model.Officer;
 import com.example.app.data.model.Receipt;
 import com.example.app.data.model.Transaction;
 import com.example.app.interfaces.HomeCustomerCallback;
@@ -49,7 +52,7 @@ public class FireStoreSource {
 
                     loginCallback.onSuccess(
                             queryDocumentSnapshots.getDocuments().get(0)
-                            .toObject(Account.class)
+                                    .toObject(Account.class)
                     );
 
                 })
@@ -60,23 +63,23 @@ public class FireStoreSource {
 
     public void getCustomerByUsername(String username, HomeCustomerCallback homeCustomerCallback) {
         db.collection("customer")
-            .whereEqualTo("username", username)
-            .get()
-            .addOnSuccessListener(queryDocumentSnapshots -> {
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
 
-                if (queryDocumentSnapshots.isEmpty()) {
-                    homeCustomerCallback.onSuccess(null);
-                    return;
-                }
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        homeCustomerCallback.onSuccess(null);
+                        return;
+                    }
 
-                homeCustomerCallback.onSuccess(
-                    queryDocumentSnapshots.getDocuments().get(0)
-                            .toObject(Customer.class).getFullName()
-                );
-            })
-            .addOnFailureListener(e -> {
-                homeCustomerCallback.onFailure();
-            });
+                    homeCustomerCallback.onSuccess(
+                            queryDocumentSnapshots.getDocuments().get(0)
+                                    .toObject(Customer.class).getFullName()
+                    );
+                })
+                .addOnFailureListener(e -> {
+                    homeCustomerCallback.onFailure();
+                });
     }
 
 
@@ -88,7 +91,6 @@ public class FireStoreSource {
         Task<QuerySnapshot> q2 = db.collection("transaction")
                 .whereEqualTo("usernameReceive", username)
                 .get();
-
 
 
         Tasks.whenAllSuccess(q1, q2)
@@ -138,38 +140,38 @@ public class FireStoreSource {
 
     public void widthraw(String username, long amount) {
         db.collection("account")
-            .whereEqualTo("username", username)
-            .get()
-            .addOnSuccessListener(querySnapshot -> {
-                if (!querySnapshot.isEmpty()) {
-                    DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
-                    DocumentReference accountRef = doc.getReference();
+                .whereEqualTo("username", username)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        DocumentReference accountRef = doc.getReference();
 
-                    db.runTransaction( transaction -> {
-                        DocumentSnapshot snapshot = transaction.get(accountRef);
+                        db.runTransaction(transaction -> {
+                            DocumentSnapshot snapshot = transaction.get(accountRef);
 
-                        Long currentBalance = snapshot.getLong("balance");
-                        if (currentBalance == null) currentBalance = 0L;
+                            Long currentBalance = snapshot.getLong("balance");
+                            if (currentBalance == null) currentBalance = 0L;
 
-                        if (currentBalance < amount) {
-                            throw new FirebaseFirestoreException(
-                                    "Insufficient balance",
-                                    FirebaseFirestoreException.Code.ABORTED
-                            );
-                        }
+                            if (currentBalance < amount) {
+                                throw new FirebaseFirestoreException(
+                                        "Insufficient balance",
+                                        FirebaseFirestoreException.Code.ABORTED
+                                );
+                            }
 
-                        Long newBalance = currentBalance - amount;
+                            Long newBalance = currentBalance - amount;
 
-                        transaction.update(accountRef, "balance", newBalance);
+                            transaction.update(accountRef, "balance", newBalance);
 
-                        return null;
-                    }).addOnSuccessListener(unused -> {
-                        Log.d("Withdraw", "Withdraw success");
-                    }).addOnFailureListener(e -> {
-                        Log.e("Withdraw", "Failed: " + e.getMessage());
-                    });
-                }
-            });
+                            return null;
+                        }).addOnSuccessListener(unused -> {
+                            Log.d("Withdraw", "Withdraw success");
+                        }).addOnFailureListener(e -> {
+                            Log.e("Withdraw", "Failed: " + e.getMessage());
+                        });
+                    }
+                });
     }
 
 
@@ -279,7 +281,7 @@ public class FireStoreSource {
                         DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
                         DocumentReference accountRef = doc.getReference();
 
-                        db.runTransaction( transaction -> {
+                        db.runTransaction(transaction -> {
                             DocumentSnapshot snapshot = transaction.get(accountRef);
 
                             Long currentBalance = snapshot.getLong("balance");
@@ -296,6 +298,239 @@ public class FireStoreSource {
                             Log.e("Withdraw", "Failed: " + e.getMessage());
                         });
                     }
+                });
+    }
+
+
+    public void getNumberOfCustomer(MutableLiveData<String> numberOfCustomerLiveData) {
+        db.collection("customer")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    numberOfCustomerLiveData.postValue(
+                            String.valueOf(queryDocumentSnapshots.size())
+                    );
+                })
+                .addOnFailureListener(e -> {
+                    numberOfCustomerLiveData.postValue("0");
+                });
+    }
+
+
+
+    public void getNumberOfOfficer(MutableLiveData<String> numberOfCustomerLiveData) {
+        db.collection("officer")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    numberOfCustomerLiveData.postValue(
+                            String.valueOf(queryDocumentSnapshots.size())
+                    );
+                })
+                .addOnFailureListener(e -> {
+                    numberOfCustomerLiveData.postValue("0");
+                });
+    }
+
+
+
+    public void getRate(MutableLiveData<String> rateLiveData) {
+        db.collection("rateProfit")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
+                        Double rate = doc.getDouble("rate");
+
+                        if (rate != null) {
+                            rateLiveData.postValue(rate + " %");
+                        } else {
+                            rateLiveData.postValue("0 %");
+                        }
+                    } else {
+                        rateLiveData.postValue("0 %");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    rateLiveData.postValue("0 %");
+                });
+    }
+
+
+    public void getListCustomer(MutableLiveData<List<Account>> listCustomerLiveData) {
+        db.collection("account")
+                .whereEqualTo("role", "customer")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Account> customers = new ArrayList<>();
+
+                    for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                        Account account = doc.toObject(Account.class);
+                        if (account != null) {
+                            customers.add(account);
+                        }
+                    }
+
+                    listCustomerLiveData.postValue(customers);
+                })
+                .addOnFailureListener(e -> {
+                    listCustomerLiveData.postValue(new ArrayList<>());
+                });
+    }
+
+
+    public void updateOfficer(String username, String fullName,
+                              String birthDay, String phoneNumber,
+                              String address, String email, String gender,
+                              MutableLiveData<Boolean> isUpdateOfficerSuccess) {
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("fullName", fullName);
+        updates.put("birthDay", birthDay);
+        updates.put("phoneNumber", phoneNumber);
+        updates.put("address", address);
+        updates.put("email", email);
+        updates.put("gender", gender);
+
+        db.collection("officer")
+                .whereEqualTo("username", username)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(qs -> {
+                    if (qs.isEmpty()) {
+                        isUpdateOfficerSuccess.postValue(false);
+                        return;
+                    }
+
+                    DocumentSnapshot doc = qs.getDocuments().get(0);
+                    db.collection("officer")
+                            .document(doc.getId())
+                            .update(updates);
+                    isUpdateOfficerSuccess.postValue(true);
+                })
+                .addOnFailureListener(e -> {
+                    isUpdateOfficerSuccess.postValue(false);
+                    Log.d("updateOfficer", "updateOfficer: False");
+                });
+    }
+
+
+    public void getOfficerByUserName(String username,
+                                     MutableLiveData<Officer> officerLiveData) {
+
+        db.collection("officer")
+                .whereEqualTo("username", username)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        Officer officer = doc.toObject(Officer.class);
+
+                        if (officer != null) {
+                            officerLiveData.postValue(officer);
+                        } else {
+                            officerLiveData.postValue(null);
+                        }
+                    } else {
+                        officerLiveData.postValue(null);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    officerLiveData.postValue(null);
+                });
+    }
+
+
+    public void updateRate(String rate, MutableLiveData<Boolean> isUpdateRateLiveData) {
+        double rateValue;
+
+        try {
+            rateValue = Double.parseDouble(rate);
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("rate", rateValue);
+
+        db.collection("rateProfit")
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+
+                        db.collection("rateProfit")
+                                .document(doc.getId())
+                                .update(updates);
+                        isUpdateRateLiveData.postValue(true);
+                    } else {
+                        isUpdateRateLiveData.postValue(false);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    isUpdateRateLiveData.postValue(false);
+                    Log.d("updateRate", "updateRate: False");
+                });
+    }
+
+
+    public void getCustomerObjectByUsername(String username, MutableLiveData<Customer> customerLiveData) {
+        db.collection("customer")
+                .whereEqualTo("username", username)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        Customer customer = doc.toObject(Customer.class);
+
+                        if (customer != null) {
+                            customerLiveData.postValue(customer);
+                        } else {
+                            customerLiveData.postValue(null);
+                        }
+                    } else {
+                        customerLiveData.postValue(null);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    customerLiveData.postValue(null);
+                });
+    }
+
+
+    public void updateCustomer(String username, String fullName,
+                              String birthDay, String phoneNumber,
+                              String address, String email, String gender,
+                              MutableLiveData<Boolean> isUpdateCustomerSuccess) {
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("fullName", fullName);
+        updates.put("birthDay", birthDay);
+        updates.put("phoneNumber", phoneNumber);
+        updates.put("address", address);
+        updates.put("email", email);
+        updates.put("gender", gender);
+
+        db.collection("customer")
+                .whereEqualTo("username", username)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(qs -> {
+                    if (qs.isEmpty()) {
+                        isUpdateCustomerSuccess.postValue(false);
+                        return;
+                    }
+
+                    DocumentSnapshot doc = qs.getDocuments().get(0);
+                    db.collection("customer")
+                            .document(doc.getId())
+                            .update(updates);
+                    isUpdateCustomerSuccess.postValue(true);
+                })
+                .addOnFailureListener(e -> {
+                    isUpdateCustomerSuccess.postValue(false);
+                    Log.d("updateOfficer", "updateOfficer: False");
                 });
     }
 }

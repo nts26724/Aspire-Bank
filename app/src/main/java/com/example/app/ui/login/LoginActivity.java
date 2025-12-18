@@ -17,14 +17,15 @@ import com.example.app.R;
 import com.example.app.data.model.Account;
 import com.example.app.interfaces.LoginCallback;
 import com.example.app.ui.homecustomer.HomeCustomerActivity;
+import com.example.app.ui.homeofficer.HomeOfficerActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
-    TextInputEditText username, password;
-    Button btnLogin, btnRegister;
-    LoginViewModel loginViewModel;
-    String usernameText;
-    String passwordText;
+    private TextInputEditText username, password;
+    private Button btnLogin, btnRegister;
+    private LoginViewModel loginViewModel;
+    private String usernameText;
+    private String passwordText;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +71,14 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "Không thể kết nối tới máy chủ", Toast.LENGTH_SHORT).show();
                     break;
                 case CUSTOMER:
-                    Intent intent = new Intent(LoginActivity.this, HomeCustomerActivity.class);
-                    startActivity(intent);
+                    Intent intentHomeCustomer = new Intent(LoginActivity.this, HomeCustomerActivity.class);
+                    startActivity(intentHomeCustomer);
                     finish();
                     break;
                 case OFFICER:
-//                    Intent intent = new Intent(LoginActivity.this, HomeOfficerActivity.class);
-//                    startActivity(intent);
-//                    finish();
+                    Intent intentHomeOfficer = new Intent(LoginActivity.this, HomeOfficerActivity.class);
+                    startActivity(intentHomeOfficer);
+                    finish();
                     break;
             }
         });

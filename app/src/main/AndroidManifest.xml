@@ -45,6 +45,12 @@
         <activity android:name=".ui.depositaccount.DepositAccountVerifyOTP" />
         <activity android:name=".ui.depositaccount.DepositAccountSuccess" />
 
+        <activity android:name=".ui.homeofficer.HomeOfficerActivity" />
+        <activity android:name=".ui.listcustomer.ListCustomerActivity" />
+        <activity android:name=".ui.listcustomer.ListCustomerDetail" />
+        <activity android:name=".ui.profileofficer.ProfileOfficerActivity" />
+        <activity android:name=".ui.rate.RateActivity" />
+
         <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:exported="true">

@@ -140,7 +140,7 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                                     sessionManager.getAccount().getUsername(),
                                     amount);
 
-                            sessionManager.getAccount().widthraw(amount);
+                            sessionManager.getAccount().withdraw(amount);
 
                             if(usernameReceive.contains("EVN")){
                                 deleteReceiptByReceiptID(usernameReceive);

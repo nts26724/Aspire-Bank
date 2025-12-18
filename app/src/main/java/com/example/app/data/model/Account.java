@@ -10,6 +10,7 @@ public class Account {
     private long balance;
     private long mortgage;
     private long saving;
+    private String cardNumber;
 
     private String phoneNumber;
     private String email;
@@ -119,5 +120,13 @@ public class Account {
 
     public void deposit(long amount) {
         this.balance += amount;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 }

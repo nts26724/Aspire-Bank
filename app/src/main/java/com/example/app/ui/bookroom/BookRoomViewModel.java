@@ -206,7 +206,7 @@ public class BookRoomViewModel extends AndroidViewModel {
                             sessionManager.getAccount().getUsername(),
                             price);
 
-                    sessionManager.getAccount().widthraw(price);
+                    sessionManager.getAccount().withdraw(price);
 
                     roomRepository.addTransaction(price, "BookRoom Payment", true,
                             sessionManager.getAccount().getUsername(), hotelName);
