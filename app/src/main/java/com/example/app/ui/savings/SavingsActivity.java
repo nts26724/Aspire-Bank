@@ -51,7 +51,7 @@ public class SavingsActivity extends AppCompatActivity {
     private double currentAmount = 0;
     private String selectedTermString = "1 tháng";
     private int selectedTermMonths = 1;
-    private double currentInterestRate = 3.5;
+    private double currentInterestRate = 0.0;
 
     private String transactionType = "SAVINGS";
     private RateRepository rateRepository;
@@ -75,7 +75,7 @@ public class SavingsActivity extends AppCompatActivity {
         setupAmountInput();
         setupSubmitButton();
 
-        updateAllButtonsFromDB();
+        fetchCommonInterestRate();
     }
 
     private void initViews() {
@@ -159,7 +159,34 @@ public class SavingsActivity extends AppCompatActivity {
         }
     }
 
-    private void updateAllButtonsFromDB() {
+    private void fetchCommonInterestRate() {
+        int termToFetch = 1;
+
+        rateRepository.getRateByTerm(termToFetch, new RateCallback() {
+            @Override
+            public void onRateLoaded(InterestRate rateObj) {
+                if ("MORTGAGE".equals(transactionType)) {
+                    currentInterestRate = rateObj.getMortgageRate();
+                } else {
+                    currentInterestRate = rateObj.getSavingsRate();
+                }
+
+                if (tvInterestRateLabel != null) {
+                    tvInterestRateLabel.setText(currentInterestRate + "%/năm");
+                }
+
+                updateAllButtonsUI();
+                updateCalculations();
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(SavingsActivity.this, "Không lấy được lãi suất: " + message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateAllButtonsUI() {
         for (MaterialButton btn : termButtons) {
             String originalText = btn.getText().toString();
             int months = 1;
@@ -171,52 +198,9 @@ public class SavingsActivity extends AppCompatActivity {
                 continue;
             }
 
-            final int termMonths = months;
-
-            rateRepository.getRateByTerm(termMonths, new RateCallback() {
-                @Override
-                public void onRateLoaded(InterestRate rateObj) {
-                    double realRate;
-                    if ("MORTGAGE".equals(transactionType)) {
-                        realRate = rateObj.getMortgageRate();
-                    } else {
-                        realRate = rateObj.getSavingsRate();
-                    }
-
-                    String newText = termMonths + " THÁNG\n" + realRate + "%/NĂM";
-                    btn.setText(newText);
-
-                    if (selectedTermMonths == termMonths) {
-                        currentInterestRate = realRate;
-                        if (tvInterestRateLabel != null) {
-                            tvInterestRateLabel.setText(currentInterestRate + "%/năm");
-                        }
-                        updateCalculations();
-                    }
-                }
-
-                @Override
-                public void onError(String message) {
-                }
-            });
+            String newText = months + " THÁNG\n" + currentInterestRate + "%/NĂM";
+            btn.setText(newText);
         }
-    }
-
-    private void updateRateFromDatabase() {
-        rateRepository.getRateByTerm(selectedTermMonths, new RateCallback() {
-            @Override
-            public void onRateLoaded(InterestRate rateObj) {
-                if ("MORTGAGE".equals(transactionType)) {
-                    currentInterestRate = rateObj.getMortgageRate();
-                } else {
-                    currentInterestRate = rateObj.getSavingsRate();
-                }
-                updateCalculations();
-            }
-
-            @Override
-            public void onError(String message) {}
-        });
     }
 
     private void setupTermButtons() {
@@ -226,6 +210,7 @@ public class SavingsActivity extends AppCompatActivity {
                     b.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F5F5F5")));
                 }
                 btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFF3E0")));
+
                 String text = btn.getText().toString();
                 String[] parts = text.split("\n");
                 if (parts.length > 0) {
@@ -236,7 +221,7 @@ public class SavingsActivity extends AppCompatActivity {
                         selectedTermMonths = 1;
                     }
                 }
-                updateRateFromDatabase();
+                updateCalculations();
             });
         }
     }
