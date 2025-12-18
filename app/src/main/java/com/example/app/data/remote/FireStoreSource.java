@@ -555,7 +555,7 @@ public class FireStoreSource {
                     Log.d("updateOfficer", "updateOfficer: False");
                 });
     }
-}
+
     public void getCustomerDetail(String username, CustomerCallback callback) {
         db.collection("customer").whereEqualTo("username", username).get()
                 .addOnSuccessListener(querySnapshot -> {

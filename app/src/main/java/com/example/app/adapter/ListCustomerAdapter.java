@@ -19,20 +19,44 @@ import com.example.app.data.model.FlightOfferResponse;
 import com.example.app.ui.listcustomer.ListCustomerDetail;
 import com.example.app.ui.listcustomer.ListCustomerViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListCustomerAdapter extends RecyclerView.Adapter<ListCustomerAdapter.ListCustomerViewHolder> {
     private List<Account> listCustomer;
+    private List<Account> fullListCustomer;
 
 
-    public ListCustomerAdapter(List<Account> listOffer) {
-        this.listCustomer = listOffer;
+    public ListCustomerAdapter(List<Account> listCustomer) {
+        this.listCustomer = listCustomer;
+        this.fullListCustomer = listCustomer;
+
     }
 
-    public void setData(List<Account> listOffer) {
-        this.listCustomer = listOffer;
+    public void setData(List<Account> listCustomer) {
+        this.listCustomer = listCustomer;
         notifyDataSetChanged();
     }
+
+
+    public void setFilteredList(String query) {
+        if(query.isEmpty() || query == null) {
+            listCustomer = fullListCustomer;
+            notifyDataSetChanged();
+            return;
+        }
+
+        List<Account> filteredList = new ArrayList<>();
+        for(Account account : fullListCustomer) {
+            if(account.getCardNumber().contains(query)) {
+                filteredList.add(account);
+            }
+        }
+
+        listCustomer = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override

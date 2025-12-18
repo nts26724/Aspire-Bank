@@ -10,6 +10,7 @@ import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
 import com.example.app.data.repository.ListCustomerRepository;
 import com.example.app.interfaces.HomeCustomerCallback;
+import com.example.app.interfaces.RegisterCallback;
 import com.example.app.utils.SessionManager;
 
 import java.util.List;
@@ -62,8 +63,10 @@ public class ListCustomerViewModel extends AndroidViewModel {
     public void registerUser(String username, String password, String fullName,
                              String gender, String birthDay, String phoneNumber,
                              String address, String email) {
-        listCustomerRepository.registerUser(username, password, fullName,
-                gender, birthDay, phoneNumber, address, email, new RegisterCallback() {
+        listCustomerRepository.registerUser(
+                new Account(username, password, "customer"),
+                new Customer(username, fullName, birthDay, address, phoneNumber, email, gender),
+                new RegisterCallback() {
                     @Override
                     public void onSuccess() {
                         isRegisterUserSuccess.postValue(true);

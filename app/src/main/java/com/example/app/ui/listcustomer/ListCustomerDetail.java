@@ -155,7 +155,7 @@ public class ListCustomerDetail extends AppCompatActivity {
             );
 
             listCustomerViewModel.isRegisterUserSuccess().observe(
-                    this, account -> {
+                    this, isRegisterUserSuccess -> {
                         if(isRegisterUserSuccess) {
                             Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                             Log.d("addState", "addState: True");

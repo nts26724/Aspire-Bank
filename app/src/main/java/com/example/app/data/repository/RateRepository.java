@@ -19,7 +19,7 @@ public class RateRepository {
     public void updateRate(String rate, MutableLiveData<Boolean> isUpdateRateLiveData) {
         fireStoreSource.updateRate(rate, isUpdateRateLiveData);
     }
-}
+
     public void getRateByTerm(int termMonths, RateCallback callback) {
         fireStoreSource.getInterestRates(termMonths, callback);
     }

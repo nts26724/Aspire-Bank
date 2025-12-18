@@ -17,7 +17,6 @@ public class Account {
     private long balance;
     private long mortgage;
     private long saving;
-    private String cardNumber;
 
     public Account() {
     }
@@ -122,11 +121,4 @@ public class Account {
         this.balance += amount;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
 }
