@@ -16,7 +16,11 @@ import com.example.app.R;
 import com.example.app.ui.customeview.UtilityBarView;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class BookRoomActivity extends AppCompatActivity {
     TextInputEditText checkInDate, checkOutDate, quantityPeople, quantityRoom, radius;
@@ -41,28 +45,12 @@ public class BookRoomActivity extends AppCompatActivity {
 
         find.setOnClickListener(v -> {
 
-            if(checkInDate.getText() == null || checkOutDate.getText() == null ||
-                    quantityPeople.getText() == null || quantityRoom.getText() == null ||
-                    radius.getText() == null) {
-                Toast.makeText(this,
-                        "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-
-
             String checkInDateStr = checkInDate.getText().toString();
             String checkOutDateStr = checkOutDate.getText().toString();
             String quantityPeopleStr = quantityPeople.getText().toString();
             String quantityRoomStr = quantityRoom.getText().toString();
             String radiusStr = radius.getText().toString();
 
-            if (!isValidDate(checkInDateStr) || !isValidDate(checkOutDateStr)) {
-                Toast.makeText(this,
-                        "Vui lòng nhập ngày theo định dạng yyyy-MM-dd",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
 
             if (checkInDateStr.isEmpty() ||
                     checkOutDateStr.isEmpty() ||
@@ -73,17 +61,40 @@ public class BookRoomActivity extends AppCompatActivity {
                 Toast.makeText(this,
                         "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
 
+            } else if (!isValidDate(checkInDateStr) || !isValidDate(checkOutDateStr)) {
+
+                Toast.makeText(this,
+                        "Vui lòng nhập ngày theo định dạng yyyy-MM-dd",
+                        Toast.LENGTH_SHORT).show();
+
+            } else if(!isAfterToday(checkInDateStr) || !isAfterToday(checkOutDateStr)) {
+
+                Toast.makeText(this,
+                        "Ngày thuê và trả phòng phải sau ngày hiện tại",
+                        Toast.LENGTH_SHORT).show();
+
+            } else if(isBeforeCheckInDate(checkInDateStr, checkOutDateStr)) {
+
+                Toast.makeText(this,
+                        "Ngày trả phòng không được trước ngày thuê phòng",
+                        Toast.LENGTH_SHORT).show();
+
             } else if(Integer.parseInt(quantityPeopleStr) > 9 ||
                     Integer.parseInt(quantityPeopleStr) < 1) {
 
                 Toast.makeText(this,
-                        "Số người phải trong khoảng [0-9]", Toast.LENGTH_SHORT).show();
+                        "Số người phải trong khoảng [1-9]", Toast.LENGTH_SHORT).show();
 
             } else if(Integer.parseInt(quantityRoomStr) > 9 ||
                     Integer.parseInt(quantityRoomStr) < 1) {
 
                 Toast.makeText(this,
-                        "Số phòng phải trong khoảng [0-9]", Toast.LENGTH_SHORT).show();
+                        "Số phòng phải trong khoảng [1-9]", Toast.LENGTH_SHORT).show();
+
+            } else if(Integer.parseInt(radiusStr) < 0) {
+
+                Toast.makeText(this,
+                        "Số km phải là số dương", Toast.LENGTH_SHORT).show();
 
             } else {
                 Intent intentBookRoomMap = new Intent(this, BookRoomMap.class);
@@ -116,6 +127,47 @@ public class BookRoomActivity extends AppCompatActivity {
             sdf.parse(input);
             return true;
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    public boolean isAfterToday(String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        sdf.setLenient(false);
+
+        try {
+            Date inputDate = sdf.parse(dateStr);
+
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY, 0);
+            today.set(Calendar.MINUTE, 0);
+            today.set(Calendar.SECOND, 0);
+            today.set(Calendar.MILLISECOND, 0);
+
+            return inputDate.after(today.getTime());
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+
+    public static boolean isBeforeCheckInDate(String checkInDate,
+                                                 String checkOutDate) {
+
+        if (checkInDate == null || checkOutDate == null) return false;
+
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        sdf.setLenient(false);
+
+        try {
+            Date checkIn = sdf.parse(checkInDate);
+            Date checkOut = sdf.parse(checkOutDate);
+
+            return checkOut.before(checkIn);
+
+        } catch (ParseException e) {
             return false;
         }
     }

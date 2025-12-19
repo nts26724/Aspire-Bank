@@ -16,7 +16,11 @@ import com.example.app.R;
 import com.example.app.ui.customeview.UtilityBarView;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class BookTicketActivity extends AppCompatActivity {
     private TextInputEditText origin, destination, departureDay,
@@ -39,15 +43,6 @@ public class BookTicketActivity extends AppCompatActivity {
         utilityBarView.setColorBookTicket();
 
         find.setOnClickListener(v -> {
-            if(origin.getText() == null || destination.getText() == null ||
-                    departureDay.getText() == null || quantityAdult.getText() == null
-                    || quantityChildren.getText() == null) {
-
-                Toast.makeText(this,
-                        "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
 
             String originStr = origin.getText().toString();
             String destinationStr = destination.getText().toString();
@@ -55,30 +50,61 @@ public class BookTicketActivity extends AppCompatActivity {
             String quantityAdultStr = quantityAdult.getText().toString();
             String quantityChildrenStr = quantityChildren.getText().toString();
 
+            if(originStr.isEmpty() ||
+                destinationStr.isEmpty() ||
+                departureDayStr.isEmpty() ||
+                quantityAdultStr.isEmpty() ||
+                quantityChildrenStr.isEmpty()) {
 
-            if (!isValidDate(departureDayStr)) {
+                Toast.makeText(this,
+                        "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+
+            } else if (!isValidDate(departureDayStr)) {
+
                 Toast.makeText(this,
                         "Vui lòng nhập ngày theo định dạng yyyy-MM-dd",
                         Toast.LENGTH_SHORT).show();
-                return;
-            }
 
+            } else if(!isAfterToday(departureDayStr)) {
 
-            if(!isIATACode(originStr) || !isIATACode(destinationStr)) {
+                Toast.makeText(this,
+                        "Ngày khởi hành phải sau ngày hiện tại",
+                        Toast.LENGTH_SHORT).show();
+
+            } else if(!isIATACode(originStr) || !isIATACode(destinationStr)) {
+
                 Toast.makeText(this,
                         "Vui lòng nhập mã sân bay theo định dạng IATA",
                         Toast.LENGTH_SHORT);
-                return;
+
+            } else if(Integer.parseInt(quantityAdultStr) +
+                    Integer.parseInt(quantityChildrenStr) < 0) {
+
+                Toast.makeText(this,
+                        "Tổng số lượng hành khách phải là số dương",
+                        Toast.LENGTH_SHORT).show();
+
+            } else if(Integer.parseInt(quantityAdultStr) < 0) {
+
+                Toast.makeText(this,
+                        "Số lượng nguời lớn không được là số âm",
+                        Toast.LENGTH_SHORT).show();
+
+            } else if(Integer.parseInt(quantityChildrenStr) < 0) {
+
+                Toast.makeText(this,
+                        "Số lượng trẻ nhỏ không được là số âm",
+                        Toast.LENGTH_SHORT).show();
+
+            } else {
+                Intent intentBookTicketList = new Intent(this, BookTicketList.class);
+                intentBookTicketList.putExtra("origin", originStr);
+                intentBookTicketList.putExtra("destination", destinationStr);
+                intentBookTicketList.putExtra("departureDate", departureDayStr);
+                intentBookTicketList.putExtra("quantityAdult", quantityAdultStr);
+                intentBookTicketList.putExtra("quantityChildren", quantityChildrenStr);
+                startActivity(intentBookTicketList);
             }
-
-
-            Intent intentBookTicketList = new Intent(this, BookTicketList.class);
-            intentBookTicketList.putExtra("origin", originStr);
-            intentBookTicketList.putExtra("destination", destinationStr);
-            intentBookTicketList.putExtra("departureDate", departureDayStr);
-            intentBookTicketList.putExtra("quantityAdult", quantityAdultStr);
-            intentBookTicketList.putExtra("quantityChildren", quantityChildrenStr);
-            startActivity(intentBookTicketList);
         });
     }
 
@@ -111,4 +137,24 @@ public class BookTicketActivity extends AppCompatActivity {
         return input.matches("^[A-Z]{3}$");
     }
 
+
+
+    public boolean isAfterToday(String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        sdf.setLenient(false);
+
+        try {
+            Date inputDate = sdf.parse(dateStr);
+
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY, 0);
+            today.set(Calendar.MINUTE, 0);
+            today.set(Calendar.SECOND, 0);
+            today.set(Calendar.MILLISECOND, 0);
+
+            return inputDate.after(today.getTime());
+        } catch (ParseException e) {
+            return false;
+        }
+    }
 }

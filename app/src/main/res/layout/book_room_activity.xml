@@ -139,7 +139,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nhập số người [0-9]"
+                    android:hint="Nhập số người [1-9]"
                     app:boxBackgroundColor="#eeeeee"
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusBottomStart="20dp"
@@ -164,7 +164,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nhập số phòng [0-9]"
+                    android:hint="Nhập số phòng [1-9]"
                     app:boxBackgroundColor="#eeeeee"
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusBottomStart="20dp"

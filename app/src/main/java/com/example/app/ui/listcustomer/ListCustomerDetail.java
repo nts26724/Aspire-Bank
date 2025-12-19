@@ -110,11 +110,11 @@ public class ListCustomerDetail extends AppCompatActivity {
             listCustomerViewModel.updateCustomer(
                     usernameCustomerStr,
                     name.getText().toString(),
-                    gender.getText().toString(),
                     birthDay.getText().toString(),
                     phoneNumber.getText().toString(),
                     address.getText().toString(),
-                    email.getText().toString()
+                    email.getText().toString(),
+                    gender.getText().toString()
             );
 
             listCustomerViewModel.isUpdateCustomerSuccess().observe(
