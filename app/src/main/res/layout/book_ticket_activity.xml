@@ -73,7 +73,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="TPHCM"
+                        android:hint="Nhập điểm khởi hành"
                         app:boxBackgroundColor="#eeeeee"
                         app:boxCornerRadiusBottomEnd="20dp"
                         app:boxCornerRadiusBottomStart="20dp"
@@ -103,7 +103,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Hà Nội"
+                        android:hint="Nhập điểm đến"
                         app:boxBackgroundColor="#eeeeee"
                         app:boxCornerRadiusBottomEnd="20dp"
                         app:boxCornerRadiusBottomStart="20dp"
@@ -133,7 +133,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="2025-12-03"
+                        android:hint="Nhập ngày khởi hành"
                         app:boxBackgroundColor="#eeeeee"
                         app:boxCornerRadiusBottomEnd="20dp"
                         app:boxCornerRadiusBottomStart="20dp"
@@ -148,6 +148,7 @@
                             android:drawablePadding="10dp"
                             android:textSize="20dp"
                             android:text="2026-02-03"
+                            android:inputType="date"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,7 +164,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="1"
+                        android:hint="Nhập số lượng người lớn"
                         app:boxBackgroundColor="#eeeeee"
                         app:boxCornerRadiusBottomEnd="20dp"
                         app:boxCornerRadiusBottomStart="20dp"
@@ -194,7 +195,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="1"
+                        android:hint="Nhập số lượng trẻ nhỏ"
                         app:boxBackgroundColor="#eeeeee"
                         app:boxCornerRadiusBottomEnd="20dp"
                         app:boxCornerRadiusBottomStart="20dp"
