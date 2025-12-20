@@ -15,6 +15,7 @@ import com.example.app.data.model.Receipt;
 import com.example.app.data.model.Transaction;
 import com.example.app.ui.receiptpayment.ReceiptPaymentCheck;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -44,9 +45,10 @@ public class ReceiptPaymentAdapter extends RecyclerView.Adapter<ReceiptPaymentAd
     @Override
     public void onBindViewHolder(@NonNull ReceiptPaymentViewHolder holder, int position) {
         Receipt currReceipt = listReceipt.get(position);
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
 
         holder.receiptID.setText("Mã HĐ: " + currReceipt.getReceiptID());
-        holder.amount.setText(currReceipt.getAmount() + " VND");
+        holder.amount.setText(formatter.format(currReceipt.getAmount()) + " VND");
         holder.type.setText(currReceipt.getType());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

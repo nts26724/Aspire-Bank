@@ -63,7 +63,7 @@ public class BookTicketCheck extends AppCompatActivity {
         destination.setText(destinationStr);
         departureArriveTime.setText(departureArriveTimeStr);
         departureDate.setText(departureDateStr);
-        price.setText(priceStr + " đ");
+        price.setText(priceStr + " VND");
 
 
         pay.setOnClickListener(v -> {

@@ -34,6 +34,8 @@ public class ReceiptPaymentSuccess extends AppCompatActivity {
 
         init();
 
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+
         Intent intent = getIntent();
         String typeStr = intent.getStringExtra("type");
         String amountStr = intent.getStringExtra("amount");
@@ -41,7 +43,7 @@ public class ReceiptPaymentSuccess extends AppCompatActivity {
 
 
         type.setText(typeStr);
-        amount.setText(amountStr);
+        amount.setText(formatter.format(Integer.parseInt(amountStr)) + " VND");
         receiptID.setText(receiptIDStr);
 
         continuePayment.setOnClickListener(v -> {
