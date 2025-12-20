@@ -135,10 +135,6 @@ public class VerifyOTPViewModel extends AndroidViewModel {
                                 sessionManager.getAccount().setSaving(currentSaving + amount);
                             }
 
-                            if (usernameReceive.contains("EVN")) {
-                                deleteReceiptByReceiptID(usernameReceive);
-                            }
-
                             verifyOTPRepository.addTransaction(amount, content, true,
                                     usernameTransfer, usernameReceive);
 

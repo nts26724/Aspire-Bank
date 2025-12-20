@@ -38,7 +38,7 @@ public class ReceiptPaymentActivity extends AppCompatActivity {
         receiptPaymentViewModel.getReceiptsByUsername(SessionManager.getInstance(this).getAccount().getUsername());
 
         receiptPaymentViewModel.getListReceipts().observe(this, receipts -> {
-            if(receipts == null) {
+            if(receipts == null || receipts.isEmpty()) {
                 lstReceipt.setVisibility(View.GONE);
                 textReceipt.setVisibility(View.VISIBLE);
                 return;
