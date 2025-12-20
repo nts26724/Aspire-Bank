@@ -226,6 +226,11 @@ public class TransferActivity extends AppCompatActivity {
             return;
         }
 
+        if (transferAmount <= 0) {
+            Toast.makeText(this, "Số tiền giao dịch phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (transferAmount < 10000) {
             Toast.makeText(this, "Số tiền tối thiểu là 10.000đ", Toast.LENGTH_SHORT).show();
             return;

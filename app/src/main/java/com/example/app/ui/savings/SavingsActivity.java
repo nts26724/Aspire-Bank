@@ -295,6 +295,11 @@ public class SavingsActivity extends AppCompatActivity {
                 return;
             }
 
+            if (currentAmount <= 0) {
+                Toast.makeText(this, "Số tiền giao dịch phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (currentAmount < 1000000) {
                 Toast.makeText(this, "Số tiền tối thiểu là 1.000.000đ", Toast.LENGTH_SHORT).show();
                 return;
