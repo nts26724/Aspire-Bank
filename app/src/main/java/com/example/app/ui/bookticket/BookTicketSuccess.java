@@ -41,6 +41,16 @@ public class BookTicketSuccess extends AppCompatActivity {
         String departureDateStr = intentSource.getStringExtra("departureDate");
         String priceStr = intentSource.getStringExtra("price");
 
+
+        nameCustomer.setText(nameCustomerStr);
+        nameAirline.setText(nameAirlineStr);
+        origin.setText(originStr);
+        destination.setText(destinationStr);
+        departureArriveTime.setText(departureArriveTimeStr);
+        departureDate.setText(departureDateStr);
+        price.setText(priceStr + " VND");
+
+
         continueBookTicket.setOnClickListener(v -> {
             Intent intentBookTicket = new Intent(this, BookTicketActivity.class);
             startActivity(intentBookTicket);

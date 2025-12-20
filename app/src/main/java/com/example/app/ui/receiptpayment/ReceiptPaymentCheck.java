@@ -42,7 +42,7 @@ public class ReceiptPaymentCheck extends AppCompatActivity {
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
 
         type.setText(typeStr);
-        amount.setText(formatter.format(amount));
+        amount.setText(formatter.format(Integer.parseInt(amountStr)) + " VND");
         receiptID.setText(receiptIDStr);
 
         payment.setOnClickListener(v -> {
