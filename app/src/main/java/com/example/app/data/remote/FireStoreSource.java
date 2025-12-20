@@ -253,7 +253,10 @@ public class FireStoreSource {
     }
 
     public void deleteReceiptByReceiptID(String receiptID) {
-        db.collection("receipt").whereEqualTo("receiptID", receiptID).limit(1).get()
+        db.collection("receipt")
+                .whereEqualTo("receiptID", receiptID)
+                .limit(1)
+                .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
                         String docId = querySnapshot.getDocuments().get(0).getId();

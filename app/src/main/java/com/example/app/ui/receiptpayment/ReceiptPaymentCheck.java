@@ -13,6 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.app.R;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class ReceiptPaymentCheck extends AppCompatActivity {
     private TextView type, amount, receiptID;
     private Button payment, cancel;
@@ -36,8 +39,10 @@ public class ReceiptPaymentCheck extends AppCompatActivity {
         String amountStr = intent.getStringExtra("amount");
         String receiptIDStr = intent.getStringExtra("receiptID");
 
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+
         type.setText(typeStr);
-        amount.setText(amountStr);
+        amount.setText(formatter.format(amount));
         receiptID.setText(receiptIDStr);
 
         payment.setOnClickListener(v -> {

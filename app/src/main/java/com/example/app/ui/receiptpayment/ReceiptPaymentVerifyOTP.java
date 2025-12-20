@@ -31,6 +31,7 @@ public class ReceiptPaymentVerifyOTP extends VerifyOTPActivity {
 
         verifyOTPViewModel.getBooleanLiveData().observe(this, isSuccessful -> {
                 if(isSuccessful) {
+                    verifyOTPViewModel.deleteReceiptByReceiptID(receiptID);
                     Intent intentReceiptPaymentSuccess = new Intent(this, ReceiptPaymentSuccess.class);
                     intentReceiptPaymentSuccess.putExtra("type", type);
                     intentReceiptPaymentSuccess.putExtra("amount", intentSource.getStringExtra("amount"));
