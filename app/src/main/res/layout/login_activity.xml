@@ -69,27 +69,26 @@
                     android:layout_marginTop="5dp"
                     >
 
-                        <com.google.android.material.textfield.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxBackgroundColor="#efeeeb"
+                        android:hint="Nhập tên đăng nhập"
+                        android:layout_span="2"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:boxBackgroundColor="#efeeeb"
-                            android:hint="Nhập tên đăng nhập"
-                            android:layout_span="2"
-                            app:boxCornerRadiusTopStart="20dp"
-                            app:boxCornerRadiusBottomStart="20dp"
-                            app:boxCornerRadiusTopEnd="20dp"
-                            app:boxCornerRadiusBottomEnd="20dp"
-                            >
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/username"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="text"
-                                android:textSize="18dp"
-                                android:text="officer1"
-                                />
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:inputType="text"
+                            android:textSize="18dp"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </TableRow>
 
@@ -111,27 +110,26 @@
                     >
 
 
-                        <com.google.android.material.textfield.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxBackgroundColor="#efeeeb"
+                        android:hint="Nhập mật khẩu"
+                        android:layout_span="2"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:boxBackgroundColor="#efeeeb"
-                            android:hint="Nhập mật khẩu"
-                            android:layout_span="2"
-                            app:boxCornerRadiusTopStart="20dp"
-                            app:boxCornerRadiusBottomStart="20dp"
-                            app:boxCornerRadiusTopEnd="20dp"
-                            app:boxCornerRadiusBottomEnd="20dp"
-                            >
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/password"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="textPassword"
-                                android:textSize="18dp"
-                                android:text="officer1"
-                                />
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:inputType="textPassword"
+                            android:textSize="18dp"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </TableRow>
 

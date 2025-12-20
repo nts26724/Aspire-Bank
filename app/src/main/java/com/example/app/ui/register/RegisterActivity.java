@@ -82,8 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            if (!email.contains("@")) {
-                Toast.makeText(this, "Email không hợp lệ (thiếu @)", Toast.LENGTH_SHORT).show();
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Email không đúng định dạng!", Toast.LENGTH_SHORT).show();
                 return;
             }
 

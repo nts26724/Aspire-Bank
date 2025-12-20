@@ -37,79 +37,112 @@
                 app:cardElevation="2dp"
                 app:cardBackgroundColor="@android:color/white">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
                     android:padding="24dp">
 
-                    <ImageView
-                        android:id="@+id/img_avatar"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_aspire_logo" />
-
-                    <TextView
-                        android:id="@+id/tv_profile_name"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit_profile"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_gravity="top|end"
+                        android:backgroundTint="#FFF3E0"
                         android:fontFamily="@font/adamina"
-                        android:text="Nguyen Van A"
+                        android:text="Chỉnh sửa"
+                        android:textAllCaps="false"
                         android:textColor="@color/aspire_dark_text"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_status_verified"
-                        android:fontFamily="@font/adamina"
-                        android:paddingStart="16dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="4dp"
-                        android:text="Đã xác thực"
-                        android:textColor="@color/aspire_dark_text"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        app:cornerRadius="16dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp">
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_upload_photo"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            app:cardCornerRadius="40dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent">
+
+                            <ImageView
+                                android:id="@+id/img_avatar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_aspire_logo" />
+                        </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:id="@+id/tv_profile_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:backgroundTint="#FFF3E0"
+                            android:layout_marginTop="12dp"
                             android:fontFamily="@font/adamina"
-                            android:text="Tải ảnh lên"
+                            android:text="Nguyen Van A"
                             android:textColor="@color/aspire_dark_text"
-                            android:textAllCaps="false"
-                            app:cornerRadius="20dp" />
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_logout"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:backgroundTint="#FFF3E0"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_status_verified"
                             android:fontFamily="@font/adamina"
-                            android:text="Đăng xuất"
+                            android:paddingStart="16dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="4dp"
+                            android:text="Đã xác thực"
                             android:textColor="@color/aspire_dark_text"
-                            android:textAllCaps="false"
-                            app:cornerRadius="20dp" />
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_upload_photo"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:backgroundTint="#FFF3E0"
+                                android:fontFamily="@font/adamina"
+                                android:text="Tải ảnh lên"
+                                android:textColor="@color/aspire_dark_text"
+                                android:textAllCaps="false"
+                                app:cornerRadius="20dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_logout"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:backgroundTint="#FFF3E0"
+                                android:fontFamily="@font/adamina"
+                                android:text="Đăng xuất"
+                                android:textColor="@color/aspire_dark_text"
+                                android:textAllCaps="false"
+                                app:cornerRadius="20dp" />
+                        </LinearLayout>
                     </LinearLayout>
-
-                </LinearLayout>
+                </FrameLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
