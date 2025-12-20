@@ -87,7 +87,9 @@ public class FireStoreSource {
     }
 
     public void getAccountByUsername(String username, LoginCallback loginCallback) {
-        db.collection("account").whereEqualTo("username", username).get()
+        db.collection("account")
+                .whereEqualTo("username", username)
+                .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.isEmpty()) {
                         loginCallback.onSuccess(null);

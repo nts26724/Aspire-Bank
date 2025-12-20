@@ -1,6 +1,7 @@
 package com.example.app.ui.login;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -39,6 +40,8 @@ public class LoginViewModel extends AndroidViewModel {
                 }
 
                 if (!account.getPassword().equals(passwordText)) {
+                    Log.d("Password", "Password: " + account.getPassword());
+                    Log.d("Password", "Password: " + passwordText);
                     loginResult.postValue(Result.WRONG_PASSWORD);
                     return;
                 }

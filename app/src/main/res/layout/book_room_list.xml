@@ -59,11 +59,10 @@
             android:id="@+id/textNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Khồng tìm thấy khách sạn phù hợp"
-            android:textSize="20dp"
-            android:gravity="center"
             android:layout_marginVertical="20dp"
-            />
+            android:gravity="center"
+            android:text="Không tìm thấy khách sạn phù hợp"
+            android:textSize="20dp" />
     </LinearLayout>
 
 
