@@ -21,7 +21,7 @@ public class LoginViewModel extends AndroidViewModel {
         super(application);
         accountRepository = new AccountRepository();
         loginResult = new MutableLiveData<>();
-        sessionManager = new SessionManager(application.getApplicationContext());
+        sessionManager = SessionManager.getInstance(application.getApplicationContext());
     }
 
     public void login(String username, String passwordText) {

@@ -12,22 +12,16 @@ public class SessionManager {
     private static final String PREF_NAME = "app_session";
     private static final String KEY_ACCOUNT = "account_json";
     private final SharedPreferences prefs;
-    private final SharedPreferences.Editor editor;
-
 
     public SessionManager(Context context) {
-        prefs = context.getSharedPreferences(PREF_NAME,
-                Context.MODE_PRIVATE);
-
-        editor = prefs.edit();
-
+        prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         String json = prefs.getString(KEY_ACCOUNT, null);
         if (json != null) {
             account = new Gson().fromJson(json, Account.class);
         }
     }
 
-    public static SessionManager getInstance(Context context) {
+    public static synchronized SessionManager getInstance(Context context) {
         if (instance == null) {
             instance = new SessionManager(context.getApplicationContext());
         }
@@ -36,7 +30,6 @@ public class SessionManager {
 
     public void setAccount(Account account) {
         this.account = account;
-
         String json = new Gson().toJson(account);
         prefs.edit().putString(KEY_ACCOUNT, json).apply();
     }
@@ -45,13 +38,8 @@ public class SessionManager {
         return account;
     }
 
-    public void clear() {
-        account = null;
-        prefs.edit().clear().apply();
-    }
-
     public void logout() {
-        editor.clear();
-        editor.commit();
+        this.account = null;
+        prefs.edit().clear().apply();
     }
 }
