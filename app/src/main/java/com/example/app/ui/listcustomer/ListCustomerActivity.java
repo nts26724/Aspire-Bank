@@ -63,6 +63,8 @@ public class ListCustomerActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(newText == null)
+                    newText = "";
                 listCustomerAdapter.setFilteredList(newText);
                 return true;
             }
