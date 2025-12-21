@@ -203,17 +203,19 @@ public class ListCustomerDetail extends AppCompatActivity {
                 listCustomerViewModel.isExistUsername(usernameStr);
                 listCustomerViewModel.isExistUsername().observe(
                     this, isExistUsername -> {
-                        if(isExistUsername) {
+                        if(!isExistUsername) {
                             listCustomerViewModel.registerUser(
-                                    username.getText().toString(),
-                                    password.getText().toString(),
-                                    name.getText().toString(),
-                                    gender.getText().toString(),
-                                    birthDay.getText().toString(),
-                                    phoneNumber.getText().toString(),
-                                    address.getText().toString(),
-                                    email.getText().toString()
+                                    usernameStr,
+                                    passwordStr,
+                                    nameStr,
+                                    genderStr,
+                                    birthDayStr,
+                                    phoneNumberStr,
+                                    addressStr,
+                                    emailStr
                             );
+
+
 
                             listCustomerViewModel.isRegisterUserSuccess().observe(
                                     this, isRegisterUserSuccess -> {
