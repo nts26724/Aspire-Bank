@@ -351,10 +351,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="14dp"
-                    android:text="Đăng ký"
+                    android:text="ĐĂNG KÝ"
                     android:textSize="16sp"
-                    android:fontFamily="@font/adamina"
-                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:textAllCaps="false"
                     app:backgroundTint="@color/aspire_orange_primary"
                     app:cornerRadius="999dp"/>
 

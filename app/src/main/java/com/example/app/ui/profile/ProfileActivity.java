@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.util.Patterns; // Import thêm thư viện này
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +34,7 @@ import com.example.app.ui.customeview.NavBarView;
 import com.example.app.ui.login.LoginActivity;
 import com.example.app.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -50,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView imgAvatar;
     private TextView tvProfileName;
     private Button btnUploadPhoto, btnLogout, btnEdit;
-    private TextInputEditText etName, etDob, etAddress, etPhone, etEmail;
+    private TextInputEditText etName, etDob, etAddress, etPhone, etEmail, etAccountNumber;
 
     private FireStoreSource fireStoreSource;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
@@ -83,6 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.btn_edit_profile);
 
         etName = findViewById(R.id.et_profile_name);
+        etAccountNumber = findViewById(R.id.et_profile_account_number);
         etDob = findViewById(R.id.et_profile_dob);
         etAddress = findViewById(R.id.et_profile_address);
         etPhone = findViewById(R.id.et_profile_phone);
@@ -102,6 +104,24 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (account != null) {
             tvProfileName.setText(account.getUsername());
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("account")
+                    .whereEqualTo("username", account.getUsername())
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        if (!querySnapshot.isEmpty()) {
+                            DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                            String accNumber = document.getString("accountNumber");
+                            if (accNumber != null) {
+                                etAccountNumber.setText(accNumber);
+                            } else {
+                                String cardNum = document.getString("cardNumber");
+                                if (cardNum != null) etAccountNumber.setText(cardNum);
+                            }
+                        }
+                    });
+
             fireStoreSource.getCustomerDetail(account.getUsername(), new CustomerCallback() {
                 @Override
                 public void onSuccess(Customer customer) {
