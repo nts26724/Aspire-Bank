@@ -55,16 +55,6 @@ public class ListCustomerDetail extends AppCompatActivity {
         } else {
             detailState();
         }
-
-
-        usernameStr = username.getText().toString().trim();
-        passwordStr = password.getText().toString().trim();
-        nameStr = name.getText().toString().trim();
-        birthDayStr = birthDay.getText().toString().trim();
-        phoneNumberStr = phoneNumber.getText().toString().trim();
-        addressStr = address.getText().toString().trim();
-        emailStr = email.getText().toString().trim();
-        genderStr = gender.getText().toString().trim();
     }
 
     public void init(){
@@ -101,6 +91,8 @@ public class ListCustomerDetail extends AppCompatActivity {
 
 
         edit.setOnClickListener(v -> {
+            getInfo();
+
             if(!isEdit) {
                 edit.setText("Lưu");
                 name.setEnabled(true);
@@ -181,6 +173,8 @@ public class ListCustomerDetail extends AppCompatActivity {
 
 
         edit.setOnClickListener(v -> {
+            getInfo();
+
             if(usernameStr.isEmpty() ||
             passwordStr.isEmpty() ||
             nameStr.isEmpty() ||
@@ -264,5 +258,17 @@ public class ListCustomerDetail extends AppCompatActivity {
         } catch (ParseException e) {
             return false;
         }
+    }
+
+
+    public void getInfo() {
+        usernameStr = username.getText().toString().trim();
+        passwordStr = password.getText().toString().trim();
+        nameStr = name.getText().toString().trim();
+        birthDayStr = birthDay.getText().toString().trim();
+        phoneNumberStr = phoneNumber.getText().toString().trim();
+        addressStr = address.getText().toString().trim();
+        emailStr = email.getText().toString().trim();
+        genderStr = gender.getText().toString().trim();
     }
 }
