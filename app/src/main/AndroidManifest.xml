@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -7,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +26,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
 
-        <activity android:name=".ui.login.LoginActivity" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.homecustomer.HomeCustomerActivity" />
         <activity android:name=".ui.bookroom.BookRoomActivity" />
         <activity android:name=".ui.bookroom.BookRoomCheck" />
@@ -73,18 +82,30 @@
 
         <activity android:name=".ui.verify.VerifyOTPActivity" />
 
-        <activity android:name=".ui.profile.ProfileActivity" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".ui.savings.SavingsActivity" />
+        <activity
+            android:name=".ui.savings.SavingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.savings.SavingsConfirmActivity" />
         <activity android:name=".ui.savings.SavingsSuccessActivity" />
         <activity android:name=".ui.savings.SavingsVerifyOTP"/>
 
-        <activity android:name=".ui.register.RegisterActivity" />
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.register.RegisterFaceAuthActivity" />
         <activity android:name=".ui.register.RegisterSuccessActivity" />
 
-        <activity android:name=".ui.transfer.TransferActivity" />
+        <activity
+            android:name=".ui.transfer.TransferActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.transfer.TransferVerifyOTP" />
         <activity android:name=".ui.transfer.TransferSuccessActivity" />
     </application>
