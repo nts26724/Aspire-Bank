@@ -1,174 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#FDF0D5"
-    android:id="@+id/login"
-    tools:context=".ui.login.LoginActivity"
-    >
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:paddingBottom="50dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cardCornerRadius="20dp"
-        >
+        tools:context=".ui.login.LoginActivity">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingHorizontal="30dp"
-            android:paddingVertical="30dp"
-            >
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_logo_bank"
-                android:layout_gravity="center"
-                />
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="30dp">
 
-            <TextView
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:text="Chào mừng đến với Aspire Bank"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_logo_bank" />
 
+                <TextView
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Chào mừng đến với Aspire Bank"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
-            <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                >
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp">
 
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tên đăng nhập"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        android:layout_gravity="left"
-                        />
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Tên đăng nhập"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </TableRow>
 
-                </TableRow>
-
-                <TableRow
-                    android:layout_marginTop="5dp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxBackgroundColor="#efeeeb"
-                        android:hint="Nhập tên đăng nhập"
-                        android:layout_span="2"
-                        app:boxCornerRadiusTopStart="20dp"
-                        app:boxCornerRadiusBottomStart="20dp"
-                        app:boxCornerRadiusTopEnd="20dp"
-                        app:boxCornerRadiusBottomEnd="20dp"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/username"
+                    <TableRow android:layout_marginTop="5dp">
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:textSize="18dp"
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_span="2"
+                            android:hint="Nhập tên đăng nhập"
+                            app:boxBackgroundColor="#efeeeb"
+                            app:boxCornerRadiusBottomEnd="20dp"
+                            app:boxCornerRadiusBottomStart="20dp"
+                            app:boxCornerRadiusTopEnd="20dp"
+                            app:boxCornerRadiusTopStart="20dp">
 
-                </TableRow>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/username"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textColor="@color/aspire_dark_text"
+                                android:textSize="18sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </TableRow>
 
-                <TableRow
-                    android:layout_marginTop="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mật khẩu"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        android:layout_gravity="left"
-                        />
+                    <TableRow android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Mật khẩu"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </TableRow>
 
-                </TableRow>
-
-                <TableRow
-                    android:layout_marginTop="5dp"
-                    >
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxBackgroundColor="#efeeeb"
-                        android:hint="Nhập mật khẩu"
-                        android:layout_span="2"
-                        app:boxCornerRadiusTopStart="20dp"
-                        app:boxCornerRadiusBottomStart="20dp"
-                        app:boxCornerRadiusTopEnd="20dp"
-                        app:boxCornerRadiusBottomEnd="20dp"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/password"
+                    <TableRow android:layout_marginTop="5dp">
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPassword"
-                            android:textSize="18dp"
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_span="2"
+                            android:hint="Nhập mật khẩu"
+                            app:boxBackgroundColor="#efeeeb"
+                            app:boxCornerRadiusBottomEnd="20dp"
+                            app:boxCornerRadiusBottomStart="20dp"
+                            app:boxCornerRadiusTopEnd="20dp"
+                            app:boxCornerRadiusTopStart="20dp">
 
-                </TableRow>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                android:textColor="@color/aspire_dark_text"
+                                android:textSize="18sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </TableRow>
 
-                <TableRow
-                    android:layout_marginTop="15dp">
-                    <Button
-                        android:id="@+id/btnLogin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_span="2"
-                        android:text="Đăng nhập"
-                        android:textColor="#e44a1f"
-                        android:backgroundTint="#feddbc"
-                        android:textSize="18dp"
-                        android:paddingVertical="5dp"
-                        />
-                </TableRow>
+                    <TableRow android:layout_marginTop="15dp">
+                        <Button
+                            android:id="@+id/btnLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:backgroundTint="#feddbc"
+                            android:paddingVertical="5dp"
+                            android:text="Đăng nhập"
+                            android:textColor="#e44a1f"
+                            android:textSize="18sp" />
+                    </TableRow>
 
-                <TableRow
-                    android:layout_marginTop="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chưa có tài khoản?"
-                        android:textSize="15dp"
-                        android:layout_gravity="center"
-                        />
+                    <TableRow android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Chưa có tài khoản?"
+                            android:textSize="15sp" />
 
-                    <Button
-                        android:id="@+id/btnRegister"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Đăng ký"
-                        android:backgroundTint="#e44a1f"
-                        android:textSize="15dp"
-                        android:layout_marginStart="10dp"
-                        />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                        <Button
+                            android:id="@+id/btnRegister"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="#e44a1f"
+                            android:text="Đăng ký"
+                            android:textSize="15sp" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
