@@ -2,6 +2,7 @@ package com.example.app.ui.depositaccount;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,13 +34,13 @@ public class DepositAccountActivity extends AppCompatActivity {
 
         init();
 
-        String linkedBankStr = linkedBank.getText().toString().trim();
-        String numberAccountStr = numberAccount.getText().toString().trim();
-        String nameAccountStr = nameAccount.getText().toString().trim();
-        String amountStr = amount.getText().toString().trim();
-
 
         deposit.setOnClickListener(v -> {
+            String linkedBankStr = linkedBank.getText().toString().trim();
+            String numberAccountStr = numberAccount.getText().toString().trim();
+            String nameAccountStr = nameAccount.getText().toString().trim();
+            String amountStr = amount.getText().toString().trim();
+
             if(linkedBankStr.isEmpty() || numberAccountStr.isEmpty() ||
                     nameAccountStr.isEmpty() || amountStr.isEmpty()) {
 
@@ -49,13 +50,14 @@ public class DepositAccountActivity extends AppCompatActivity {
             } else if(Long.parseLong(amountStr) < 50000) {
 
                 Toast.makeText(this,
-                        "Số tiền tối thiểu là 50.000đ", Toast.LENGTH_SHORT).show();
+                        "Số tiền tối thiểu là 50.000 đ", Toast.LENGTH_SHORT).show();
 
             } else {
                 Intent intentDepositAccountCheck = new Intent(DepositAccountActivity.this, DepositAccountCheck.class);
                 intentDepositAccountCheck.putExtra("linkedBank", linkedBankStr);
                 intentDepositAccountCheck.putExtra("numberAccount", numberAccountStr);
                 intentDepositAccountCheck.putExtra("nameAccount", nameAccountStr);
+                Log.d("amount", "amount: " + amountStr);
                 intentDepositAccountCheck.putExtra("amount", amountStr);
                 startActivity(intentDepositAccountCheck);
             }
