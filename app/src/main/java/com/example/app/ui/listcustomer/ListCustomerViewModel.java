@@ -10,6 +10,7 @@ import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
 import com.example.app.data.repository.ListCustomerRepository;
 import com.example.app.interfaces.HomeCustomerCallback;
+import com.example.app.interfaces.LoginCallback;
 import com.example.app.interfaces.RegisterCallback;
 import com.example.app.utils.SessionManager;
 
@@ -21,7 +22,7 @@ public class ListCustomerViewModel extends AndroidViewModel {
     private MutableLiveData<Customer> customerByUsernameLiveData;
     private MutableLiveData<Boolean> isUpdateCustomerSuccess;
     private MutableLiveData<Boolean> isRegisterUserSuccess;
-
+    private MutableLiveData<Boolean> isExistUsername;
     public ListCustomerViewModel(@NonNull Application application) {
         super(application);
 
@@ -30,6 +31,7 @@ public class ListCustomerViewModel extends AndroidViewModel {
         customerByUsernameLiveData = new MutableLiveData<>();
         isUpdateCustomerSuccess = new MutableLiveData<>();
         isRegisterUserSuccess = new MutableLiveData<>();
+        isExistUsername = new MutableLiveData<>();
     }
 
     public void getListCustomer() {
@@ -81,5 +83,28 @@ public class ListCustomerViewModel extends AndroidViewModel {
 
     public MutableLiveData<Boolean> isRegisterUserSuccess() {
         return isRegisterUserSuccess;
+    }
+
+
+    public void isExistUsername(String username) {
+        listCustomerRepository.isExistUsername(username, new LoginCallback() {
+            @Override
+            public void onSuccess(Account account) {
+                if (account == null) {
+                    isExistUsername.postValue(false);
+                    return;
+                }
+                isExistUsername.postValue(true);
+            }
+
+            @Override
+            public void onFailure() {
+                isExistUsername.postValue(false);
+            }
+        });
+    }
+
+    public MutableLiveData<Boolean> isExistUsername() {
+        return isExistUsername;
     }
 }

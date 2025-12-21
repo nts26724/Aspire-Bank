@@ -57,14 +57,14 @@ public class ListCustomerDetail extends AppCompatActivity {
         }
 
 
-        usernameStr = username.getText().toString();
-        passwordStr = password.getText().toString() ;
-        nameStr = name.getText().toString();
-        birthDayStr = birthDay.getText().toString();
-        phoneNumberStr = phoneNumber.getText().toString();
-        addressStr = address.getText().toString();
-        emailStr = email.getText().toString();
-        genderStr = gender.getText().toString();
+        usernameStr = username.getText().toString().trim();
+        passwordStr = password.getText().toString().trim();
+        nameStr = name.getText().toString().trim();
+        birthDayStr = birthDay.getText().toString().trim();
+        phoneNumberStr = phoneNumber.getText().toString().trim();
+        addressStr = address.getText().toString().trim();
+        emailStr = email.getText().toString().trim();
+        genderStr = gender.getText().toString().trim();
     }
 
     public void init(){
@@ -125,7 +125,7 @@ public class ListCustomerDetail extends AppCompatActivity {
                 Toast.makeText(this, "Khách hàng chưa đủ tuổi",
                         Toast.LENGTH_SHORT).show();
             } else if(isValidBirthDay(birthDayStr)) {
-                Toast.makeText(this, "Ngày sinh phải đúng định dạng dd/MM/yyyy",
+                Toast.makeText(this, "Ngày sinh phải đúng định dạng dd/mm/yyyy",
                         Toast.LENGTH_SHORT).show();
             } else if(phoneNumberStr.length() != 10 || !phoneNumberStr.startsWith("0")) {
                 Toast.makeText(this, "Số điện thoại không hợp lệ",
@@ -170,14 +170,15 @@ public class ListCustomerDetail extends AppCompatActivity {
 
     public void addState() {
         edit.setText("Thêm");
-        username.setVisibility(View.VISIBLE);
-        password.setVisibility(View.VISIBLE);
+        usernameLayout.setVisibility(View.VISIBLE);
+        passwordLayout.setVisibility(View.VISIBLE);
         name.setEnabled(true);
         gender.setEnabled(true);
         birthDay.setEnabled(true);
         phoneNumber.setEnabled(true);
         address.setEnabled(true);
         email.setEnabled(true);
+
 
         edit.setOnClickListener(v -> {
             if(usernameStr.isEmpty() ||
@@ -191,12 +192,12 @@ public class ListCustomerDetail extends AppCompatActivity {
 
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin",
                         Toast.LENGTH_SHORT).show();
-//                return;
+
             } else if(Integer.parseInt(birthDayStr.split("/")[2]) < 2009) {
                 Toast.makeText(this, "Khách hàng chưa đủ tuổi",
                         Toast.LENGTH_SHORT).show();
             } else if(isValidBirthDay(birthDayStr)) {
-                Toast.makeText(this, "Ngày sinh phải đúng định dạng dd/MM/yyyy",
+                Toast.makeText(this, "Ngày sinh phải đúng định dạng dd/mm/yyyy",
                         Toast.LENGTH_SHORT).show();
             } else if(phoneNumberStr.length() != 10 || !phoneNumberStr.startsWith("0")) {
                 Toast.makeText(this, "Số điện thoại không hợp lệ",
@@ -205,27 +206,44 @@ public class ListCustomerDetail extends AppCompatActivity {
                 Toast.makeText(this, "Email không hợp lệ",
                         Toast.LENGTH_SHORT).show();
             } else {
-                listCustomerViewModel.registerUser(
-                        username.getText().toString(),
-                        password.getText().toString(),
-                        name.getText().toString(),
-                        gender.getText().toString(),
-                        birthDay.getText().toString(),
-                        phoneNumber.getText().toString(),
-                        address.getText().toString(),
-                        email.getText().toString()
-                );
+                listCustomerViewModel.isExistUsername(usernameStr);
+                listCustomerViewModel.isExistUsername().observe(
+                    this, isExistUsername -> {
+                        if(isExistUsername) {
+                            listCustomerViewModel.registerUser(
+                                    username.getText().toString(),
+                                    password.getText().toString(),
+                                    name.getText().toString(),
+                                    gender.getText().toString(),
+                                    birthDay.getText().toString(),
+                                    phoneNumber.getText().toString(),
+                                    address.getText().toString(),
+                                    email.getText().toString()
+                            );
 
-                listCustomerViewModel.isRegisterUserSuccess().observe(
-                        this, isRegisterUserSuccess -> {
-                            if(isRegisterUserSuccess) {
-                                Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                                Log.d("addState", "addState: True");
-                            } else {
-                                Toast.makeText(this, "Đăng ký không thành công", Toast.LENGTH_SHORT).show();
-                                Log.d("addState", "addState: False");
-                            }
+                            listCustomerViewModel.isRegisterUserSuccess().observe(
+                                    this, isRegisterUserSuccess -> {
+                                        if(isRegisterUserSuccess) {
+                                            Toast.makeText(this,
+                                                    "Đăng ký thành công",
+                                                    Toast.LENGTH_SHORT).show();
+                                            Log.d("addState", "addState: True");
+                                        } else {
+                                            Toast.makeText(this,
+                                                    "Đăng ký không thành công",
+                                                    Toast.LENGTH_SHORT).show();
+                                            Log.d("addState", "addState: False");
+                                        }
+                                    }
+                            );
+                        } else {
+                            Toast.makeText(this, "Tên đăng nhập đã tồn tại",
+                                    Toast.LENGTH_SHORT).show();
+
+                            Log.d("Register from Officer",
+                                    "addState: Tên đăng nhập đã tồn tại");
                         }
+                    }
                 );
             }
 
@@ -237,7 +255,7 @@ public class ListCustomerDetail extends AppCompatActivity {
         if (birthDayStr == null) return false;
 
         SimpleDateFormat sdf =
-                new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
         sdf.setLenient(false);
 
         try {

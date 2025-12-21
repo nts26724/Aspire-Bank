@@ -6,6 +6,7 @@ import com.example.app.data.model.Account;
 import com.example.app.data.model.Customer;
 import com.example.app.data.remote.FireStoreSource;
 import com.example.app.interfaces.HomeCustomerCallback;
+import com.example.app.interfaces.LoginCallback;
 import com.example.app.interfaces.RegisterCallback;
 
 import java.util.List;
@@ -35,5 +36,9 @@ public class ListCustomerRepository {
 
     public void registerUser(Account account, Customer customer, RegisterCallback registerCallback) {
         fireStoreSource.registerUser(account, customer, registerCallback);
+    }
+
+    public void isExistUsername(String username, LoginCallback loginCallback) {
+        fireStoreSource.getAccountByUsername(username, loginCallback);
     }
 }

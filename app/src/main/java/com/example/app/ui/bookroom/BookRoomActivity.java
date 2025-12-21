@@ -64,7 +64,7 @@ public class BookRoomActivity extends AppCompatActivity {
             } else if (!isValidDate(checkInDateStr) || !isValidDate(checkOutDateStr)) {
 
                 Toast.makeText(this,
-                        "Vui lòng nhập ngày theo định dạng yyyy-MM-dd",
+                        "Vui lòng nhập ngày theo định dạng yyyy-mm-dd",
                         Toast.LENGTH_SHORT).show();
 
             } else if(!isAfterToday(checkInDateStr) || !isAfterToday(checkOutDateStr)) {
@@ -121,7 +121,7 @@ public class BookRoomActivity extends AppCompatActivity {
 
 
     public boolean isValidDate(String input) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
         sdf.setLenient(false);
         try {
             sdf.parse(input);
@@ -133,7 +133,7 @@ public class BookRoomActivity extends AppCompatActivity {
 
 
     public boolean isAfterToday(String dateStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
         sdf.setLenient(false);
 
         try {
@@ -158,7 +158,7 @@ public class BookRoomActivity extends AppCompatActivity {
         if (checkInDate == null || checkOutDate == null) return false;
 
         SimpleDateFormat sdf =
-                new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
         sdf.setLenient(false);
 
         try {
