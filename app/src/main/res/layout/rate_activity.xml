@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:text="Lãi xuất hàng tháng"
+                    android:text="Lãi suất hàng tháng"
                     android:textColor="@color/white"
                     />
 
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:text="Lãi xuất hàng tháng"
+            android:text="Lãi suất hàng tháng"
             android:layout_marginTop="40dp"
             />
 
