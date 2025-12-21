@@ -122,7 +122,7 @@ public class BookTicketActivity extends AppCompatActivity {
 
 
     public boolean isValidDate(String input) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
         try {
             sdf.parse(input);
@@ -140,7 +140,7 @@ public class BookTicketActivity extends AppCompatActivity {
 
 
     public boolean isAfterToday(String dateStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         sdf.setLenient(false);
 
         try {
