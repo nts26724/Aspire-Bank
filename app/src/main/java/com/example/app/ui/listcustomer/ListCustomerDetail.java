@@ -113,11 +113,11 @@ public class ListCustomerDetail extends AppCompatActivity {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin",
                         Toast.LENGTH_SHORT).show();
 //                return;
-            } else if(Integer.parseInt(birthDayStr.split("/")[2]) < 2009) {
-                Toast.makeText(this, "Khách hàng chưa đủ tuổi",
-                        Toast.LENGTH_SHORT).show();
             } else if(isValidBirthDay(birthDayStr)) {
                 Toast.makeText(this, "Ngày sinh phải đúng định dạng dd/mm/yyyy",
+                        Toast.LENGTH_SHORT).show();
+            } else if(Integer.parseInt(birthDayStr.split("/")[2]) < 2009) {
+                Toast.makeText(this, "Khách hàng chưa đủ tuổi",
                         Toast.LENGTH_SHORT).show();
             } else if(phoneNumberStr.length() != 10 || !phoneNumberStr.startsWith("0")) {
                 Toast.makeText(this, "Số điện thoại không hợp lệ",
@@ -249,7 +249,7 @@ public class ListCustomerDetail extends AppCompatActivity {
         if (birthDayStr == null) return false;
 
         SimpleDateFormat sdf =
-                new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
+                new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         sdf.setLenient(false);
 
         try {
