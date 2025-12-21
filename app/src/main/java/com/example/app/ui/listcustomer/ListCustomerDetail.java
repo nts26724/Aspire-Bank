@@ -216,7 +216,6 @@ public class ListCustomerDetail extends AppCompatActivity {
                             );
 
 
-
                             listCustomerViewModel.isRegisterUserSuccess().observe(
                                     this, isRegisterUserSuccess -> {
                                         if(isRegisterUserSuccess) {
@@ -232,6 +231,8 @@ public class ListCustomerDetail extends AppCompatActivity {
                                         }
                                     }
                             );
+
+                            finish();
                         } else {
                             Toast.makeText(this, "Tên đăng nhập đã tồn tại",
                                     Toast.LENGTH_SHORT).show();
