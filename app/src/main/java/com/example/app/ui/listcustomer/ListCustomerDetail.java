@@ -116,7 +116,7 @@ public class ListCustomerDetail extends AppCompatActivity {
             } else if(!isValidBirthDay(birthDayStr)) {
                 Toast.makeText(this, "Ngày sinh phải đúng định dạng dd/mm/yyyy",
                         Toast.LENGTH_SHORT).show();
-            } else if(Integer.parseInt(birthDayStr.split("/")[2]) < 2009) {
+            } else if(Integer.parseInt(birthDayStr.split("/")[2]) >= 2009) {
                 Toast.makeText(this, "Khách hàng chưa đủ tuổi",
                         Toast.LENGTH_SHORT).show();
             } else if(phoneNumberStr.length() != 10 || !phoneNumberStr.startsWith("0")) {
