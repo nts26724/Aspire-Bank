@@ -75,10 +75,10 @@
                         android:gravity="center"
                         android:maxLength="1"
                         android:paddingVertical="10dp"
-                        android:text="1"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         />
+<!--                        android:text="1"-->
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -101,10 +101,10 @@
                         android:maxLength="1"
                         android:textSize="20dp"
                         android:gravity="center"
-                        android:text="2"
                         android:paddingVertical="10dp"
                         android:textStyle="bold"
                         />
+<!--                        android:text="2"-->
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -127,10 +127,10 @@
                         android:maxLength="1"
                         android:textSize="20dp"
                         android:gravity="center"
-                        android:text="3"
                         android:paddingVertical="10dp"
                         android:textStyle="bold"
                         />
+<!--                        android:text="3"-->
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -153,10 +153,10 @@
                         android:maxLength="1"
                         android:textSize="20dp"
                         android:gravity="center"
-                        android:text="4"
                         android:paddingVertical="10dp"
                         android:textStyle="bold"
                         />
+<!--                        android:text="4"-->
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -179,9 +179,10 @@
                         android:gravity="center"
                         android:maxLength="1"
                         android:paddingVertical="10dp"
-                        android:text="5"
                         android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        />
+<!--                        android:text="5"-->
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -204,10 +205,10 @@
                         android:maxLength="1"
                         android:textSize="20dp"
                         android:gravity="center"
-                        android:text="6"
                         android:paddingVertical="10dp"
                         android:textStyle="bold"
                         />
+<!--                        android:text="6"-->
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
