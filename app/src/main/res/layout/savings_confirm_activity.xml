@@ -46,7 +46,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="24dp"
                     android:fontFamily="@font/adamina"
-                    android:text="Thông tin gửi tiết kiệm"
+                    android:text="Xác nhận thông tin"
                     android:textColor="@color/aspire_dark_text"
                     android:textSize="20sp"
                     android:textStyle="bold" />
