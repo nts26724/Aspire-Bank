@@ -58,30 +58,30 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 loginViewModel.login(usernameText, passwordText);
             }
-        });
 
-        loginViewModel.getLoginResult().observe(this, result -> {
-            switch (result) {
-                case NOT_FOUND:
-                    Toast.makeText(this, "Tên đăng nhập không tồn tại", Toast.LENGTH_SHORT).show();
-                    break;
-                case WRONG_PASSWORD:
-                    Toast.makeText(this, "Mật khẩu không đúng", Toast.LENGTH_SHORT).show();
-                    break;
-                case ERROR:
-                    Toast.makeText(this, "Không thể kết nối tới máy chủ", Toast.LENGTH_SHORT).show();
-                    break;
-                case CUSTOMER:
-                    Intent intentHomeCustomer = new Intent(LoginActivity.this, HomeCustomerActivity.class);
-                    startActivity(intentHomeCustomer);
-                    finish();
-                    break;
-                case OFFICER:
-                    Intent intentHomeOfficer = new Intent(LoginActivity.this, HomeOfficerActivity.class);
-                    startActivity(intentHomeOfficer);
-                    finish();
-                    break;
-            }
+            loginViewModel.getLoginResult().observe(this, result -> {
+                switch (result) {
+                    case NOT_FOUND:
+                        Toast.makeText(this, "Tên đăng nhập không tồn tại", Toast.LENGTH_SHORT).show();
+                        break;
+                    case WRONG_PASSWORD:
+                        Toast.makeText(this, "Mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                        break;
+                    case ERROR:
+                        Toast.makeText(this, "Không thể kết nối tới máy chủ", Toast.LENGTH_SHORT).show();
+                        break;
+                    case CUSTOMER:
+                        Intent intentHomeCustomer = new Intent(LoginActivity.this, HomeCustomerActivity.class);
+                        startActivity(intentHomeCustomer);
+                        finish();
+                        break;
+                    case OFFICER:
+                        Intent intentHomeOfficer = new Intent(LoginActivity.this, HomeOfficerActivity.class);
+                        startActivity(intentHomeOfficer);
+                        finish();
+                        break;
+                }
+            });
         });
     }
 
