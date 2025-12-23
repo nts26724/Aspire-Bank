@@ -47,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         btnLogin.setOnClickListener(v -> {
-            usernameText = username.getText().toString();
-            passwordText = password.getText().toString();
+            usernameText = username.getText().toString().trim();
+            passwordText = password.getText().toString().trim();
 
             if (usernameText.isEmpty() || passwordText.isEmpty()) {
                 Toast.makeText(this,
